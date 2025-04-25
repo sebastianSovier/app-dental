@@ -1,0 +1,157 @@
+import { computed, inject, Injectable, signal } from "@angular/core";
+import { catchError, map, Observable, of, throwError } from "rxjs";
+import { environment } from "../../environments/environment";
+import { AuthStatus } from "@interfaces/auth-status.enum";
+import { LoginResponse } from "@interfaces/login-response.interface";
+import { UserDataService } from "./user-data.service";
+import { emptyResponse } from "@interfaces/personal-data-request.interface";
+import { HttpClient } from "@angular/common/http";
+import { InsuredUser, PacienteRequest } from "@interfaces/services.interface";
+
+
+@Injectable({
+  providedIn: "root",
+})
+export class AuthService {
+  private timeOutSessionCallback: ((value: boolean) => void) | null = null;
+
+  constructor(private http: HttpClient) {
+    this.checkAuthStatus().subscribe();
+  }
+
+
+  private readonly insuredData = inject(UserDataService);
+
+  private _authStatus = signal<AuthStatus>(AuthStatus.checking);
+  private _token = signal<string | null>(null);
+  private _xsrfToken = signal<string | null>(null);
+  public authStatus = computed(() => this._authStatus());
+  public token = computed(() => this._token());
+  public xsrfToken = computed(() => this._xsrfToken());
+
+
+  public setTimeOutSessionCallback(callback: (value: boolean) => void): void {
+    this.timeOutSessionCallback = callback;
+  }
+
+  private setAuthentication(loginResponse: LoginResponse): boolean {
+    const { access_Token } = loginResponse;
+
+    this._token.set(access_Token);
+    this._authStatus.set(AuthStatus.authenticated);
+    sessionStorage.setItem("accessToken", access_Token);
+    const user : InsuredUser = {
+      token: access_Token,
+      retry: 0,
+      idAgendamiento: "",
+    }
+    this.insuredData.setInsuredUser(user);
+    return true;
+  }
+  public setXsrfToken(token: string): boolean {
+    this._xsrfToken.set(token);
+    return true;
+  }
+  loginPacientes(loginRequest:any): Observable<boolean> {
+    const url = `${environment.apiUrl}/Authentication/loginPaciente`;
+
+
+    return this.http.post<LoginResponse>(url, loginRequest).pipe(
+      map((response) => this.setAuthentication(response)),
+      catchError((err) =>
+        throwError(() => {
+          console.log({ err });
+          return "Error en servidor. Por favor, intente más tarde.";
+        })
+      )
+    );
+  }
+  withoutLoginPacientes(loginRequest:any): Observable<boolean> {
+    const url = `${environment.apiUrl}/Authentication/withoutLoginPaciente`;
+
+
+    return this.http.post<LoginResponse>(url, loginRequest).pipe(
+      map((response) => this.setAuthentication(response)),
+      catchError((err) =>
+        throwError(() => {
+          console.log({ err });
+          return "Error en servidor. Por favor, intente más tarde.";
+        })
+      )
+    );
+  }
+  loginProfesional(loginRequest:any): Observable<boolean> {
+    const url = `${environment.apiUrl}/Authentication/loginProfesional`;
+
+
+    return this.http.post<LoginResponse>(url, loginRequest).pipe(
+      map((response) => this.setAuthentication(response)),
+      catchError((err) =>
+        throwError(() => {
+          console.log({ err });
+          return "Error en servidor. Por favor, intente más tarde.";
+        })
+      )
+    );
+  }
+  crearPaciente(crearPacienteRequest:PacienteRequest): Observable<LoginResponse> {
+    const url = `${environment.apiUrl}/Authentication/crearPaciente`;
+
+
+    return this.http.post<LoginResponse>(url, crearPacienteRequest)
+         .pipe(
+           map((data) => data),
+           catchError(err => throwError(() => err))
+         )
+  }
+  logout() {
+    this._authStatus.set(AuthStatus.notAuthenticated);
+    this._token.set(null);
+    this.insuredData.resetData();
+    const itemsSession = ["accessToken"];
+    itemsSession.forEach((item) => sessionStorage.removeItem(item));
+    this._xsrfToken.set(null);
+    document.cookie = 'Q=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    const itemsLocal = ["accessToken"];
+    itemsLocal.forEach((item) => localStorage.removeItem(item));
+    return true;
+  }
+  addError401() {
+    sessionStorage.setItem("Error401", "1");
+  }
+   logoutService() {
+      const apiUrl = `${environment.apiUrl}/Authentication/logout`;
+      const body = {
+      };
+      return this.http.post<emptyResponse>(apiUrl, body)
+        .pipe(
+          map((data) => this.logout()),
+          catchError(err => throwError(() => this.logout()))
+        )
+    }
+
+  verifyError401() {
+    let vari = sessionStorage.getItem("Error401");
+    if (vari === "1" && this.timeOutSessionCallback) {
+      this.timeOutSessionCallback(true);
+      sessionStorage.removeItem("Error401");
+    }
+  }
+
+  checkAuthStatus(): Observable<boolean> {
+    if (typeof window === 'undefined') {
+      return of(false); // O manejar diferente para SSR
+    }
+  
+    const token = sessionStorage.getItem("accessToken");
+
+    if (!token) {
+      this.logout();
+      return of(false);
+    }
+
+    this._authStatus.set(AuthStatus.authenticated);
+    this._token.set(token);
+    return of(true);
+  }
+}

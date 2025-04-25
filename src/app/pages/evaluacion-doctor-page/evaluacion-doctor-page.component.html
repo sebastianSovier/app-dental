@@ -1,0 +1,22 @@
+<form [formGroup]="ratingForm" (ngSubmit)="onSubmit()" class="rating-form">
+    <div class="form-group" *ngFor="let field of ratingFields">
+      <label>{{ field.label }}: {{ ratingForm.get(field.controlName)?.value }}</label>
+      <p class="question">{{ field.question }}</p>
+  
+      <mat-slider [min]="1" [max]="10" [step]="1" >
+        <input
+          matSliderThumb
+          type="range"
+          min="1"
+          max="10"
+          step="1"
+          [formControl]="getFormControl(field.controlName)"
+        />
+      </mat-slider>
+    </div>
+  
+    <button mat-flat-button color="primary" type="submit" [disabled]="ratingForm.invalid">
+      Enviar evaluación
+    </button>
+  </form>
+  

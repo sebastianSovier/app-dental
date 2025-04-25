@@ -1,0 +1,19 @@
+.min-vh-100 {
+    min-height: 100vh;
+  }
+  
+  .main-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 1rem;
+  
+    @media (max-width: 768px) {
+      padding: 0.5rem;
+    }
+  }
+  

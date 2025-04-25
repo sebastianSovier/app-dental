@@ -1,0 +1,18 @@
+.botones-citas-card {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+  
+    .botones-citas {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+  
+      button {
+        justify-content: flex-start;
+        text-align: left;
+        font-weight: 500;
+      }
+    }
+  }
+  

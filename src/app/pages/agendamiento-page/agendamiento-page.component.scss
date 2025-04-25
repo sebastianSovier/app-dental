@@ -1,0 +1,188 @@
+.custom-stepper {
+  padding: 1rem;
+
+  ::ng-deep .mat-step-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+.form-section {
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.mat-error {
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+.recommended-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: green;
+  color: #000;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+.mat-error-p {
+  color: #f44336;
+  font-size: 0.9rem;
+  margin: 0;
+}
+.doctor-card {
+  position: relative;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.doctor-card h2 {
+  margin-bottom: 1rem;
+  color: #3f51b5;
+}
+
+.hours-container {
+  margin-top: 1rem;
+
+  h4 {
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+}
+
+.hour-slot-group {
+  margin-bottom: 1rem;
+
+  button {
+    min-width: 80px;
+  }
+}
+
+.submit-container {
+  text-align: right;
+  margin-top: 1rem;
+
+  button {
+    min-width: 220px;
+    font-weight: 600;
+  }
+}
+.w-full {
+  width: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.buttons-container {
+  margin-top: 16px;
+
+  button {
+    min-width: 120px;
+  }
+
+  mat-button {
+    color: #3f51b5;
+  }
+}
+
+mat-step {
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+mat-form-field {
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+::ng-deep .mat-step-header .mat-step-label {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 600px) {
+  ::ng-deep .mat-step-header .mat-step-label {
+    display: none;
+  }
+
+  ::ng-deep .mat-step-header {
+    min-width: 40px;
+    max-width: 40px;
+  }
+
+  ::ng-deep .mat-step-icon {
+    margin: 0 auto;
+  }
+}
+::ng-deep .mat-horizontal-stepper-header-container {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+.mat-select-full-width {
+  width: 65%;
+
+  .mat-select {
+    width: 65%;
+  }
+
+  .mat-select-trigger {
+    width: 65%;
+  }
+}
+
+mat-label {
+  color: #5f6368;
+}
+
+mat-error {
+  font-size: 0.875rem;
+  color: red;
+}
+.selected {
+  border: 2px solid #1976d2;
+  background-color: green;
+  color: white;
+}
+.birthday-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.birthday-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.birthday-field {
+  width: 100%;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+

@@ -1,0 +1,47 @@
+.login-tab-group {
+    margin: 32px auto;
+    max-width: 480px;
+    width: 100%;
+    padding: 0 16px;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 0;
+  
+    .full-width {
+      width: 100%;
+    }
+  
+    .submit-btn {
+      align-self: flex-end;
+      padding: 8px 24px;
+      font-weight: 500;
+      border-radius: 8px;
+    }
+    .back-btn {
+      align-self: flex-start;
+      margin-bottom: -12%;
+      padding: 8px 24px;
+      font-weight: 500;
+      border-radius: 8px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .login-form {
+      .submit-btn {
+        align-self: center;
+        width: 100%;
+       
+      }
+      .back-btn {
+        align-self: center;
+        width: 100%;
+        margin-bottom: -1%;
+      }
+    }
+  }
+  

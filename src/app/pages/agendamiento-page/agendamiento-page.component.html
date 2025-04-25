@@ -1,0 +1,248 @@
+<mat-stepper linear #stepper class="custom-stepper">
+  <mat-step [completed]="PersonalDataForm.valid"  [editable]="editable"  [matTooltip]="'Información personal'"
+  matTooltipPosition="above" [stepControl]="PersonalDataForm" label="Información personal">
+    <form [formGroup]="PersonalDataForm" (ngSubmit)="onSubmitPersonalData(PersonalDataForm, stepper)">
+      <div fxLayout="row wrap" fxLayoutGap="16px" class="form-section">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+          <mat-label>RUT</mat-label>
+          <input matInput formControlName="rut" (blur)="obtenerPaciente()" (input)="setFormatRut($event)" minlength="7" maxlength="12" required>
+          <mat-error *ngIf="isValidInput('rut', PersonalDataForm)">
+            <ng-container *ngFor="let error of errors(PersonalDataForm.get('rut'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+          <mat-label>Nombres</mat-label>
+          <input matInput formControlName="nombres" maxlength="80" minlength="1" required dirOnlyLetters>
+          <mat-error *ngIf="isValidInput('nombres', PersonalDataForm)">
+            <ng-container *ngFor="let error of errors(PersonalDataForm.get('nombres'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+          <mat-label>Apellido paterno</mat-label>
+          <input matInput formControlName="apellidoPaterno" maxlength="60" minlength="1" required dirOnlyLetters>
+          <mat-error *ngIf="isValidInput('apellidoPaterno', PersonalDataForm)">
+            <ng-container *ngFor="let error of errors(PersonalDataForm.get('apellidoPaterno'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+          <mat-label>Apellido materno</mat-label>
+          <input matInput formControlName="apellidoMaterno" maxlength="60" minlength="1" required dirOnlyLetters>
+          <mat-error *ngIf="isValidInput('apellidoMaterno', PersonalDataForm)">
+            <ng-container *ngFor="let error of errors(PersonalDataForm.get('apellidoMaterno'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="button-group">
+       
+        <button mat-button type="button" (click)="volverInicio()" matStepperPrevious>Volver</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!PersonalDataForm.valid">Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [completed]="ContactDataForm.valid" [editable]="editable"   [matTooltip]="'Información de contacto'"
+  matTooltipPosition="above" [stepControl]="ContactDataForm" label="Información de contacto">
+    <form [formGroup]="ContactDataForm" (ngSubmit)="onSubmitContactData(ContactDataForm, stepper)">
+      <div fxLayout="row wrap" fxLayoutGap="16px" class="form-section">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+          <mat-label>Correo</mat-label>
+          <input matInput type="email" formControlName="correo" maxlength="60" required>
+          <mat-error *ngIf="isValidInput('correo', ContactDataForm)">
+            <ng-container *ngFor="let error of errors(ContactDataForm.get('correo'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+          <mat-label>Teléfono celular</mat-label>
+          <input matInput type="text" formControlName="telefono" maxlength="8" minlength="8" required>
+          <mat-error *ngIf="isValidInput('telefono', ContactDataForm)">
+            <ng-container *ngFor="let error of errors(ContactDataForm.get('telefono'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Dirección</mat-label>
+          <input matInput type="text" formControlName="direccion" maxlength="40" required dirOnlyLettersNumbers>
+          <mat-error *ngIf="isValidInput('direccion', ContactDataForm)">
+            <ng-container *ngFor="let error of errors(ContactDataForm.get('direccion'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="button-group">
+      
+        <button mat-button type="button" (click)="stepper.previous()">Volver</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!ContactDataForm.valid">Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [completed]="BirthdayDataForm.valid" [editable]="editable"  [matTooltip]="'Fecha de nacimiento'"
+  matTooltipPosition="above" [stepControl]="BirthdayDataForm" label="Fecha de nacimiento">
+    <form [formGroup]="BirthdayDataForm" (ngSubmit)="onSubmitBirthdayData(BirthdayDataForm, stepper)" class="birthday-form">
+      <div class="form-section">
+        <mat-form-field appearance="outline" >
+          <mat-label>Día</mat-label>
+          <input matInput formControlName="day" maxlength="2" placeholder="DD" [dirOnlyNumbers]="2" required>
+          <mat-error *ngIf="isValidInput('day', BirthdayDataForm)">
+            <ng-container *ngFor="let error of errors(BirthdayDataForm.get('day'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" >
+          <mat-label>Mes</mat-label>
+          <input matInput formControlName="month" maxlength="2" placeholder="MM" [dirOnlyNumbers]="2" required>
+          <mat-error *ngIf="isValidInput('month', BirthdayDataForm)">
+            <ng-container *ngFor="let error of errors(BirthdayDataForm.get('month'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" >
+          <mat-label>Año</mat-label>
+          <input matInput formControlName="year" maxlength="4" placeholder="AAAA" [dirOnlyNumbers]="4" required>
+          <mat-error *ngIf="isValidInput('year', BirthdayDataForm)">
+            <ng-container *ngFor="let error of errors(BirthdayDataForm.get('year'))">
+              {{ errorMessages[error] }}<br>
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div *ngIf="BirthdayDataForm.errors?.['invalidDate']" class="mat-error">
+        Fecha inválida. Por favor ingresa una fecha válida.
+      </div>
+      <div *ngIf="BirthdayDataForm.errors?.['underage']" class="mat-error">
+        Debes tener al menos 18 años.
+      </div>
+  
+      <div class="btn-container">
+       
+        <button mat-button matStepperPrevious type="button">Volver</button>
+        <button mat-flat-button color="primary" [disabled]="!BirthdayDataForm.valid" type="submit">
+          Siguiente
+        </button>
+      </div>
+    </form>
+  </mat-step>
+  
+  <ng-container *ngIf="!omitirPreguntas">
+    <mat-step *ngIf="preguntasIniciales.length === 0" [editable]="editable"  [matTooltip]="'Preguntas personales'"
+    matTooltipPosition="above" label="Preguntas personales"></mat-step>
+  
+    <mat-step *ngIf="preguntasIniciales.length > 0"
+              [stepControl]="PersonalQuestionsForm" [editable]="editable"  [matTooltip]="'Preguntas personales'"
+              matTooltipPosition="above"
+              label="Preguntas personales">
+      <form [formGroup]="PersonalQuestionsForm"
+            (ngSubmit)="onSubmitPersonalQuestionsData(PersonalQuestionsForm, stepper)"
+            class="personal-questions-form">
+        
+        <div class="form-section">
+          <div *ngFor="let preguntaInicial of preguntasIniciales; trackBy: trackPreguntaInicial">
+            <mat-form-field appearance="outline" class="mat-select-full-width" [matTooltip]="preguntaInicial.texto" matTooltipPosition="above">
+              <mat-label>{{ preguntaInicial.texto }}</mat-label>
+              <mat-select [formControlName]="'pregunta' + preguntaInicial.id_pregunta" required>
+                <mat-option [value]="null">--</mat-option>
+                <mat-option *ngFor="let alternativa of getAlternativasParaPregunta(preguntaInicial.id_pregunta)"
+                            [value]="alternativa.id_alternativa_respuesta">
+                  {{ alternativa.texto }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="isValidInput('pregunta' + preguntaInicial.id_pregunta, PersonalQuestionsForm)">
+                <ng-container *ngFor="let error of errors(PersonalQuestionsForm.get('pregunta' + preguntaInicial.id_pregunta))">
+                  {{ errorMessages[error] }}<br />
+                </ng-container>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="btn-container">
+         
+          <button mat-button matStepperPrevious type="button">Volver</button>
+          <button mat-flat-button color="primary"
+          [disabled]="!PersonalQuestionsForm.valid"
+          type="submit">
+    Siguiente
+  </button>
+        </div>
+      </form>
+    </mat-step>
+  </ng-container>
+  
+
+  
+  <mat-step [editable]="editable"  [completed]="seleccionHora" label="Doctores Disponibles" [matTooltip]="'Doctores Disponibles'"
+  matTooltipPosition="above">
+    <div *ngFor="let doctor of doctors;let i = index; trackBy: trackByDoctorId" class="doctor-card">
+      <div *ngIf="i === 0" class="recommended-badge">
+        ⭐ Recomendado
+      </div>
+      <h2>{{ doctor.nombre_completo }}</h2>
+  
+      <form [formGroup]="doctor.form" (ngSubmit)="onSubmitDoctorAgendamientoData(doctor, stepper)">
+        <div fxLayout="row wrap" fxLayoutGap="16px">
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+            <mat-label>Selecciona una fecha</mat-label>
+            <input matInput [min]="minSelectableDate"
+                   [matDatepicker]="picker"
+                   formControlName="appointmentDate"
+                   (click)="picker.open()"
+                   (focus)="picker.open()"
+                   [matDatepickerFilter]="filterWeekends"
+                   (dateChange)="onDateChange($event, doctor)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker ></mat-datepicker>
+            <mat-error *ngIf="isValidInput('appointmentDate', doctor.form)">
+              <ng-container *ngFor="let error of errors(doctor.form.get('appointmentDate'))">
+                {{ errorMessages[error] }}<br />
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div *ngIf="doctor.form.get('appointmentDate')?.value" class="hours-container">
+          <h4>Horas disponibles</h4>
+          <div fxLayout="row wrap" fxLayoutGap="12px" class="hour-slot-group">
+            <button *ngFor="let hour of doctor.horasDisponibles"
+                    mat-stroked-button
+                    type="button"
+                    [class.selected]="doctor.form.get('appointmentTime')?.value === hour"
+                    color="{{ doctor.form.get('appointmentTime')?.value === hour ? 'accent' : 'primary' }}"
+                    (click)="selectHour(doctor, hour)">
+              {{ hour }}
+            </button>
+          </div>
+        </div>
+  
+        <div class="submit-container" *ngIf="doctor.form.valid">
+          <button mat-flat-button color="primary" type="submit">
+            Agendar con {{ doctor.nombre_completo }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-step>
+  
+</mat-stepper>

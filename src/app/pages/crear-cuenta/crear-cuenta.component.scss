@@ -1,0 +1,29 @@
+.crear-cuenta-card {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+  
+    .form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+    }
+  
+    .full-width {
+      width: 100%;
+    }
+  
+    .mat-error-p {
+      color: #f44336;
+      font-size: 0.875rem;
+      margin-top: -12px;
+      margin-bottom: 8px;
+    }
+  }
+  

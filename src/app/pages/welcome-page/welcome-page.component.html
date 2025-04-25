@@ -1,0 +1,50 @@
+<section class="agenda-section mat-elevation-z4">
+  <div class="content-wrapper">
+    <h1 class="agenda-title">Bienvenido a Autoatención Odontológica</h1>
+    <p class="agenda-subtitle">
+      Atención odontológica de calidad, cercana y profesional.
+    </p>
+
+    <div class="button-row">
+      <button mat-flat-button color="primary" class="cta-button" (click)="goToAgendamiento()">
+        Agendar Hora
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="doctors-section">
+  <div class="section-title">
+    <h2>Nuestros Especialistas</h2>
+    <p>Conoce al equipo de profesionales que cuidará tu sonrisa.</p>
+  </div>
+
+  <div class="doctor-cards-grid">
+    <mat-card *ngFor="let profesional of profesionalesPuntaje" class="doctor-card mat-elevation-z3">
+      <mat-card-header>
+        <mat-card-title>{{ profesional.nombres }} {{ profesional.apellido_paterno }} {{ profesional.apellido_materno }}</mat-card-title>
+        <mat-card-subtitle>{{ profesional.especialidad }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content *ngIf="profesional.puntaje_general && profesional.empatia && profesional.claridad && profesional.cordialidad && profesional.nivel_satisfaccion && profesional.recomendacion && profesional.puntualidad">
+        <div class="ratings-grid">
+          <div class="rating" *ngFor="let item of [
+            { label: 'Empatía', value: profesional.empatia },
+            { label: 'Claridad', value: profesional.claridad },
+            { label: 'Cordialidad', value: profesional.cordialidad },
+            { label: 'Satisfacción', value: profesional.nivel_satisfaccion },
+            { label: 'Recomendación', value: profesional.recomendacion },
+            { label: 'Puntualidad', value: profesional.puntualidad }
+          ]">
+            <span class="label" [title]="item.label">⭐ {{ item.label }}</span>
+            <mat-progress-bar mode="determinate" [value]="getNumber(item.value)"></mat-progress-bar>
+            <span class="value">{{ item.value }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+
+

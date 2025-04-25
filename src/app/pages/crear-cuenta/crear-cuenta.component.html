@@ -1,0 +1,36 @@
+<mat-card class="crear-cuenta-card">
+  <mat-card-header>
+    <mat-card-title>Crear Cuenta</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="crearCuentaForm" (ngSubmit)="onSubmitPacientes(crearCuentaForm)">
+      <div class="form-fields">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="contrasena" type="password" minlength="8" maxlength="8" required />
+          <mat-error *ngIf="crearCuentaForm.get('contrasena')?.invalid">
+            La contraseña debe tener exactamente 8 caracteres.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Repetir Contraseña</mat-label>
+          <input matInput formControlName="repetirContrasena" type="password" minlength="8" maxlength="20" required />
+          <mat-error *ngIf="crearCuentaForm.get('repetirContrasena')?.invalid">
+            Debes repetir correctamente la contraseña.
+          </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="crearCuentaForm.errors?.['passwordMismatch']" class="mat-error-p">
+          Las contraseñas no coinciden.
+        </div>
+      </div>
+
+      <div class="form-buttons">
+        <button mat-stroked-button color="warn" type="button">Salir</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="!crearCuentaForm.valid">Crear</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
