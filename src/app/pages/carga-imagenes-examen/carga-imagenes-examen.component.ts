@@ -174,7 +174,7 @@ export class CargaImagenesExamenComponent implements OnInit {
     this.loadingService.setLoading(false);
     if (
       !this.insuredData.currentUser()?.idAgendamiento ||
-      this.insuredData.currentPortal()?.type_page === 'paciente'
+      this.insuredData.currentPortal()?.type_page === 'Paciente'
     ) {
       this.router.navigate(['/historial-atenciones-page']);
     }

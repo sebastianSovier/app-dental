@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, map, catchError, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { alternativaPreguntasInicialesResponse, eliminarCitaPaciente,horasAgendadasPorDoctor, horasAgendadasPorPaciente, imagenExamenConsulta, preguntasInicialesResponse, profesionalesPuntuacion, profesionalesResponse, tokenResponse } from '@interfaces/personal-data-request.interface';
+import { alternativaPreguntasInicialesResponse, crearProfesionalResponse, eliminarCitaPaciente,horasAgendadasPorDoctor, horasAgendadasPorPaciente, imagenExamenConsulta, preguntasInicialesResponse, profesionalesPuntuacion, profesionalesResponse, tokenResponse, usuariosResponse } from '@interfaces/personal-data-request.interface';
 import { LoadingPageService } from './loading-page.service';
 import { UserDataService } from './user-data.service';
 import { environment } from '../../environments/environment';
@@ -81,12 +81,45 @@ export class PersonalServiceService {
         catchError(err => throwError(() => err))
       )
   }
+  modificarPerfilUsuario(modificarPerfilRequest:any): Observable<LoginResponse> {
+    const apiUrl = `${environment.apiUrl}/Authentication/modificarPerfilUsuario`;
+
+
+
+    return this.http.post<LoginResponse>(apiUrl, modificarPerfilRequest)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
   obtenerDatosPaciente(): Observable<PacienteRequest> {
     const apiUrl = `${environment.apiUrl}/Authentication/obtenerDatosPaciente`;
 
 
 
     return this.http.post<PacienteRequest>(apiUrl, {})
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
+  obtenerUsuarios(): Observable<usuariosResponse> {
+    const apiUrl = `${environment.apiUrl}/Authentication/obtenerUsuarios`;
+
+
+
+    return this.http.post<usuariosResponse>(apiUrl, {})
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
+  eliminarUsuario(rut:string): Observable<LoginResponse> {
+    const apiUrl = `${environment.apiUrl}/Authentication/eliminarUsuario`;
+    const body ={
+      rut:rut
+    }
+    return this.http.post<LoginResponse>(apiUrl, body)
       .pipe(
         map((data) => data),
         catchError(err => throwError(() => err))
@@ -182,6 +215,17 @@ export class PersonalServiceService {
   }
   confirmarAgendamientoPaciente(request:eliminarCitaPaciente): Observable<LoginResponse> {
     const apiUrl = `${environment.apiUrl}/Paciente/ConfirmarAgendamientoPaciente`;
+
+
+
+    return this.http.post<LoginResponse>(apiUrl, request)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
+  crearProfesional(request:crearProfesionalResponse): Observable<LoginResponse> {
+    const apiUrl = `${environment.apiUrl}/Authentication/crearProfesional`;
 
 
 

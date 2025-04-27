@@ -17,7 +17,7 @@
           Portal Privado
         </button>
         
-        <button mat-flat-button color="primary" *ngIf="insuredData.currentPortal()?.type_page === 'paciente'" (click)="goToMenu()">
+        <button mat-flat-button color="primary" *ngIf="insuredData.currentPortal()?.type_page === 'Paciente'" (click)="goToMenu()">
           Menú
         </button>
         <button mat-flat-button color="warn" *ngIf="insuredData.currentUser()?.token" (click)="goToLogout()">

@@ -1,0 +1,127 @@
+
+      <form [formGroup]="ProfesionalDataForm" (ngSubmit)="onSubmitProfesionalDataForm(ProfesionalDataForm)">
+        <div fxLayout="row wrap" fxLayoutGap="16px" class="form-section">
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+            <mat-label>RUT</mat-label>
+            <input matInput formControlName="rut"  (input)="setFormatRut($event)" minlength="7" maxlength="12" required>
+            <mat-error *ngIf="isValidInput('rut', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('rut'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="nombres" maxlength="80" minlength="1" required dirOnlyLetters>
+            <mat-error *ngIf="isValidInput('nombres', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('nombres'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+            <mat-label>Apellido paterno</mat-label>
+            <input matInput formControlName="apellidoPaterno" maxlength="60" minlength="1" required dirOnlyLetters>
+            <mat-error *ngIf="isValidInput('apellidoPaterno', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('apellidoPaterno'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+            <mat-label>Apellido materno</mat-label>
+            <input matInput formControlName="apellidoMaterno" maxlength="60" minlength="1" required dirOnlyLetters>
+            <mat-error *ngIf="isValidInput('apellidoMaterno', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('apellidoMaterno'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+ 
+ 
+  
+        <div fxLayout="row wrap" fxLayoutGap="16px" class="form-section">
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+            <mat-label>Correo</mat-label>
+            <input matInput type="email" formControlName="correo" maxlength="60" required>
+            <mat-error *ngIf="isValidInput('correo', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('correo'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
+            <mat-label>Teléfono celular</mat-label>
+            <input matInput type="text" formControlName="telefono" maxlength="8" minlength="8" required>
+            <mat-error *ngIf="isValidInput('telefono', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('telefono'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Dirección</mat-label>
+            <input matInput type="text" formControlName="direccion" maxlength="40" required dirOnlyLettersNumbers>
+            <mat-error *ngIf="isValidInput('direccion', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('direccion'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="form-section">
+          <mat-form-field appearance="outline" >
+            <mat-label>Día</mat-label>
+            <input matInput formControlName="day" maxlength="2" placeholder="DD" [dirOnlyNumbers]="2" required>
+            <mat-error *ngIf="isValidInput('day', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('day'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field appearance="outline" >
+            <mat-label>Mes</mat-label>
+            <input matInput formControlName="month" maxlength="2" placeholder="MM" [dirOnlyNumbers]="2" required>
+            <mat-error *ngIf="isValidInput('month', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('month'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field appearance="outline" >
+            <mat-label>Año</mat-label>
+            <input matInput formControlName="year" maxlength="4" placeholder="AAAA" [dirOnlyNumbers]="4" required>
+            <mat-error *ngIf="isValidInput('year', ProfesionalDataForm)">
+              <ng-container *ngFor="let error of errors(ProfesionalDataForm.get('year'))">
+                {{ errorMessages[error] }}<br>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </div>
+    
+        <div *ngIf="ProfesionalDataForm.errors?.['invalidDate']" class="mat-error">
+          Fecha inválida. Por favor ingresa una fecha válida.
+        </div>
+        <div *ngIf="ProfesionalDataForm.errors?.['underage']" class="mat-error">
+          Debes tener al menos 18 años.
+        </div>
+    
+        <div class="btn-container">
+         
+          <button mat-button (click)="volverMantenedor()" type="button">Volver</button>
+          <button mat-raised-button color="accent" type="submit" [disabled]="!ProfesionalDataForm.valid">
+            <mat-icon>add_circle</mat-icon>
+            Crear profesional
+          </button>
+        </div>
+      </form>

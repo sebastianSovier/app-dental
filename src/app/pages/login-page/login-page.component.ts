@@ -17,10 +17,11 @@ import { rutValidator } from '../../directives/rut-validator';
 import * as rutHelpers from "rut-helpers";
 import { CurrentPortal } from '@interfaces/currentPortal.interface';
 import { PreventService } from '@services/prevent.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login-page',
-  imports: [MatTabsModule,MatFormFieldModule,MatInputModule,ReactiveFormsModule, FormsModule, CommonModule,],
+  imports: [MatTabsModule,MatFormFieldModule,MatInputModule,ReactiveFormsModule, FormsModule, CommonModule,MatIconModule],
   templateUrl: './login-page.component.html',
   providers: [rutValidator],
   styleUrl: './login-page.component.scss'
@@ -47,6 +48,7 @@ export class LoginPageComponent implements OnInit {
   loginProfesionalForm: FormGroup;
   valueRut: any;
   tipoPagina: string;
+  hidePassword = true;
 
   constructor() {
     this.loginProfesionalForm = this.fb.group(
@@ -82,7 +84,7 @@ export class LoginPageComponent implements OnInit {
       const loginRequest = { rut: loginPacientesForm.get("rut")?.value.replace(/\./g, "").replace("-", ""), password: loginPacientesForm.get("contrasena")?.value };
       this.authService.loginPacientes(loginRequest).subscribe({
             next: (response1) => {
-              const portal : CurrentPortal = {type_page:"paciente"};
+              const portal : CurrentPortal = {type_page:"Paciente"};
               this.authSession.setTypePage(portal);
               this.getToken();
             },
@@ -104,10 +106,12 @@ export class LoginPageComponent implements OnInit {
   private handleTokenResponse(response: TokenResponse) {
     if (response.token) {
       this.authService.setXsrfToken(response.token);
-      if(this.authSession.currentPortal()?.type_page === "paciente") {
+      if(this.authSession.currentPortal()?.type_page === "Paciente") {
       return this.router.navigate(["/personal-menu-page"]);
-      } else if(this.authSession.currentPortal()?.type_page === "profesional") {
+      } else if(this.authSession.currentPortal()?.type_page === "Profesional") {
         return this.router.navigate(["/proximas-atenciones-page"]);
+      }else{
+        return this.router.navigate(["/administrador-page"]);
       }
     }
     return this.redirectToError();
@@ -122,9 +126,6 @@ export class LoginPageComponent implements OnInit {
        this.authService.loginProfesional(loginRequest).subscribe({
          next: (response1) => {
            console.log(response1);
-           
-           const portal : CurrentPortal = {type_page:"profesional"};
-           this.authSession.setTypePage(portal);
            this.getToken();
          },
          error: (error: any) => {

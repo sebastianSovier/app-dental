@@ -20,11 +20,29 @@ export interface profesionalesResponse {
   id_especialidad: string;
   especialidad: string;
   nombres: string;
-
+  
   apellido_paterno: string;
 
   apellido_materno: string;
   puntaje:string;
+  id_perfil:string;
+}
+export interface crearProfesionalResponse {
+  rut: string;
+  id_especialidad: number;
+  nombres: string;
+  fecha_nacimiento: string;
+  telefono: string;
+  correo: string;
+  direccion: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+}
+
+
+export interface usuariosResponse {
+  profesionales: profesionalesResponse[];
+  pacientes: profesionalesResponse[];
 }
 
 export interface horasAgendadasPorDoctor {
@@ -50,6 +68,8 @@ export interface horasAgendadasPorPaciente {
   apellido_materno: string;
   puntuacion_realizada:boolean;
   estado:string;
+  id_perfil:string;
+
 }
 export interface profesionalesPuntuacion {
    id_profesional:string;

@@ -1,0 +1,72 @@
+<ng-container *ngIf="Usuarios.length > 0">
+    <mat-card class="tabla-card">
+      <mat-card-title>Horas Agendadas</mat-card-title>
+      <div class="tabla-wrapper">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 tabla-custom">
+  
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef>Nombre Usuario</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.nombres}} {{element.apellido_paterno}} {{element.apellido_materno}}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="tipo_usuario">
+            <th mat-header-cell *matHeaderCellDef>Tipo usuario</th>
+            <td mat-cell *matCellDef="let element"><ng-container *ngIf="element.especialidad; else paciente">
+              {{element.especialidad}}
+            </ng-container>
+            <ng-template #paciente>
+              Paciente
+            </ng-template>   </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="tipo_perfil">
+            <th mat-header-cell *matHeaderCellDef>Tipo de perfil</th>
+            <td mat-cell *matCellDef="let element"><ng-container *ngIf="element.id_perfil === '2'">
+              Profesional
+            </ng-container>
+            <ng-container *ngIf="element.id_perfil === '1'">
+              Paciente
+            </ng-container>
+            <ng-container *ngIf="element.id_perfil === '3'">
+              Administrador
+            </ng-container>  </td>
+          </ng-container>
+  
+
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef>Fecha registro</th>
+            <td mat-cell *matCellDef="let element">{{element.fecha_registro}}
+                 </td>
+          </ng-container>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" aria-label="crear profesional" (click)="modificarPerfil(element)">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" aria-label="eliminar usuario" (click)="eliminarUsuario(element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    
+
+    </mat-card>
+    <button mat-button type="button" (click)="volverMenu()" >Volver</button>
+    <button mat-button type="button" (click)="crearProfesional()" >Crear Profesional</button>
+
+  </ng-container>
+  <ng-container *ngIf="Usuarios.length === 0">
+    <mat-card class="tabla-card">
+      <mat-card-title>No hay usuarios registrados</mat-card-title>
+    </mat-card>
+    <button mat-button type="button" (click)="volverMenu()" >Volver</button>
+    </ng-container>

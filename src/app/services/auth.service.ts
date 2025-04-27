@@ -7,6 +7,7 @@ import { UserDataService } from "./user-data.service";
 import { emptyResponse } from "@interfaces/personal-data-request.interface";
 import { HttpClient } from "@angular/common/http";
 import { InsuredUser, PacienteRequest } from "@interfaces/services.interface";
+import { CurrentPortal } from "@interfaces/currentPortal.interface";
 
 
 @Injectable({
@@ -35,11 +36,20 @@ export class AuthService {
   }
 
   private setAuthentication(loginResponse: LoginResponse): boolean {
-    const { access_Token } = loginResponse;
+    const { access_Token,id_perfil } = loginResponse;
 
     this._token.set(access_Token);
     this._authStatus.set(AuthStatus.authenticated);
     sessionStorage.setItem("accessToken", access_Token);
+    const portal: CurrentPortal = {
+      type_page:
+        id_perfil === "1"
+          ? "Paciente"
+          : id_perfil === "2"
+          ? "Profesional"
+          : "Administrador"
+    };
+    this.insuredData.setTypePage(portal);
     const user : InsuredUser = {
       token: access_Token,
       retry: 0,

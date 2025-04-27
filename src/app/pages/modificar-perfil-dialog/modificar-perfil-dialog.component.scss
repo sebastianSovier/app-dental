@@ -1,0 +1,28 @@
+.full-width {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 3%;
+  }
+  
+  @media (max-width: 600px) {
+    .full-width {
+      max-width: 100%;
+      padding: 0 16px;
+    }
+  }
+  .mat-raised-button {
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    text-transform: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .mat-button {
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 500;
+    text-transform: none;
+  }
+  

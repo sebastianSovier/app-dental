@@ -59,7 +59,7 @@ export class HistorialAtencionesPageComponent {
   }
   ngOnInit() {
     this.prevent.preventBackButton();
-    if(this.insuredData.currentPortal()?.type_page === "paciente"){
+    if(this.insuredData.currentPortal()?.type_page === "Paciente"){
     this.obtenerAgendamientoPaciente();
     }else{
       this.obtenerAgendamientoDoctor();

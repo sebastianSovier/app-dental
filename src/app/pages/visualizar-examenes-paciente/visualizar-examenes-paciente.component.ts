@@ -103,7 +103,7 @@ export class VisualizarExamenesPacienteComponent {
     this.loadingService.setLoading(false);
     if (
       !this.insuredData.currentUser()?.idAgendamiento ||
-      this.insuredData.currentPortal()?.type_page === 'profesional'
+      this.insuredData.currentPortal()?.type_page === 'Profesional'
     ) {
       this.router.navigate(['/historial-atenciones-page']);
     }

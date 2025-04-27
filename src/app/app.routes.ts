@@ -60,6 +60,16 @@ export const routes: Routes = [
         path: 'visualizar-examenes-page',
         loadComponent: () => import('./pages/visualizar-examenes-paciente/visualizar-examenes-paciente.component').then(m => m.default),
         canActivate: [privateGuard],
+    },
+    {
+        path: 'administrador-page',
+        loadComponent: () => import('./pages/administrador-page/administrador-page.component').then(m => m.default),
+        canActivate: [privateGuard],
+    },
+    {
+        path: 'crear-profesional-page',
+        loadComponent: () => import('./pages/create-profesional/create-profesional.component').then(m => m.default),
+        canActivate: [privateGuard],
     },  
     {
         path: 'error-page', component: ErrorPageComponent,
