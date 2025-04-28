@@ -20,7 +20,7 @@ export interface profesionalesResponse {
   id_especialidad: string;
   especialidad: string;
   nombres: string;
-  
+  id_paciente: string;
   apellido_paterno: string;
 
   apellido_materno: string;

@@ -13,18 +13,27 @@ import { CommonModule } from '@angular/common';
 })
 export class ModificarPerfilDialogComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { id_perfil: string,rut:string },
+    @Inject(MAT_DIALOG_DATA) public data: { id_perfil: string,rut:string,id_paciente:string,id_profesional:string },
     private dialogRef: MatDialogRef<ImageViewerDialogComponent>
   ) {}
-  perfiles = [
-    { value: "1", label: 'Paciente' },
-    { value: "2", label: 'Profesional' },
-    { value: "3", label: 'Administrador' }
-  ];
+  perfilesFilter : {
+    value: string;
+    label: string;
+}[] = [];
   perfilSeleccionado: string = ''; 
   ngOnInit() {
-    this.perfilSeleccionado = this.data.id_perfil === '1' ? "Paciente" : this.data.id_perfil === '2' ? "Profesional" : "Administrador";
+    this.perfilSeleccionado = this.data.id_perfil === '1' ? "Paciente" : this.data.id_perfil === '2' ? "Profesional" : this.data.id_perfil === '3' ? "Administrador" : "Deshabilitado";
+      if (this.data.id_paciente) {
+          this.perfilesFilter.push( { value: "4", label: 'Deshabilitado' });
+          this.perfilesFilter.push( { value: "1", label: 'Paciente' });
+        
+      }else if (this.data.id_profesional) {
+          this.perfilesFilter.push( { value: "4", label: 'Deshabilitado' });
+          this.perfilesFilter.push( { value: "2", label: 'Profesional' });
+        
+      }
   }
+  
   cerrar(): void {
     this.dialogRef.close();
   }

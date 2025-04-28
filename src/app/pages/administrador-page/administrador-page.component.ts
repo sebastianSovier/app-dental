@@ -60,7 +60,7 @@ export class AdministradorPageComponent {
   crearProfesional(){
     this.router.navigate(["/crear-profesional-page"]);
   }
-  modificarPerfil(element:profesionalesResponse){
+  modificarPerfil(element:any){
     const dialogRef = this.dialog.open(ModificarPerfilDialogComponent, {
       width: '600px',
       height: '400px',
@@ -69,6 +69,8 @@ export class AdministradorPageComponent {
       data: {
         id_perfil: element.id_perfil,
         rut: element.rut,
+        id_paciente:element.id_paciente,
+        id_profesional:element.id_profesional
       }
     });
   

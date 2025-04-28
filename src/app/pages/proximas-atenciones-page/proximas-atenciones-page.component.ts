@@ -139,7 +139,7 @@ isHoraCercana(hora:string): boolean {
     }).then((result) => {
       if (result.isConfirmed) {
         this.loadingService.setLoading(true);
-        const eliminarCita :eliminarCitaPaciente = {id_agendamiento: element.id_agendamiento};
+        const eliminarCita :eliminarCitaPaciente = {id_agendamiento: element.id_agendamiento.toString()};
         this.ps.eliminarAgendamientoPaciente(eliminarCita).subscribe({
           next: (response1) => {
             this.obtenerAgendamientoPaciente();
