@@ -97,7 +97,7 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
   }
 
   private handleUnauthorizedOrForbidden(err: HttpErrorResponse, request: HttpRequest<any>): Observable<never> {
-    this.authService.logout();
+    this.authService.logoutService();
     this.UserDataService.resetData();
     this.formService.clearForms();
     sessionStorage.clear();
@@ -106,7 +106,7 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
     return throwError(() => new Error(err.message));
   }
   private handleUnauthorize(err: HttpErrorResponse, request: HttpRequest<any>): Observable<never> {
-    this.authService.logout();
+    this.authService.logoutService();
     this.UserDataService.resetData();
     this.formService.clearForms();
     sessionStorage.clear();

@@ -36,16 +36,16 @@ export class AuthService {
   }
 
   private setAuthentication(loginResponse: LoginResponse): boolean {
-    const { access_Token,id_perfil } = loginResponse;
+    const { access_Token,id } = loginResponse;
 
     this._token.set(access_Token);
     this._authStatus.set(AuthStatus.authenticated);
     sessionStorage.setItem("accessToken", access_Token);
     const portal: CurrentPortal = {
       type_page:
-        id_perfil === "1"
+        id === 1
           ? "Paciente"
-          : id_perfil === "2"
+          : id === 2
           ? "Profesional"
           : "Administrador"
     };

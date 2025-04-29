@@ -125,6 +125,11 @@ export class HistorialAtencionesPageComponent {
       });
     }
   */}
+  verTratamientoConsulta(item:horasAgendadasPorPaciente){
+    this.loadingService.setLoading(true);
+    this.insuredData.setAgendamientoInsuredUser(item.id_agendamiento);
+    this.router.navigate(["/ver-tratamiento-consulta-page"]);
+  }
   descargarExamenesMedicos(item:horasAgendadasPorPaciente){
     this.loadingService.setLoading(true);
     this.insuredData.setAgendamientoInsuredUser(item.id_agendamiento);

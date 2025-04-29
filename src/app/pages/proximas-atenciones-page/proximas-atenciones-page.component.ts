@@ -171,8 +171,17 @@ isHoraCercana(hora:string): boolean {
     });
   }
   volverMenu() {
-    this.router.navigate(['/personal-menu-page']);
+    if(this.insuredData.currentPortal()?.type_page === "Paciente"){
+      this.router.navigate(['/personal-menu-page']);
+    }else{
+      this.router.navigate(['/inicio']);
+
+    }
   }
+  recargarTabla(){
+    this.ngOnInit();
+  }
+  
 
 }
 export default ProximasAtencionesPageComponent;

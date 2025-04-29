@@ -72,6 +72,11 @@ export const routes: Routes = [
         canActivate: [privateGuard],
     },  
     {
+        path: 'ver-tratamiento-consulta-page',
+        loadComponent: () => import('./pages/tratamientos-consulta-paciente/tratamientos-consulta-paciente.component').then(m => m.default),
+        canActivate: [privateGuard],
+    },  
+    {
         path: 'error-page', component: ErrorPageComponent,
     },
     { path: '**', component: ErrorPageComponent }

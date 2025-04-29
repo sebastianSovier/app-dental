@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, map, catchError, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { alternativaPreguntasInicialesResponse, crearProfesionalResponse, eliminarCitaPaciente,horasAgendadasPorDoctor, horasAgendadasPorPaciente, imagenExamenConsulta, preguntasInicialesResponse, profesionalesPuntuacion, profesionalesResponse, tokenResponse, usuariosResponse } from '@interfaces/personal-data-request.interface';
+import { alternativaPreguntasInicialesResponse, crearProfesionalResponse, eliminarCitaPaciente,horasAgendadasPorDoctor, horasAgendadasPorPaciente, imagenExamenConsulta, obtenerTratamientoConsultaPaciente, preguntasInicialesResponse, profesionalesPuntuacion, profesionalesResponse, tokenResponse, usuariosResponse } from '@interfaces/personal-data-request.interface';
 import { LoadingPageService } from './loading-page.service';
 import { UserDataService } from './user-data.service';
 import { environment } from '../../environments/environment';
@@ -47,6 +47,7 @@ export class PersonalServiceService {
         catchError(err => throwError(() => err))
       )
   }
+  
   
   obtenerAlternativaPreguntasIniciales(): Observable<alternativaPreguntasInicialesResponse[]> {
     const apiUrl = `${environment.apiUrl}/Utilitario/obtenerAlternativaPreguntasIniciales`;
@@ -219,6 +220,17 @@ export class PersonalServiceService {
 
 
     return this.http.post<LoginResponse>(apiUrl, request)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
+  obtenerTratamientoConsultaPaciente(request:any): Observable<obtenerTratamientoConsultaPaciente[]> {
+    const apiUrl = `${environment.apiUrl}/ConsultaMedica/obtenerTratamientoConsultaMedica`;
+
+
+
+    return this.http.post<obtenerTratamientoConsultaPaciente[]>(apiUrl, request)
       .pipe(
         map((data) => data),
         catchError(err => throwError(() => err))

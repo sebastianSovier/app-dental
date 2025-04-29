@@ -38,7 +38,14 @@ export interface crearProfesionalResponse {
   apellido_paterno: string;
   apellido_materno: string;
 }
-
+export interface obtenerTratamientoConsultaPaciente {
+ motivo_consulta:string;
+ observaciones:string;
+ nombre:string;
+ descripcion:string;
+ valor_unitario:string;
+ total:string;
+}
 
 export interface usuariosResponse {
   profesionales: profesionalesResponse[];

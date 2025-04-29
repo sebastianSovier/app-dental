@@ -161,12 +161,12 @@
         <div class="form-section">
           <div *ngFor="let preguntaInicial of preguntasIniciales; trackBy: trackPreguntaInicial">
             <mat-form-field appearance="outline" class="mat-select-full-width" [matTooltip]="preguntaInicial.texto" matTooltipPosition="above">
-              <mat-label>{{ preguntaInicial.texto }}</mat-label>
+              <mat-label>{{ preguntaInicial.texto | uppercase }}</mat-label>
               <mat-select [formControlName]="'pregunta' + preguntaInicial.id_pregunta" required>
                 <mat-option [value]="null">--</mat-option>
                 <mat-option *ngFor="let alternativa of getAlternativasParaPregunta(preguntaInicial.id_pregunta)"
                             [value]="alternativa.id_alternativa_respuesta">
-                  {{ alternativa.texto }}
+                  {{ alternativa.texto | uppercase }}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="isValidInput('pregunta' + preguntaInicial.id_pregunta, PersonalQuestionsForm)">
@@ -199,7 +199,7 @@
       <div *ngIf="i === 0" class="recommended-badge">
         ⭐ Recomendado
       </div>
-      <h2>{{ doctor.nombre_completo }}</h2>
+      <h2>{{ doctor.nombre_completo | uppercase }}</h2>
   
       <form [formGroup]="doctor.form" (ngSubmit)="onSubmitDoctorAgendamientoData(doctor, stepper)">
         <div fxLayout="row wrap" fxLayoutGap="16px">

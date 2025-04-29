@@ -115,6 +115,8 @@
   <mat-card class="tabla-card">
     <mat-card-title>No hay horas agendadas</mat-card-title>
   </mat-card>
-  <button mat-button type="button" (click)="volverMenu()" >Volver</button>
+  </ng-container>
+  <button mat-button type="button" *ngIf="horasAgendadasPorPaciente.length > 0" (click)="volverMenu()" >Volver</button>
+  <button mat-button type="button" *ngIf="horasAgendadasPorDoctor.length > 0 || horasAgendadasPorPaciente.length > 0" (click)="recargarTabla()" ><mat-icon>refresh</mat-icon></button>
 
 
