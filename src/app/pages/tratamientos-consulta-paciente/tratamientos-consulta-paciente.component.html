@@ -1,7 +1,7 @@
 
   <ng-container *ngIf="tratamientoConsultaPaciente.length > 0">
     <mat-card class="tabla-card">
-      <mat-card-title>Horas Agendadas</mat-card-title>
+      <mat-card-title>Tratamientos entregados</mat-card-title>
       <div class="tabla-wrapper">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 tabla-custom">
   
@@ -18,8 +18,8 @@
           </ng-container>
   
           <ng-container matColumnDef="valor">
-            <th mat-header-cell *matHeaderCellDef>Fecha</th>
-            <td mat-cell *matCellDef="let element"> {{element.valor_unitario}} </td>
+            <th mat-header-cell *matHeaderCellDef>Valor</th>
+            <td mat-cell *matCellDef="let element"> {{element.valor_unitario | currency:'CLP'}} </td>
           </ng-container>
   
           <tr mat-header-row *matHeaderRowDef="displayedColumnsPaciente"></tr>

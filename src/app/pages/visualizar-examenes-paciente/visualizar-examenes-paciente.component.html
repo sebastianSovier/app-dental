@@ -1,7 +1,7 @@
 <!-- image-preview-table.component.html -->
-<div class="preview-container mat-elevation-z4">
+<div class="preview-container mat-elevation-z4" *ngIf="dataSource.data.length > 0">
 
-    <h2 class="title">Examenes adheridos a su consulta</h2>
+    <h2 class="title">Resultados de exámenes radiograficos</h2>
   
     <!-- Tabla de imágenes -->
     <div class="table-wrapper">
@@ -48,4 +48,9 @@
       </button>
     </div>
   </div>
+  <ng-container *ngIf="dataSource.data.length === 0">
+    <mat-card class="tabla-card">
+      <mat-card-title>Aún no existen resultados disponibles</mat-card-title>
+    </mat-card>
+    </ng-container>
   

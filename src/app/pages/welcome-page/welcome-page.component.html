@@ -22,8 +22,8 @@
   <div class="doctor-cards-grid">
     <mat-card *ngFor="let profesional of profesionalesPuntaje" class="doctor-card mat-elevation-z3">
       <mat-card-header>
-        <mat-card-title>{{ profesional.nombres }} {{ profesional.apellido_paterno }} {{ profesional.apellido_materno }}</mat-card-title>
-        <mat-card-subtitle>{{ profesional.especialidad }}</mat-card-subtitle>
+        <mat-card-title>{{ profesional.nombres | uppercase }} {{ profesional.apellido_paterno | uppercase }} {{ profesional.apellido_materno | uppercase}}</mat-card-title>
+        <mat-card-subtitle>{{ profesional.especialidad | uppercase}}</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-content *ngIf="profesional.puntaje_general && profesional.empatia && profesional.claridad && profesional.cordialidad && profesional.nivel_satisfaccion && profesional.recomendacion && profesional.puntualidad">

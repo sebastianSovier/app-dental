@@ -92,6 +92,10 @@ export class EvaluacionDoctorPageComponent implements OnInit {
       console.log('Formulario enviado:', this.ratingForm.value);
     }
   }
+  volverHistorial(){
+    this.loadingService.setLoading(true);
+    this.router.navigate(["/historial-atenciones-page"]);
+  }
 
   
 }

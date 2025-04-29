@@ -33,7 +33,6 @@ export const appConfig: ApplicationConfig = {
       useValue: 'es-CL',
     },
     provideRouter(routes, withHashLocation()),
-    provideClientHydration(),
     provideAnimations(),
     provideHttpClient(
       withFetch(),

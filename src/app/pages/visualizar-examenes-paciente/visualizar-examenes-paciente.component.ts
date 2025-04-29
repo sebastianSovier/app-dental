@@ -18,6 +18,7 @@ import { UserDataService } from '@services/user-data.service';
 import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-dialog.component';
 import { ImagenPreview } from '@interfaces/services.interface';
 import { Router } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-visualizar-examenes-paciente',
@@ -32,7 +33,8 @@ import { Router } from '@angular/router';
     MatStepperModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
   ],
   templateUrl: './visualizar-examenes-paciente.component.html',
   styleUrl: './visualizar-examenes-paciente.component.scss'
