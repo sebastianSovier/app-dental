@@ -43,6 +43,12 @@ export interface crearAgendamientoPaciente {
   fecha: string;
   hora: string;
 }
+export interface modificarAgendamientoPaciente {
+  id_profesional: string;
+  id_agendamiento: string;
+  fecha: string;
+  hora: string;
+}
 export interface guardarConsultaMedica {
   id_agendamiento :string;
   motivo_consulta :string;

@@ -6,7 +6,7 @@ import { alternativaPreguntasInicialesResponse, crearProfesionalResponse, elimin
 import { LoadingPageService } from './loading-page.service';
 import { UserDataService } from './user-data.service';
 import { environment } from '../../environments/environment';
-import { crearAgendamientoPaciente, crearContrasenaPaciente, guardarConsultaMedica, guardarPuntuacionAtencionPaciente, okResponse, PacienteRequest, respuestasPreguntas } from '@interfaces/services.interface';
+import { crearAgendamientoPaciente, crearContrasenaPaciente, guardarConsultaMedica, guardarPuntuacionAtencionPaciente, modificarAgendamientoPaciente, okResponse, PacienteRequest, respuestasPreguntas } from '@interfaces/services.interface';
 import { LoginResponse } from '@interfaces/login-response.interface';
 
 @Injectable({
@@ -260,6 +260,17 @@ export class PersonalServiceService {
   }
   guardarAgendamientoPaciente(AgendamientoPaciente:crearAgendamientoPaciente): Observable<okResponse> {
     const apiUrl = `${environment.apiUrl}/Paciente/agendamientoPaciente`;
+
+
+
+    return this.http.post<okResponse>(apiUrl, AgendamientoPaciente)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
+  modificarAgendamientoPaciente(AgendamientoPaciente:modificarAgendamientoPaciente): Observable<okResponse> {
+    const apiUrl = `${environment.apiUrl}/Paciente/modificarAgendamientoPaciente`;
 
 
 

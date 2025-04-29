@@ -17,7 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import * as rutHelpers from "rut-helpers";
 import { OnlyNumbersDirective } from '../../directives/only-numbers.directive';
-import { crearAgendamientoPaciente, PacienteRequest, respuestasPreguntas } from '@interfaces/services.interface';
+import { crearAgendamientoPaciente, modificarAgendamientoPaciente, PacienteRequest, respuestasPreguntas } from '@interfaces/services.interface';
 import { alternativaPreguntasInicialesResponse, horasAgendadasPorDoctor, preguntasInicialesResponse, profesionalesResponse } from '@interfaces/personal-data-request.interface';
 import { SweetAlertService } from '@services/sweet-alert.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -124,7 +124,7 @@ export class AgendamientoPageComponent implements OnInit {
     );
   }
   trackPreguntaInicial(index: number, preguntaInicial: any): string {
-    return preguntaInicial.id_pregunta; // o cualquier otro identificador único
+    return preguntaInicial.id_pregunta; 
   }
   getAlternativasParaPregunta(idPregunta: string) {
     return this.alternativaPreguntasIniciales.filter(a => a.id_pregunta === idPregunta.toString());
@@ -146,11 +146,22 @@ export class AgendamientoPageComponent implements OnInit {
         }
     
         doctor.reservas[dateKey].push(hour);
+        if(this.authSession.currentUser()?.idAgendamiento){
+          const modificarAgendamientoRequest:modificarAgendamientoPaciente = {id_agendamiento:this.authSession.currentUser()?.idAgendamiento.toString()!,id_profesional: doctor.id, fecha: dateKey, hora: hour};
+          this.ps.modificarAgendamientoPaciente(modificarAgendamientoRequest).subscribe({
+            next: (response1) => {
+              this.loadingService.setLoading(false);
+              this.sweetAlertService.showSweetAlert("agendamiento", "exitoso");
+            },
+            error: (error: any) => {
+              console.log(error);
+              this.loadingService.setLoading(false);
+            },
+          });
+        }else{
         const crearAgendamientoRequest:crearAgendamientoPaciente = {id_profesional: doctor.id, fecha: dateKey, hora: hour};
         this.ps.guardarAgendamientoPaciente(crearAgendamientoRequest).subscribe({
           next: (response1) => {
-            //this.generateHalfHourSlots(doctor,this.fechaSeleccionada);
-            //alert(`✅ Cita agendada con ${doctor.nombre_completo} el ${dateKey} a las ${hour}`);
             this.loadingService.setLoading(false);
             this.sweetAlertService.showSweetAlert("agendamiento", "exitoso");
 
@@ -160,7 +171,7 @@ export class AgendamientoPageComponent implements OnInit {
             this.loadingService.setLoading(false);
           },
         });
-       
+      }
       }
   }
   
@@ -273,7 +284,7 @@ onSubmitBirthdayData(BirthdayDataForm:FormGroup,stepper:MatStepper): void {
 }
 ngOnInit(): void {
   this.prevent.preventBackButton();
-  this.authSession.currentUser()?.token ? this.preLoadData() : this.loadingService.setLoading(false);
+  this.authSession.currentUser()?.token && this.authSession.currentPortal()?.type_page === "Paciente" ? this.preLoadData() : this.loadingService.setLoading(false);
   this.minSelectableDate = this.getMinDateWithTimeRestriction();
 }
 preLoadData(){
@@ -340,8 +351,8 @@ onDateChange(event: MatDatepickerInputEvent<Date>,doctor:Doctor) {
 
   this.doctors.forEach(doctorr => {
     if (doctorr.id !== doctor.id) {
-      doctorr.form.reset(); // Limpiar formulario de doctores no seleccionados
-      doctorr.horasDisponibles = []; // Limpiar horas disponibles
+      doctorr.form.reset(); 
+      doctorr.horasDisponibles = []; 
     }
   });
 
@@ -363,7 +374,7 @@ getMinDateWithTimeRestriction(): Date {
     now.setDate(now.getDate() + 1); 
     now.setHours(0, 0, 0, 0);  
   } else {
-    now.setHours(0, 0, 0, 0);  // Si no ha pasado el límite, permite seleccionar hoy
+    now.setHours(0, 0, 0, 0); 
   }
 
   return now;
@@ -462,7 +473,6 @@ private isFutureHour(hour: number, minutes: number): boolean {
 
   future.setHours(hour, minutes, 0, 0);
 
-  // Margen de 30 minutos desde ahora
   const nowConMargen = new Date(now.getTime());
 
   return future > nowConMargen;

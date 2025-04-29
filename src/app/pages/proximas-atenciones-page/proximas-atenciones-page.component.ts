@@ -99,7 +99,11 @@ export class ProximasAtencionesPageComponent {
     });
   }
   modificarCita(element:horasAgendadasPorPaciente){
-
+    this.loadingService.setLoading(true);
+    this.insuredData.setAgendamientoInsuredUser(element.id_agendamiento.toString());
+    this.router.navigate([
+      '/agendamiento-page'
+    ]);
   }
   cargarExamenesMedicos(item:horasAgendadasPorDoctor) {
     this.loadingService.setLoading(true);
