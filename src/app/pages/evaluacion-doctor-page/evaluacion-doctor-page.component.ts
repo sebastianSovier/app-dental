@@ -10,6 +10,7 @@ import { guardarPuntuacionAtencionPaciente } from '@interfaces/services.interfac
 import { LoadingPageService } from '@services/loading-page.service';
 import { PersonalServiceService } from '@services/personal-service.service';
 import { PreventService } from '@services/prevent.service';
+import { SweetAlertService } from '@services/sweet-alert.service';
 import { UserDataService } from '@services/user-data.service';
 import { ValidationsService } from '@services/validations-forms.service';
 
@@ -26,6 +27,7 @@ export class EvaluacionDoctorPageComponent implements OnInit {
   private loadingService = inject(LoadingPageService);
   private readonly authSession = inject(UserDataService);
   private readonly router = inject(Router);
+  private readonly sweetAlertService = inject(SweetAlertService);
   disabled = this.loadingService.submitButtonDisabled$;
   private ps = inject(PersonalServiceService);
   private prevent = inject(PreventService);
@@ -81,6 +83,7 @@ export class EvaluacionDoctorPageComponent implements OnInit {
              };
             this.ps.guardarPuntuacionAtencionPaciente(crearPuntuacionRequest).subscribe({
                   next: (response1) => {
+                    this.sweetAlertService.showSweetAlert("evaluacion", "exitoso");
                     this.router.navigate(['/historial-atenciones-page']);
                   },
                   error: (error: any) => {

@@ -151,7 +151,7 @@ export class AgendamientoPageComponent implements OnInit {
           this.ps.modificarAgendamientoPaciente(modificarAgendamientoRequest).subscribe({
             next: (response1) => {
               this.loadingService.setLoading(false);
-              this.sweetAlertService.showSweetAlert("agendamiento", "exitoso");
+              this.sweetAlertService.showSweetAlert("modificacion", "exitoso");
             },
             error: (error: any) => {
               console.log(error);

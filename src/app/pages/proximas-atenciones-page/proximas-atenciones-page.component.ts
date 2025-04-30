@@ -12,6 +12,7 @@ import { eliminarCitaPaciente, horasAgendadasPorDoctor, horasAgendadasPorPacient
 import { UtilsService } from '@services/utils.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { SweetAlertService } from '@services/sweet-alert.service';
 
 @Component({
   selector: 'app-proximas-atenciones-page',
@@ -24,7 +25,7 @@ export class ProximasAtencionesPageComponent {
   private insuredData = inject(UserDataService);
   private loadingService = inject(LoadingPageService);
   private utilService = inject(UtilsService);
-  
+  private sweetAlertService = inject(SweetAlertService);
   private router = inject(Router);
   private prevent = inject(PreventService);
   disabled = this.loadingService.submitButtonDisabled$;
@@ -166,6 +167,7 @@ isHoraCercana(hora:string): boolean {
     this.ps.confirmarAgendamientoPaciente(eliminarCita).subscribe({
       next: (response1) => {
         this.obtenerAgendamientoPaciente();
+        this.sweetAlertService.showSweetAlert("cita_confirmada", "exitoso");
         console.log(response1);
       },
       error: (error: any) => {

@@ -165,6 +165,43 @@ export class SweetAlertService {
         }
       });
     }
+    if (component === "modificacion" && id === "exitoso") {
+      Swal.fire({
+        icon: "success",
+        title: "Modificación de agendamiento exitoso",
+        showCancelButton: false,
+        timer: 2000,
+        showConfirmButton: false,
+        draggable:false,
+        allowOutsideClick:false,
+      }).then((result) => {
+        this.router.navigate(["/personal-menu-page"]);
+      });
+    }
+    if (component === "evaluacion" && id === "exitoso") {
+      Swal.fire({
+        icon: "success",
+        title: "Evaluación realizada exitosamente",
+        showConfirmButton: false,
+        timer: 2000,
+        draggable:false,
+        allowOutsideClick:false,
+        showCancelButton:false
+      }).then((result) => {
+          this.router.navigate(["/historial-atenciones-page"]);
+      });
+    }
+    if (component === "cita_confirmada" && id === "exitoso") {
+      Swal.fire({
+        icon: "success",
+        title: "Cita confirmada exitosamente",
+        showConfirmButton: false,
+        timer: 2000,
+        draggable:false,
+        allowOutsideClick:false,
+        showCancelButton:false
+      });
+    }
     return;
   }
 }

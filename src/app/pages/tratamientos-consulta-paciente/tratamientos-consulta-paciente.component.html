@@ -29,12 +29,12 @@
     
 
     </mat-card>
-    <button mat-button type="button" (click)="volverMenu()" >Volver</button>
   </ng-container>
   <ng-container *ngIf="tratamientoConsultaPaciente.length === 0">
     <mat-card class="tabla-card">
       <mat-card-title>No hay tratamientos disponibles</mat-card-title>
     </mat-card>
+    
     </ng-container>
 
-
+    <button mat-button type="button" (click)="volverMenu()" >Volver</button>
