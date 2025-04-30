@@ -1,21 +1,25 @@
-# Stage 1: Base Node image for development
-FROM node:20.17.0 AS builder
+# Etapa 1: Build Angular
+FROM node:20-alpine as builder
 
-# Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Install Angular CLI
 RUN npm install -g @angular/cli --force
 
-# Install dependencies
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm install --force
 
-# Copy the rest of the application code
 COPY . .
+RUN ng build --configuration production
 
-# Expose port 4200 for Angular CLI
-EXPOSE 4200
+# Etapa 2: Nginx para servir
+FROM nginx:stable-alpine
 
-# Development command to run Angular CLI for hot reloading
-CMD ["ng", "serve","--poll","2000", "--host", "0.0.0.0", "--disable-host-check"]
+# Copiar artefactos de Angular
+COPY --from=builder /app/dist/app-dental/browser /usr/share/nginx/html
+
+# Copiar configuración personalizada de Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY ssl/ /etc/nginx/ssl/
+EXPOSE 80
+EXPOSE 443
+CMD ["nginx", "-g", "daemon off;"]

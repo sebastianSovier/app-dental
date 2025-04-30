@@ -5,15 +5,15 @@ services:
         context: .
         dockerfile: Dockerfile
      ports:
-       - "4200:4200"
+       - "8080:80"
+       - "444:443"
      networks:
        back_mi_red:
          ipv4_address: 172.19.0.5
      volumes:
        - .:/usr/src/app
-       - /usr/src/app/node_modules
      environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - CHOKIDAR_USEPOLLING=true
      deploy:
       resources:
