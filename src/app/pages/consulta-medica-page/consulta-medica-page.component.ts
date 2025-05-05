@@ -18,10 +18,11 @@ import { LoadingPageService } from '@services/loading-page.service';
 import { PersonalServiceService } from '@services/personal-service.service';
 import { ValidationsService } from '@services/validations-forms.service';
 import { PreventService } from '@services/prevent.service';
+import { OnlyNumbersDirective } from '../../directives/only-numbers.directive';
 
 @Component({
   selector: 'app-consulta-medica-page',
-  imports: [MatTableModule, MatButtonModule, MatIconModule, MatCardModule,CommonModule,MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule],
+  imports: [MatTableModule,OnlyNumbersDirective, MatIconModule, MatCardModule,CommonModule,MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule],
   templateUrl: './consulta-medica-page.component.html',
   styleUrl: './consulta-medica-page.component.scss'
 })

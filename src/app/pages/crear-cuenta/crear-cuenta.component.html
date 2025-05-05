@@ -8,15 +8,18 @@
       <div class="form-fields">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Contraseña</mat-label>
-          <input matInput formControlName="contrasena" type="password" minlength="8" maxlength="8" required />
+          <input matInput formControlName="contrasena" type="password" minlength="8" maxlength="20" required />
           <mat-error *ngIf="crearCuentaForm.get('contrasena')?.invalid">
-            La contraseña debe tener exactamente 8 caracteres.
+            La contraseña debe tener mas de 8 caracteres.
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Repetir Contraseña</mat-label>
-          <input matInput formControlName="repetirContrasena" type="password" minlength="8" maxlength="20" required />
+          <input matInput formControlName="repetirContrasena" [type]="hidePassword ? 'password' : 'text'" minlength="8" maxlength="20" required />
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" aria-label="Toggle password visibility">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
           <mat-error *ngIf="crearCuentaForm.get('repetirContrasena')?.invalid">
             Debes repetir correctamente la contraseña.
           </mat-error>

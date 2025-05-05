@@ -177,7 +177,7 @@ isHoraCercana(hora:string): boolean {
     });
   }
   volverMenu() {
-    if(this.insuredData.currentPortal()?.type_page === "Paciente"){
+    if(this.insuredData.currentPortal()?.type_page === "Paciente" || this.insuredData.currentPortal()?.type_page === "Profesional"){
       this.router.navigate(['/personal-menu-page']);
     }else{
       this.router.navigate(['/inicio']);

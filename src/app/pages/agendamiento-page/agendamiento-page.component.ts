@@ -23,12 +23,15 @@ import { SweetAlertService } from '@services/sweet-alert.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PreventService } from '@services/prevent.service';
 import { MatIconModule } from '@angular/material/icon';
+import { OnlyLettersDirective } from '../../directives/only-letters.directive';
+import { OnlyLettersNumbersDirective } from '../../directives/only-letters-numbers.directive';
 
 interface Doctor {
   id: string;
   nombre_completo: string;
   rut: string;
   especialidad:string;
+  puntaje:number;
   form: FormGroup;
   horasDisponibles: string[];
   reservas: { [date: string]: string[] };
@@ -36,9 +39,9 @@ interface Doctor {
 
 @Component({
   selector: 'app-agendamiento-page',
-  imports: [MatIconModule, MatTooltipModule, OnlyNumbersDirective,MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule ],
+  imports: [MatIconModule, MatTooltipModule, OnlyNumbersDirective,OnlyLettersDirective,OnlyLettersNumbersDirective,MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule ],
   templateUrl: './agendamiento-page.component.html',
-  providers: [rutValidator,OnlyNumbersDirective],
+  providers: [rutValidator],
   styleUrl: './agendamiento-page.component.scss'
 })
 export class AgendamientoPageComponent implements OnInit {
@@ -85,16 +88,16 @@ export class AgendamientoPageComponent implements OnInit {
     this.PersonalDataForm = this.fb.group(
       {
         rut:  [null, [Validators.required, Validators.maxLength(12), Validators.minLength(7), this.rutValidate]],
-        nombres: [null, [Validators.required,Validators.pattern(/^[a-zA-Z]+$/),Validators.maxLength(80),Validators.minLength(1)]],
-        apellidoPaterno: [null, [Validators.required,Validators.pattern(/^[a-zA-Z]+$/),Validators.maxLength(80),Validators.minLength(1)]],
-        apellidoMaterno: [null, [Validators.required,Validators.pattern(/^[a-zA-Z]+$/),Validators.maxLength(80),Validators.minLength(1)]],
+        nombres: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
+        apellidoPaterno: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
+        apellidoMaterno: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
       },
     );
     this.ContactDataForm = this.fb.group(
       {
         correo: [null, [Validators.email, Validators.required, Validators.pattern('^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$'), Validators.minLength(1),Validators.maxLength(60)]],
         telefono: [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/), Validators.maxLength(8), Validators.minLength(8)]],
-        direccion: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9 ]+$/), Validators.minLength(1),Validators.maxLength(40)]],
+        direccion: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9ÁÉÍÓÚáéíóúÑñ ]+$/), Validators.minLength(1),Validators.maxLength(40)]],
       
       },
     );
@@ -133,6 +136,10 @@ export class AgendamientoPageComponent implements OnInit {
     const day = (date || new Date()).getDay();
     return day !== 0 && day !== 6; // 0 = Domingo, 6 = Sábado
   };
+  onEmailnInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.ContactDataForm.controls['correo'].setValue(input.value.toUpperCase(), { emitEvent: false });
+  }
   onSubmitDoctorAgendamientoData(doctor:Doctor,stepper:MatStepper):void{
     this.loadingService.setLoading(true);
       const form = doctor.form;
@@ -218,6 +225,11 @@ export class AgendamientoPageComponent implements OnInit {
       const loginRequest = {rut:rutWithoutDot};
       this.authService.withoutLoginPacientes(loginRequest).subscribe({
         next: (response1) => {
+          if (typeof response1 === 'object' && response1 !== null) {
+            this.loadingService.setLoading(false);
+            const response = response1 as { message: string };
+            response && response.message === "Agende hora a traves de su portal privado." ? this.sweetAlertService.showSweetAlert("errors", "passwordExiste") : this.sweetAlertService.showSweetAlert("errors", "CrearContrasena");
+          }else{
           this.ps.fetchXsrfToken().subscribe({
             next: (response1) => {
               stepper.next(); 
@@ -228,7 +240,7 @@ export class AgendamientoPageComponent implements OnInit {
               console.log(error);
               this.loadingService.setLoading(false);
             },
-          });
+          });}
         },
         error: (error: any) => {
           console.log(error);
@@ -266,7 +278,7 @@ onSubmitBirthdayData(BirthdayDataForm:FormGroup,stepper:MatStepper): void {
     this.formDataService.setForm("formBirthdayData", BirthdayDataForm);
     this.loadingService.setLoading(true);
     this.loadingService.setDisabledButton(true);
-    const crearPacienteRequest:PacienteRequest = {rut:this.PersonalDataForm.value.rut.replace(/\./g, "").replace("-", ""),dv:"", nombres:this.PersonalDataForm.value.nombres, apellido_paterno:this.PersonalDataForm.value.apellidoPaterno, apellido_materno:this.PersonalDataForm.value.apellidoMaterno, correo:this.ContactDataForm.value.correo, telefono:this.ContactDataForm.value.telefono, direccion:this.ContactDataForm.value.direccion, fecha_nacimiento:this.fullDateReturn()};
+    const crearPacienteRequest:PacienteRequest = {rut:this.PersonalDataForm.value.rut.replace(/\./g, "").replace("-", ""),dv:"", nombres:this.PersonalDataForm.value.nombres.toUpperCase(), apellido_paterno:this.PersonalDataForm.value.apellidoPaterno.toUpperCase(), apellido_materno:this.PersonalDataForm.value.apellidoMaterno.toUpperCase(), correo:this.ContactDataForm.value.correo.toUpperCase(), telefono:this.ContactDataForm.value.telefono, direccion:this.ContactDataForm.value.direccion, fecha_nacimiento:this.fullDateReturn()};
     this.authService.crearPaciente(crearPacienteRequest).subscribe({
       next: (response1) => {
         this.authSession.setCreatePacienteInsuredUser();
@@ -335,6 +347,7 @@ createAgendaProfesionales(){
     nombre_completo: profesional.nombres + " " + profesional.apellido_paterno + " " + profesional.apellido_materno,
     rut: profesional.rut + "-" + profesional.dv,
     especialidad: profesional.especialidad,
+    puntaje: Number(profesional.puntaje),
     form: this.fb.group(
       {
         appointmentDate: [null,Validators.required,],

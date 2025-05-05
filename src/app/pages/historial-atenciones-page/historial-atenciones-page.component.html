@@ -1,6 +1,6 @@
 <ng-container *ngIf="horasAgendadasPorDoctor.length > 0">
     <mat-card class="tabla-card">
-      <mat-card-title>Historial Horas Agendadas </mat-card-title>
+      <mat-card-title>Historial atenciones medicas </mat-card-title>
       <div class="tabla-wrapper">
         <table mat-table [dataSource]="dataSourceDoctor" class="mat-elevation-z8 tabla-custom">
   
@@ -20,18 +20,26 @@
             <th mat-header-cell *matHeaderCellDef>Hora</th>
             <td mat-cell *matCellDef="let element"> {{element.hora}} </td>
           </ng-container>
-  
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef>Estado</th>
+            <td mat-cell *matCellDef="let element"><ng-container *ngIf="element.consulta_realizada === '1'; else noAtencion">
+              Se realizó la atención
+            </ng-container>
+            <ng-template #noAtencion>
+              No se realizó la atención
+            </ng-template> </td>
+          </ng-container>
           <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let element">
               <button mat-icon-button color="primary" aria-label="cargar examenes médicos"
                 [disabled]="element.consulta_realizada === '1'" (click)="cargarExamenesMedicos(element)">
-                <mat-icon>visibility</mat-icon>
+                <mat-icon>upload</mat-icon>
               </button>
-              <button mat-icon-button color="warn" aria-label="eliminar"
-                [disabled]="element.consulta_realizada === '1'" (click)="(element)">
-                <mat-icon>delete</mat-icon>
-              </button>
+              <button mat-icon-button color="primary" aria-label="Ver tratamiendo"
+              [disabled]="element.consulta_realizada === '0'" (click)="verTratamientoConsulta(element)">
+              <mat-icon>history</mat-icon> 
+            </button>
             </td>
           </ng-container>
   
@@ -104,12 +112,13 @@
     
 
     </mat-card>
-    <button mat-button type="button" (click)="volverMenu()" >Volver</button>
   </ng-container>
   <ng-container *ngIf="horasAgendadasPorDoctor.length === 0 && horasAgendadasPorPaciente.length === 0">
     <mat-card class="tabla-card">
       <mat-card-title>No hay historial de horas agendadas</mat-card-title>
     </mat-card>
     </ng-container>
+    <button mat-button type="button" (click)="volverMenu()" >Volver</button>
+
 
 

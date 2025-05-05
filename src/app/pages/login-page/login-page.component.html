@@ -1,4 +1,4 @@
-<mat-tab-group class="login-tab-group">
+<mat-tab-group class="login-tab-group mat-elevation-z4">
   <mat-tab label="Login Pacientes">
     <form [formGroup]="loginPacientesForm" (ngSubmit)="onSubmitPacientes(loginPacientesForm)" class="login-form">
       <mat-form-field appearance="outline" class="full-width">
@@ -13,25 +13,21 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Contraseña</mat-label>
-        <input matInput  [type]="hidePassword ? 'password' : 'text'" placeholder="Contraseña" formControlName="contrasena" maxlength="20" minlength="8" required />
-        <button
-        mat-icon-button
-        matSuffix
-        (click)="hidePassword = !hidePassword"
-        [attr.aria-label]="'Toggle password visibility'"
-        [attr.aria-pressed]="!hidePassword"
-        type="button"
-      >
-        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-      </button>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Contraseña" formControlName="contrasena" maxlength="20" minlength="8" required />
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" aria-label="Toggle password visibility">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error *ngIf="isValidInput('contrasena', loginPacientesForm)">
           <ng-container *ngFor="let error of errors(loginPacientesForm.get('contrasena'))">
             {{ errorMessages[error] }}<br />
           </ng-container>
         </mat-error>
       </mat-form-field>
-      <button mat-flat-button color="primary" class="back-btn" (click)="volver();"  type="button">Volver</button>
-      <button mat-flat-button color="primary" class="submit-btn" type="submit">Ingresar</button>
+
+      <div class="button-group">
+        <button  mat-flat-button color="primary" type="submit">Ingresar</button>
+        <button  mat-flat-button color="accent"  type="button" (click)="volver()">Volver</button>
+      </div>
     </form>
   </mat-tab>
 
@@ -49,17 +45,10 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Contraseña</mat-label>
-        <input matInput  [type]="hidePassword ? 'password' : 'text'" placeholder="Contraseña" formControlName="contrasena" maxlength="20" minlength="8" required />
-        <button
-        mat-icon-button
-        matSuffix
-        (click)="hidePassword = !hidePassword"
-        [attr.aria-label]="'Toggle password visibility'"
-        [attr.aria-pressed]="!hidePassword"
-        type="button"
-      >
-        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-      </button>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Contraseña" formControlName="contrasena" maxlength="20" minlength="8" required />
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" aria-label="Toggle password visibility">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error *ngIf="isValidInput('contrasena', loginProfesionalForm)">
           <ng-container *ngFor="let error of errors(loginProfesionalForm.get('contrasena'))">
             {{ errorMessages[error] }}<br />
@@ -67,8 +56,10 @@
         </mat-error>
       </mat-form-field>
 
-      <button mat-flat-button color="primary" (click)="volver();" class="back-btn" type="button">Volver</button>
-      <button mat-flat-button color="primary" class="submit-btn" type="submit">Ingresar</button>
+      <div class="button-group">
+        <button  mat-flat-button color="primary" type="submit">Ingresar</button>
+        <button  mat-flat-button color="accent"  type="button" (click)="volver()">Volver</button>
+      </div>
     </form>
   </mat-tab>
 </mat-tab-group>

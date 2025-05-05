@@ -5,10 +5,12 @@ import { LoadingPageService } from '@services/loading-page.service';
 import { PreventService } from '@services/prevent.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { UserDataService } from '@services/user-data.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-personal-menu-page',
-  imports: [MatIconModule,MatCardModule],
+  imports: [MatIconModule,MatCardModule,MatButtonModule],
   templateUrl: './personal-menu-page.component.html',
   styleUrl: './personal-menu-page.component.scss'
 })
@@ -16,6 +18,7 @@ export class PersonalMenuPageComponent implements OnInit {
 
   private loadingService = inject(LoadingPageService);
 
+  private readonly authSession = inject(UserDataService);
   
   isButtonEnabled: boolean = false;
   buttonClicked: boolean = false;
@@ -24,6 +27,8 @@ export class PersonalMenuPageComponent implements OnInit {
   acceptTermsForm: FormGroup;
   private prevent = inject(PreventService);
   disabled = this.loadingService.submitButtonDisabled$;
+  titulo: string;
+  esPaciente: boolean = false;
 
   ngOnDestroy() {}
   constructor() {
@@ -32,10 +37,14 @@ export class PersonalMenuPageComponent implements OnInit {
   ngOnInit() {
     this.prevent.preventBackButton();
     this.loadingService.setLoading(false);
+    this.titulo = this.authSession.currentPortal()?.type_page === "Paciente" ? "Mis atenciones médicas" : "Gestión de atenciones médicas";
+    this.esPaciente = this.authSession.currentPortal()?.type_page === "Paciente" ? true : false;
   }
 
   goToNuevaHora(){
-    this.router.navigate(["/agendamiento-usuario-page"]);
+    if(this.authSession.currentPortal()?.type_page === "Paciente"){
+      this.router.navigate(["/agendamiento-usuario-page"]);
+    }
   }
   goToProximasAtenciones(){
     this.router.navigate(["/proximas-atenciones-page"]);

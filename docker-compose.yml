@@ -1,26 +1,19 @@
 version: '3.8'
+
 services:
-   web:
-     build:
-        context: .
-        dockerfile: Dockerfile
-     ports:
-       - "8080:80"
-       - "444:443"
-     networks:
-       back_mi_red:
-         ipv4_address: 172.19.0.5
-     volumes:
-       - .:/usr/src/app
-     environment:
+  web:
+    image: secros18/app-dental-web
+    ports:
+      - "8080:80"
+      - "444:443"
+    networks:
+      back_mi_red:
+        ipv4_address: 172.19.0.5
+    environment:
       - NODE_ENV=production
       - CHOKIDAR_USEPOLLING=true
-     deploy:
-      resources:
-        limits:
-          memory: 2GB
+    restart: always
+
 networks:
   back_mi_red:
     external: true
-
-

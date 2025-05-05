@@ -102,35 +102,34 @@ export class HistorialAtencionesPageComponent {
     });
   }
   evaluarAtencion(item:horasAgendadasPorPaciente){
-    
+    if(item.puntuacion_realizada ||item.consulta_realizada === "0"){
+      return;
+    }
     this.loadingService.setLoading(true);
     this.insuredData.setAgendamientoInsuredUser(item.id_agendamiento);
     this.router.navigate(["/evaluar-atencion-page"]);
   }
 
   cargarExamenesMedicos(item:horasAgendadasPorDoctor) {
-      this.loadingService.setLoading(true);
-      this.insuredData.setAgendamientoInsuredUser(item.id_agendamiento);
-      this.router.navigate(["/carga-examenes-page"]);
-      /*const request = {id_agendamiento:item.id_agendamiento};
-      this.ps.descargarExamenesMedicos(request).subscribe({
-        next: (response1) => {
-          this.loadingService.setLoading(false);
-          console.log(response1);
-        },
-        error: (error: any) => {
-          console.log(error);
-          this.loadingService.setLoading(false);
-        },
-      });
+    if(item.consulta_realizada === "1"){
+      return;
     }
-  */}
+    this.loadingService.setLoading(true);
+    this.insuredData.setAgendamientoInsuredUser(item.id_agendamiento);
+    this.router.navigate(["/carga-examenes-page"]);
+   }
   verTratamientoConsulta(item:horasAgendadasPorPaciente){
+    if(item.consulta_realizada === "0"){
+      return;
+    }
     this.loadingService.setLoading(true);
     this.insuredData.setAgendamientoInsuredUser(item.id_agendamiento);
     this.router.navigate(["/ver-tratamiento-consulta-page"]);
   }
   descargarExamenesMedicos(item:horasAgendadasPorPaciente){
+    if(item.consulta_realizada === "0"){
+      return;
+    }
     this.loadingService.setLoading(true);
     this.insuredData.setAgendamientoInsuredUser(item.id_agendamiento);
     this.router.navigate(["/visualizar-examenes-page"]);

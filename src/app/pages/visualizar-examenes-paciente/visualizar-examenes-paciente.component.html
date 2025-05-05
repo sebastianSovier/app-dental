@@ -41,16 +41,16 @@
     </div>
   
     <!-- Botones de acción -->
-    <div class="actions-bottom">
-      <button mat-stroked-button color="accent" (click)="volverMenu()">
-        <mat-icon>arrow_back</mat-icon>
-        Volver
-      </button>
-    </div>
+   
   </div>
   <ng-container *ngIf="dataSource.data.length === 0">
     <mat-card class="tabla-card">
       <mat-card-title>Aún no existen resultados disponibles</mat-card-title>
     </mat-card>
     </ng-container>
-  
+    <div class="actions-bottom">
+      <button  mat-button type="button" (click)="volverMenu()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver
+      </button>
+    </div>

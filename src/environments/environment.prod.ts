@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://localhost:443/api', // Replace with your production API URL
+  apiUrl:'https://api.sistema-de-autoatencion-odontologico-iplacex.click:443/api', // Replace with your production API URL
 };

@@ -14,7 +14,7 @@ export class OnlyNumbersDirective {
   onInputChange(event: Event) {
     const input = event.target as HTMLInputElement;
 
-    let sanitizedValue = input.value.replace(/[^0-9]/g, '').replace(/[eE]/g, '');
+    let sanitizedValue = input.value.replace(/[^0-9]/g, '').replace(/[eE]/g, '').replace(/ /g, '');
 
 
     if (sanitizedValue.length > this.maxDigits) {

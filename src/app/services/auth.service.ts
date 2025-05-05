@@ -14,7 +14,6 @@ import { CurrentPortal } from "@interfaces/currentPortal.interface";
   providedIn: "root",
 })
 export class AuthService {
-  private timeOutSessionCallback: ((value: boolean) => void) | null = null;
 
   constructor(private http: HttpClient) {
     this.checkAuthStatus().subscribe();
@@ -30,15 +29,13 @@ export class AuthService {
   public token = computed(() => this._token());
   public xsrfToken = computed(() => this._xsrfToken());
 
-
-  public setTimeOutSessionCallback(callback: (value: boolean) => void): void {
-    this.timeOutSessionCallback = callback;
-  }
-
-  private setAuthentication(loginResponse: LoginResponse): boolean {
-    const { access_Token,id } = loginResponse;
-
-    this._token.set(access_Token);
+  private setAuthentication(loginResponse: LoginResponse): Object | boolean {
+    const { access_Token,id,login,auth,message } = loginResponse;
+    if(!access_Token || !auth ) {
+      this.logout();
+      return { access_Token,id,login,auth,message };
+    }
+    this._token.set(access_Token);  
     this._authStatus.set(AuthStatus.authenticated);
     sessionStorage.setItem("accessToken", access_Token);
     const portal: CurrentPortal = {
@@ -47,7 +44,10 @@ export class AuthService {
           ? "Paciente"
           : id === 2
           ? "Profesional"
-          : "Administrador"
+          : id === 3
+          ? "Administrador"
+          : "Sin definir",
+          login:login
     };
     this.insuredData.setTypePage(portal);
     const user : InsuredUser = {
@@ -62,7 +62,7 @@ export class AuthService {
     this._xsrfToken.set(token);
     return true;
   }
-  loginPacientes(loginRequest:any): Observable<boolean> {
+  loginPacientes(loginRequest:any): Observable<Object | boolean> {
     const url = `${environment.apiUrl}/Authentication/loginPaciente`;
 
 
@@ -76,7 +76,7 @@ export class AuthService {
       )
     );
   }
-  withoutLoginPacientes(loginRequest:any): Observable<boolean> {
+  withoutLoginPacientes(loginRequest:any): Observable<Object | boolean> {
     const url = `${environment.apiUrl}/Authentication/withoutLoginPaciente`;
 
 
@@ -90,7 +90,7 @@ export class AuthService {
       )
     );
   }
-  loginProfesional(loginRequest:any): Observable<boolean> {
+  loginProfesional(loginRequest:any): Observable<Object | boolean> {
     const url = `${environment.apiUrl}/Authentication/loginProfesional`;
 
 
@@ -126,9 +126,7 @@ export class AuthService {
     itemsLocal.forEach((item) => localStorage.removeItem(item));
     return true;
   }
-  addError401() {
-    sessionStorage.setItem("Error401", "1");
-  }
+
    logoutService() {
       const apiUrl = `${environment.apiUrl}/Authentication/logout`;
       const body = {
@@ -140,19 +138,7 @@ export class AuthService {
         )
     }
 
-  verifyError401() {
-    let vari = sessionStorage.getItem("Error401");
-    if (vari === "1" && this.timeOutSessionCallback) {
-      this.timeOutSessionCallback(true);
-      sessionStorage.removeItem("Error401");
-    }
-  }
-
   checkAuthStatus(): Observable<boolean> {
-    if (typeof window === 'undefined') {
-      return of(false); // O manejar diferente para SSR
-    }
-  
     const token = sessionStorage.getItem("accessToken");
 
     if (!token) {

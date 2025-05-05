@@ -1,5 +1,5 @@
 <mat-card class="botones-citas-card">
-    <mat-card-title>Gestión de Atenciones</mat-card-title>
+    <mat-card-title>{{titulo}}</mat-card-title>
   
     <div class="botones-citas">
       <button mat-flat-button color="primary" (click)="goToHistorial()">
@@ -10,7 +10,7 @@
         <mat-icon>event</mat-icon>&nbsp; Próximas atenciones
       </button>
   
-      <button mat-flat-button color="success" (click)="goToNuevaHora()">
+      <button mat-flat-button color="success" [hidden]="!esPaciente" (click)="goToNuevaHora()">
         <mat-icon>add_circle</mat-icon>&nbsp; Agendar nueva hora
       </button>
 

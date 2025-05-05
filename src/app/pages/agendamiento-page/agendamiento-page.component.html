@@ -1,6 +1,7 @@
 <mat-stepper linear #stepper class="custom-stepper">
   <mat-step [completed]="PersonalDataForm.valid"  [editable]="editable"  [matTooltip]="'Información personal'"
   matTooltipPosition="above" [stepControl]="PersonalDataForm" label="Información personal">
+  <h1 class="mobile-header">Información personal</h1>
     <form [formGroup]="PersonalDataForm" (ngSubmit)="onSubmitPersonalData(PersonalDataForm, stepper)">
       <div fxLayout="row wrap" fxLayoutGap="16px" class="form-section">
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
@@ -55,11 +56,12 @@
   <mat-step [completed]="ContactDataForm.valid" [editable]="editable"   [matTooltip]="'Información de contacto'"
   matTooltipPosition="above" [stepControl]="ContactDataForm" label="Información de contacto">
     <form [formGroup]="ContactDataForm" (ngSubmit)="onSubmitContactData(ContactDataForm, stepper)">
+      <h1 class="mobile-header">Información de contacto</h1>
       <div fxLayout="row wrap" fxLayoutGap="16px" class="form-section">
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
           <mat-label>Correo</mat-label>
-          <input matInput type="email" formControlName="correo" maxlength="60" required>
-          <mat-error *ngIf="isValidInput('correo', ContactDataForm)">
+          <input matInput type="email" formControlName="correo" maxlength="60" (input)="onEmailnInput($event)" required>
+          <mat-error *ngIf="isValidInput('correo', ContactDataForm)" >
             <ng-container *ngFor="let error of errors(ContactDataForm.get('correo'))">
               {{ errorMessages[error] }}<br>
             </ng-container>
@@ -68,7 +70,7 @@
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="45">
           <mat-label>Teléfono celular</mat-label>
-          <input matInput type="text" formControlName="telefono" maxlength="8" minlength="8" required>
+          <input matInput type="text" formControlName="telefono" maxlength="8" minlength="8" required [dirOnlyNumbers]="8">
           <mat-error *ngIf="isValidInput('telefono', ContactDataForm)">
             <ng-container *ngFor="let error of errors(ContactDataForm.get('telefono'))">
               {{ errorMessages[error] }}<br>
@@ -78,7 +80,7 @@
 
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Dirección</mat-label>
-          <input matInput type="text" formControlName="direccion" maxlength="40" required dirOnlyLettersNumbers>
+          <input matInput type="text" formControlName="direccion"  maxlength="40" required dirOnlyLettersNumbers>
           <mat-error *ngIf="isValidInput('direccion', ContactDataForm)">
             <ng-container *ngFor="let error of errors(ContactDataForm.get('direccion'))">
               {{ errorMessages[error] }}<br>
@@ -97,6 +99,7 @@
   <mat-step [completed]="BirthdayDataForm.valid" [editable]="editable"  [matTooltip]="'Fecha de nacimiento'"
   matTooltipPosition="above" [stepControl]="BirthdayDataForm" label="Fecha de nacimiento">
     <form [formGroup]="BirthdayDataForm" (ngSubmit)="onSubmitBirthdayData(BirthdayDataForm, stepper)" class="birthday-form">
+      <h1 class="mobile-header">Fecha de nacimiento</h1>
       <div class="form-section">
         <mat-form-field appearance="outline" >
           <mat-label>Día</mat-label>
@@ -154,10 +157,11 @@
               [stepControl]="PersonalQuestionsForm" [editable]="editable"  [matTooltip]="'Preguntas personales'"
               matTooltipPosition="above"
               label="Preguntas personales">
+              
       <form [formGroup]="PersonalQuestionsForm"
             (ngSubmit)="onSubmitPersonalQuestionsData(PersonalQuestionsForm, stepper)"
             class="personal-questions-form">
-        
+            <h1 class="mobile-header">Preguntas personales</h1>
         <div class="form-section">
           <div *ngFor="let preguntaInicial of preguntasIniciales; trackBy: trackPreguntaInicial">
             <mat-form-field appearance="outline" class="mat-select-full-width" [matTooltip]="preguntaInicial.texto" matTooltipPosition="above">
@@ -165,7 +169,8 @@
               <mat-select [formControlName]="'pregunta' + preguntaInicial.id_pregunta" required>
                 <mat-option [value]="null">--</mat-option>
                 <mat-option *ngFor="let alternativa of getAlternativasParaPregunta(preguntaInicial.id_pregunta)"
-                            [value]="alternativa.id_alternativa_respuesta">
+                            [value]="alternativa.id_alternativa_respuesta"  [matTooltip]="alternativa.texto"
+                            matTooltipPosition="above">
                   {{ alternativa.texto | uppercase }}
                 </mat-option>
               </mat-select>
@@ -195,8 +200,10 @@
   
   <mat-step [editable]="editable"  [completed]="seleccionHora" label="Doctores Disponibles" [matTooltip]="'Doctores Disponibles'"
   matTooltipPosition="above">
+  <h1 class="mobile-header">Doctores Disponibles</h1>
+
     <div *ngFor="let doctor of doctors;let i = index; trackBy: trackByDoctorId" class="doctor-card">
-      <div *ngIf="i === 0" class="recommended-badge">
+      <div *ngIf="i === 0 && doctor.puntaje > 0" class="recommended-badge">
         ⭐ Recomendado
       </div>
       <h2>{{ doctor.nombre_completo | uppercase }}</h2>

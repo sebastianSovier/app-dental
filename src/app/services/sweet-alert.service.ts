@@ -46,11 +46,11 @@ export class SweetAlertService {
     }
     if (component === "errors" && id === "passwordExiste") {
       Swal.fire({
-        html: `<h1>Mensaje Sistema</h1>Usuario ya posee contraseña`,
+        html: `<h1>Mensaje Sistema</h1>Usuario ya posee contraseña , será redirigido a la página de inicio sesión.`,
         icon: "warning",
         showConfirmButton: false,
-        timer: 2000,
-        customClass: { confirmButton: "btn btn-warning" },
+        timer: 3000,
+        customClass: { confirmButton: "btn btn-success" },
         buttonsStyling: false,
       }).then(() => {
         this.router.navigate(["login-page"]);
@@ -69,37 +69,7 @@ export class SweetAlertService {
 
       });
     }
-    if (component === "errors.validations" && id === "userNoValidate") {
-      Swal.fire({
-        html: `<h1>Mensaje Sistema</h1>No puede continuar, Cliente no validado o no habilitado.`,
-        icon: "error",
-        showConfirmButton: true,
-        //timer: 2000,
-        draggable:false,
-        allowOutsideClick:false,
-        confirmButtonText: "Entiendo",
-        customClass: { confirmButton: "btn btn-warning" },
-        buttonsStyling: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          
-          if (this.insuredData.currentUser()?.retry! >= 3) {
-            this.router.navigate(["/error-page"]);
-            return;
-          } else if (this.insuredData.currentUser()?.retry! < 3) {
-            this.insuredData.setRetry();
-          } else {
-            this.router.navigate(["/error-page"]);
-          }
-        } else {
-         
-            this.router.navigate(["/error-page"]);
-          }
-        
-      });
-     
-    }
-
+   
     if (component === "reintentar" && id === "error") {
       Swal.fire({
         html: `
@@ -147,15 +117,15 @@ export class SweetAlertService {
       Swal.fire({
         icon: "success",
         title: "Agendamiento exitoso",
-        html: this.insuredData.currentPortal()?.type_page === "Paciente"? undefined:`si desea crear una cuenta para realizar seguimiento y mucho mas... presione crear contraseña.`,
-        showCancelButton: true,
-        confirmButtonColor: this.insuredData.currentPortal()?.type_page === "Paciente" ?undefined: "#d33",
-        confirmButtonText: this.insuredData.currentPortal()?.type_page === "Paciente" ? undefined :"crear contraseña",
-        showConfirmButton:this.insuredData.currentPortal()?.type_page === "Paciente" ? false:true,
+        html: this.insuredData.currentPortal()?.type_page === "Paciente"? undefined:`Para seguir tu información y aprovechar más funciones, solo presiona 'Crear contraseña' y crea tu cuenta.`,
+        showCancelButton:  this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true ?true: false,
+        confirmButtonColor: this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true ?undefined: "#d33",
+        confirmButtonText: this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true ? undefined :"crear contraseña",
+        showConfirmButton:this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true ? false:true,
         draggable:false,
         allowOutsideClick:false,
         cancelButtonColor: "#6c757d",
-        cancelButtonText: "ir a inicio",
+        cancelButtonText: "Ir a inicio",
       }).then((result) => {
         if (result.isConfirmed) {
           this.router.navigate(["/crear-contrasena-page"]);
@@ -165,6 +135,23 @@ export class SweetAlertService {
         }
       });
     }
+    if (component === "errors" && id === "CrearContrasena") {
+      Swal.fire({
+        icon: "warning",
+        html: `<h1>Mensaje Sistema</h1>Usuario no puede continuar, por favor comunicarse con call center.`,
+        title: "Crear contraseña",
+        showCancelButton: false,
+        showConfirmButton: false,
+        draggable:false,
+        timer: 3000,
+        allowOutsideClick:false,
+      }).then((result) => {
+          this.insuredData.resetData();
+          this.router.navigate(["/inicio"]);
+        
+      });
+    }
+    
     if (component === "modificacion" && id === "exitoso") {
       Swal.fire({
         icon: "success",

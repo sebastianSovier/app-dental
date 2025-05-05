@@ -16,7 +16,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 @Component({
   selector: "app-welcome-page",
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule,MatProgressBarModule, MatButtonModule, MatCheckboxModule, ReactiveFormsModule, FormsModule, CommonModule,MatCardModule, MatButtonModule],
+  imports: [MatFormFieldModule, MatInputModule,MatProgressBarModule, MatCheckboxModule, ReactiveFormsModule, FormsModule, CommonModule,MatCardModule, MatButtonModule],
   templateUrl: "./welcome-page.component.html",
   styleUrl: "./welcome-page.component.scss",
 })

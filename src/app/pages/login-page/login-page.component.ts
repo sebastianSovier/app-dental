@@ -18,10 +18,11 @@ import * as rutHelpers from "rut-helpers";
 import { CurrentPortal } from '@interfaces/currentPortal.interface';
 import { PreventService } from '@services/prevent.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login-page',
-  imports: [MatTabsModule,MatFormFieldModule,MatInputModule,ReactiveFormsModule, FormsModule, CommonModule,MatIconModule],
+  imports: [MatButtonModule, MatTabsModule,MatFormFieldModule,MatInputModule,ReactiveFormsModule, FormsModule, CommonModule,MatIconModule],
   templateUrl: './login-page.component.html',
   providers: [rutValidator],
   styleUrl: './login-page.component.scss'
@@ -66,6 +67,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadingService.setLoading(false);
     this.prevent.preventBackButton();
   }
   setFormatRut(value: Event) {
@@ -84,8 +86,6 @@ export class LoginPageComponent implements OnInit {
       const loginRequest = { rut: loginPacientesForm.get("rut")?.value.replace(/\./g, "").replace("-", ""), password: loginPacientesForm.get("contrasena")?.value };
       this.authService.loginPacientes(loginRequest).subscribe({
             next: (response1) => {
-              const portal : CurrentPortal = {type_page:"Paciente"};
-              this.authSession.setTypePage(portal);
               this.getToken();
             },
             error: (error: any) => {
@@ -109,7 +109,7 @@ export class LoginPageComponent implements OnInit {
       if(this.authSession.currentPortal()?.type_page === "Paciente") {
       return this.router.navigate(["/personal-menu-page"]);
       } else if(this.authSession.currentPortal()?.type_page === "Profesional") {
-        return this.router.navigate(["/proximas-atenciones-page"]);
+        return this.router.navigate(["/personal-menu-page"]);
       }else{
         return this.router.navigate(["/administrador-page"]);
       }

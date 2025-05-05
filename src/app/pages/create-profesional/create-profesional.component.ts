@@ -22,11 +22,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OnlyNumbersDirective } from '../../directives/only-numbers.directive';
 import * as rutHelpers from "rut-helpers";
+import { OnlyLettersNumbersDirective } from '../../directives/only-letters-numbers.directive';
 
 @Component({
   selector: 'app-create-profesional',
-  imports: [MatIconModule, MatTooltipModule, OnlyNumbersDirective,MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule ],
-  providers: [rutValidator,OnlyNumbersDirective],
+  imports: [MatIconModule, MatTooltipModule, OnlyNumbersDirective,OnlyLettersNumbersDirective,OnlyNumbersDirective, MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule ],
+  providers: [rutValidator],
 
   templateUrl: './create-profesional.component.html',
   styleUrl: './create-profesional.component.scss'

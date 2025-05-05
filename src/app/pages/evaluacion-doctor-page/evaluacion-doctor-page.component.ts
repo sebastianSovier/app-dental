@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,7 +17,7 @@ import { ValidationsService } from '@services/validations-forms.service';
 
 @Component({
   selector: 'app-evaluacion-doctor-page',
-  imports: [ReactiveFormsModule,CommonModule,MatFormFieldModule, MatCardModule,MatInputModule,MatSliderModule,],
+  imports: [ReactiveFormsModule,CommonModule,MatFormFieldModule, MatCardModule,MatInputModule,MatSliderModule,MatButtonModule],
   templateUrl: './evaluacion-doctor-page.component.html',
   styleUrl: './evaluacion-doctor-page.component.scss'
 })

@@ -12,10 +12,12 @@ import { crearContrasenaPaciente } from '@interfaces/services.interface';
 import { MatCardModule } from '@angular/material/card';
 import { PreventService } from '@services/prevent.service';
 import { SweetAlertService } from '@services/sweet-alert.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-crear-cuenta',
-  imports: [MatCardModule, MatFormFieldModule,MatInputModule,ReactiveFormsModule, FormsModule, CommonModule,],
+  imports: [MatButtonModule, MatCardModule,MatIconModule, MatFormFieldModule,MatInputModule,ReactiveFormsModule, FormsModule, CommonModule,],
 
   templateUrl: './crear-cuenta.component.html',
   styleUrl: './crear-cuenta.component.scss'
@@ -35,6 +37,7 @@ export class CrearCuentaComponent implements OnInit {
   errorMessages: Record<string, string> = this.validationService.errorMessages;
   errors = (control: AbstractControl | null) => this.validationService.errors(control);
   crearCuentaForm: FormGroup;
+hidePassword = true;
 
   constructor(){
     this.crearCuentaForm = this.fb.group(
@@ -49,6 +52,7 @@ export class CrearCuentaComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.loadingService.setLoading(false);
     this.prevent.preventBackButton();
   }
   onSubmitPacientes(crearCuentaForm: FormGroup): void {

@@ -10,14 +10,14 @@
 
       <!-- Botones de navegación -->
       <div class="left-buttons d-flex flex-wrap gap-2">
-        <button mat-flat-button color="primary" *ngIf="insuredData.currentUser()?.createPaciente && insuredData.currentUser()?.token" (click)="goToSignUpPaciente()">
+        <button mat-flat-button color="primary" *ngIf="insuredData.currentUser()?.createPaciente && insuredData.currentUser()?.token" [disabled]="router.url === '/crear-contrasena-page'"  (click)="goToSignUpPaciente()">
           Crear Cuenta
         </button>
-        <button mat-flat-button color="accent" *ngIf="!insuredData.currentUser()?.token" (click)="goToLoginPaciente()">
+        <button mat-flat-button color="accent" *ngIf="!insuredData.currentUser()?.token" [disabled]="router.url === '/login-page'" (click)="goToLoginPaciente()">
           Portal Privado
         </button>
         
-        <button mat-flat-button color="primary" *ngIf="insuredData.currentPortal()?.type_page === 'Paciente'" (click)="goToMenu()">
+        <button mat-flat-button color="primary" *ngIf="insuredData.currentPortal()?.type_page === 'Paciente'" [disabled]="router.url === '/personal-menu-page'"  (click)="goToMenu()">
           Menú
         </button>
         <button mat-flat-button color="warn" *ngIf="insuredData.currentUser()?.token" (click)="goToLogout()">

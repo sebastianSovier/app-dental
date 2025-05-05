@@ -52,7 +52,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Valor</mat-label>
-          <input matInput formControlName="valor" type="text" minlength="1" maxlength="10" required />
+          <input matInput formControlName="valor"  [dirOnlyNumbers]="10" type="text" minlength="1" maxlength="10" required />
           <mat-error *ngIf="isValidInput('valor', tratamientoForm)">
             <ng-container *ngFor="let error of errors(tratamientoForm.get('valor'))">
               {{ errorMessages[error] }}<br />

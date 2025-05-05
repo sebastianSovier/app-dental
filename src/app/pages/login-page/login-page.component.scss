@@ -1,48 +1,56 @@
 .login-tab-group {
-    margin: 32px auto;
-    max-width: 480px;
-    width: 100%;
-    padding: 0 16px;
+  margin: 48px auto;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 16px;
+
+  ::ng-deep .mat-tab-label {
+    font-weight: 600;
+    font-size: 16px;
   }
-  
-  .login-form {
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 8px;
+
+  .full-width {
+    width: 100%;
+  }
+
+  .button-group {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 24px 0;
-  
-    .full-width {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .submit-btn,
+  .back-btn {
+    flex: 1 1 calc(50% - 12px);
+    min-width: 219px;
+    font-weight: 999;
+    border-radius: 10px;
+    text-transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-form {
+    padding: 16px 0;
+
+    .button-group {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .submit-btn,
+    .back-btn {
       width: 100%;
     }
-  
-    .submit-btn {
-      align-self: flex-end;
-      padding: 8px 24px;
-      font-weight: 500;
-      border-radius: 8px;
-    }
-    .back-btn {
-      align-self: flex-start;
-      margin-bottom: -12%;
-      padding: 8px 24px;
-      font-weight: 500;
-      border-radius: 8px;
-    }
   }
-  
-  @media (max-width: 600px) {
-    .login-form {
-      .submit-btn {
-        align-self: center;
-        width: 100%;
-       
-      }
-      .back-btn {
-        align-self: center;
-        width: 100%;
-        margin-bottom: -1%;
-      }
-    }
-  }
-  
-  
+}

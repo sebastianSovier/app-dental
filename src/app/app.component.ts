@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {
   NavigationCancel,
   NavigationEnd,
+  NavigationStart,
   Router,
   RouterLink,
   RouterOutlet,
@@ -60,17 +61,22 @@ export class AppComponent {
       .pipe(
         filter(
           (event) =>
-            event instanceof NavigationEnd ||
+            event instanceof NavigationStart ||
             event instanceof NavigationCancel ||
             event instanceof NavigationEnd
         )
       )
       .subscribe((event) => {
         this.prevent.preventBackButton();
+        if ((event instanceof NavigationStart)) {
+          this.loading.setLoading(true);
+        }
+       
         if (!(event instanceof NavigationEnd)) {
           return;
         } else {
           this.loading.setDisabledButton(false);
+          this.loading.setLoading(false);
         }
       //  window.scrollTo(0, 0);
       });

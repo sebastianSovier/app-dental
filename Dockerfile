@@ -19,7 +19,7 @@ COPY --from=builder /app/dist/app-dental/browser /usr/share/nginx/html
 
 # Copiar configuración personalizada de Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY ssl/ /etc/nginx/ssl/
+#COPY ssl/ /etc/nginx/ssl/
 EXPOSE 80
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]

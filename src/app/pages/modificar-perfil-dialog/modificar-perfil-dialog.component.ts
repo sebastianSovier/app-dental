@@ -4,10 +4,11 @@ import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-modificar-perfil-dialog',
-  imports: [MatSelectModule,MatFormFieldModule,CommonModule,MatDialogModule],
+  imports: [MatSelectModule,MatFormFieldModule,CommonModule,MatDialogModule,MatButtonModule],
   templateUrl: './modificar-perfil-dialog.component.html',
   styleUrl: './modificar-perfil-dialog.component.scss'
 })

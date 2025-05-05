@@ -10,8 +10,6 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { SweetAlertService } from '@services/sweet-alert.service';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { UserDataService } from '@services/user-data.service';
 import { AuthService } from '@services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
+import { LoadingPageService } from '@services/loading-page.service';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatMenuModule,
     MatButtonModule,
     MatButtonModule,
-    MatDialogModule,
+    
     MatIconModule
   ],
   templateUrl: './header.component.html',
@@ -49,22 +48,27 @@ export class HeaderComponent implements OnInit {
   isSticky = false;
   private readonly authService = inject(AuthService);
   public insuredData = inject(UserDataService);
+  private loadingService = inject(LoadingPageService);
   constructor(
-    public router: Router,
-    private sweetAlertService: SweetAlertService,
-    public dialog: MatDialog
+    public router: Router
   ) {}
 
   ngOnInit(): void {}
 
   goToLoginProfesional() {
+    this.loadingService.setLoading(true);
     this.router.navigate(['/login-professional-page']);
   }
   goToMenu() {
+    this.loadingService.setLoading(true);
     console.log(this.insuredData.currentPortal()?.type_page);
     this.router.navigate(['/personal-menu-page']);
   }
   goToLogout() {
+    if(this.router.url === '/inicio'){
+      return;
+    }
+    this.loadingService.setLoading(true);
     this.authService.logoutService().subscribe({
       next: (response) => { this.router.navigate(['/inicio']);},
       error: (error) => { this.router.navigate(['/inicio']);},
@@ -72,59 +76,14 @@ export class HeaderComponent implements OnInit {
    
   }
   goToLoginPaciente() {
+    this.loadingService.setLoading(true);
     this.router.navigate(['/login-page']);
   }
   goToSignUpPaciente() {
+    this.loadingService.setLoading(true);
     this.router.navigate(['/crear-contrasena-page']);
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(this.dialogTemplate, {
-      data: { name: 'John Doe' },
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('El diálogo se cerró', result);
-    });
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  checkScroll(): void {
-    const scrollPosition =
-      window.scrollY ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
-    this.isSticky = scrollPosition >= 50;
-  }
-
-  onLogout(): void {
-    this.sweetAlertService.showSweetAlert('header', 'logout:01');
-  }
-
-  hideMobileMenu(): void {
-    const menu = document.getElementById('menu-mobile');
-    menu?.classList.remove('visible');
-  }
 }
 
-// src/app/toggle-menu.ts
-
-export class ToggleMenu {
-  private button: HTMLElement | null;
-  private menu: HTMLElement | null;
-
-  constructor(buttonId: string, menuId: string) {
-    this.button = document.getElementById(buttonId);
-    this.menu = document.getElementById(menuId);
-    this.addEventListeners();
-  }
-
-  private addEventListeners(): void {
-    this.button?.addEventListener('click', () => this.toggleMenu());
-  }
-
-  private toggleMenu(): void {
-    this.menu?.classList.toggle('visible');
-  }
-}
