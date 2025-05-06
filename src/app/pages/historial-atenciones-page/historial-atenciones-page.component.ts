@@ -2,15 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { horasAgendadasPorPaciente, horasAgendadasPorDoctor } from '@interfaces/personal-data-request.interface';
 import { LoadingPageService } from '@services/loading-page.service';
 import { PersonalServiceService } from '@services/personal-service.service';
 import { PreventService } from '@services/prevent.service';
 import { UserDataService } from '@services/user-data.service';
 import { UtilsService } from '@services/utils.service';
+import { DerivarPacienteDialogComponent } from '../derivar-paciente-dialog/derivar-paciente-dialog.component';
 
 @Component({
   selector: 'app-historial-atenciones-page',
@@ -55,7 +57,7 @@ export class HistorialAtencionesPageComponent {
   );
 
   ngOnDestroy() {}
-  constructor(private route: ActivatedRoute) {
+  constructor(private dialog: MatDialog) {
   }
   ngOnInit() {
     this.prevent.preventBackButton();
@@ -65,7 +67,37 @@ export class HistorialAtencionesPageComponent {
       this.obtenerAgendamientoDoctor();
     }
   }
-
+  derivarPaciente(element:horasAgendadasPorDoctor) {
+    this.loadingService.setLoading(true);
+    this.insuredData.setAgendamientoInsuredUser(element.id_agendamiento);
+        const dialogRef = this.dialog.open(DerivarPacienteDialogComponent, {
+          width: '600px',
+          height: '400px',
+          disableClose: true,
+          autoFocus:true,
+          data: {
+            id_profesional: element.id_profesional
+          }
+        });
+      
+        dialogRef.afterClosed().subscribe(result => {
+          if (result && result.profesional) {
+            console.log('profesional seleccionado:', result);
+    
+            this.loadingService.setLoading(true);
+            this.ps.derivarAgendamientoPaciente({id_profesional:result.profesional,id_agendamiento:this.insuredData.currentUser()?.idAgendamiento}).subscribe({
+              next: (response1) => {
+                this.ngOnInit();
+              },
+              error: (error: any) => {
+                console.log(error);
+                this.loadingService.setLoading(false);
+              },
+            });
+          }
+        });
+      
+  }
   obtenerAgendamientoPaciente() {
     this.loadingService.setLoading(true);
     this.ps.obtenerHistoricoHorasAgendadasPorPaciente().subscribe({

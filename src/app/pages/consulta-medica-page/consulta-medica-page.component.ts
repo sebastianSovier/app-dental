@@ -117,6 +117,7 @@ export class ConsultaMedicaPageComponent implements OnInit {
         next: (response1) => {
           this.loadingService.setLoading(false);
           console.log(response1);
+          this.authSession.setAgendamientoInsuredUser("");
           this.router.navigate(['/proximas-atenciones-page']);
         },
         error: (error: any) => {

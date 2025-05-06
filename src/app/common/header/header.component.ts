@@ -38,14 +38,6 @@ import { LoadingPageService } from '@services/loading-page.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
-  isSidebarToggled = false;
-  isToggled = false;
-  showHistoryTab = false;
-  showLoginPageTab = false;
-  showOtherTabs = false;
-  showLogoutButton = true;
-  isSticky = false;
   private readonly authService = inject(AuthService);
   public insuredData = inject(UserDataService);
   private loadingService = inject(LoadingPageService);

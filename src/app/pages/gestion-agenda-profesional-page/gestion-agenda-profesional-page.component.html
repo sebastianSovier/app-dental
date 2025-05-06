@@ -1,0 +1,22 @@
+<mat-card class="form-card">
+    <h2>Seleccionar los días de cierre de agenda</h2>
+  
+    <form [formGroup]="formModificarDisponibilidad" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Rango de fechas</mat-label>
+            
+            <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeGroup" [dateFilter]="dateFilter">
+              <input matStartDate formControlName="start" placeholder="Desde" (click)="picker.open()" (focus)="picker.open()">
+              <input matEndDate formControlName="end" placeholder="Hasta" (click)="picker.open()" (focus)="picker.open()">
+            </mat-date-range-input>
+          
+            <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+            
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="!formModificarDisponibilidad.valid">Guardar</button>
+      <button mat-button type="button" (click)="volverMenu()" >Volver</button>
+
+    </form>
+  </mat-card>

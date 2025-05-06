@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -12,13 +12,13 @@ import { rutValidator } from '../../directives/rut-validator';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {MatStepper, MatStepperModule} from '@angular/material/stepper';
-import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepicker, MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import * as rutHelpers from "rut-helpers";
 import { OnlyNumbersDirective } from '../../directives/only-numbers.directive';
 import { crearAgendamientoPaciente, modificarAgendamientoPaciente, PacienteRequest, respuestasPreguntas } from '@interfaces/services.interface';
-import { alternativaPreguntasInicialesResponse, horasAgendadasPorDoctor, preguntasInicialesResponse, profesionalesResponse } from '@interfaces/personal-data-request.interface';
+import { alternativaPreguntasInicialesResponse, Doctor, horasAgendadasPorDoctor, preguntasInicialesResponse, profesionalesResponse } from '@interfaces/personal-data-request.interface';
 import { SweetAlertService } from '@services/sweet-alert.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PreventService } from '@services/prevent.service';
@@ -26,16 +26,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { OnlyLettersDirective } from '../../directives/only-letters.directive';
 import { OnlyLettersNumbersDirective } from '../../directives/only-letters-numbers.directive';
 
-interface Doctor {
-  id: string;
-  nombre_completo: string;
-  rut: string;
-  especialidad:string;
-  puntaje:number;
-  form: FormGroup;
-  horasDisponibles: string[];
-  reservas: { [date: string]: string[] };
-}
 
 @Component({
   selector: 'app-agendamiento-page',
@@ -83,8 +73,9 @@ export class AgendamientoPageComponent implements OnInit {
   seleccionHora: boolean = false;
   editable: boolean = true;
   private prevent = inject(PreventService);
+  disabledDates: Date[] = [];
   
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.PersonalDataForm = this.fb.group(
       {
         rut:  [null, [Validators.required, Validators.maxLength(12), Validators.minLength(7), this.rutValidate]],
@@ -133,12 +124,69 @@ export class AgendamientoPageComponent implements OnInit {
     return this.alternativaPreguntasIniciales.filter(a => a.id_pregunta === idPregunta.toString());
   }
   filterWeekends = (date: Date | null): boolean => {
-    const day = (date || new Date()).getDay();
-    return day !== 0 && day !== 6; // 0 = Domingo, 6 = Sábado
-  };
+    if (!date) return false;
+
+  const day = date.getDay();
+  const formattedDate = date.toISOString().split('T')[0];
+
+  const isWeekend = (day === 0 || day === 6);
+
+  const isDisabled = this.disabledDates.some((d) => {
+    const disabledFormatted = d.toISOString().split('T')[0];
+    const match = disabledFormatted === formattedDate;
+    if (match) {
+      console.log('Fecha filtrada por disabledDates:', formattedDate);
+    }
+    return match;
+  });
+
+  return !isWeekend && !isDisabled;
+}
+
   onEmailnInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.ContactDataForm.controls['correo'].setValue(input.value.toUpperCase(), { emitEvent: false });
+  }
+
+  cargarAgendaDisponible(doctor: Doctor): void {
+    this.ps.obtenerDiaSinDisponibilidadPorDoctor({ id_profesional: doctor.id }).subscribe({
+      next: (response) => {
+        this.disabledDates = [];
+        if (response.length > 0) {
+          this.disabledDates = response.map((obj) => new Date(obj.fecha));
+  
+          this.filterWeekends = (date: Date | null): boolean => {
+            if (!date) return false;
+  
+            const day = date.getDay();
+            const formattedDate = date.toISOString().split('T')[0];
+  
+            const isWeekend = (day === 0 || day === 6);
+            const isDisabled = this.disabledDates.some(
+              d => d.toISOString().split('T')[0] === formattedDate 
+            );
+  
+            return !isWeekend && !isDisabled;
+          };
+  
+        }else{
+          
+          this.filterWeekends = (date: Date | null): boolean => {
+            if (!date) return false;
+  
+            const day = date.getDay();
+            const isWeekend = (day === 0 || day === 6); 
+  
+            return !isWeekend;
+          };
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.loadingService.setLoading(false);
+      },
+    });
+
   }
   onSubmitDoctorAgendamientoData(doctor:Doctor,stepper:MatStepper):void{
     this.loadingService.setLoading(true);
@@ -158,6 +206,7 @@ export class AgendamientoPageComponent implements OnInit {
           this.ps.modificarAgendamientoPaciente(modificarAgendamientoRequest).subscribe({
             next: (response1) => {
               this.loadingService.setLoading(false);
+              this.authSession.setAgendamientoInsuredUser("");
               this.sweetAlertService.showSweetAlert("modificacion", "exitoso");
             },
             error: (error: any) => {

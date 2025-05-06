@@ -72,6 +72,7 @@ export class VisualizarExamenesPacienteComponent {
             this.dataSource.data = imagenes;
             this.loadingService.setLoading(false);
           }
+          this.insuredData.setAgendamientoInsuredUser("");
         },
         error: (error) => {
           this.loadingService.setLoading(false);

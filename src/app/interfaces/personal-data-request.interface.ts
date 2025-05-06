@@ -1,3 +1,5 @@
+import { FormGroup } from "@angular/forms";
+
 export interface preguntasInicialesResponse {
   id_pregunta: string;
   texto: string;
@@ -26,6 +28,16 @@ export interface profesionalesResponse {
   apellido_materno: string;
   puntaje:string;
   id_perfil:string;
+}
+export interface Doctor {
+  id: string;
+  nombre_completo: string;
+  rut: string;
+  especialidad:string;
+  puntaje:number;
+  form: FormGroup;
+  horasDisponibles: string[];
+  reservas: { [date: string]: string[] };
 }
 export interface crearProfesionalResponse {
   rut: string;
@@ -76,6 +88,8 @@ export interface horasAgendadasPorPaciente {
   puntuacion_realizada:boolean;
   estado:string;
   id_perfil:string;
+  dv:string;
+  
 
 }
 export interface profesionalesPuntuacion {

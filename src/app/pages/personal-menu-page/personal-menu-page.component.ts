@@ -52,5 +52,10 @@ export class PersonalMenuPageComponent implements OnInit {
   goToHistorial(){
     this.router.navigate(["/historial-atenciones-page"]);
   }
+  goToGestionarAgendaProfesional(){
+    if(this.authSession.currentPortal()?.type_page === "Profesional"){
+      this.router.navigate(["/gestionar-agenda-profesional-page"]);
+    }
+  }
 }
 export default PersonalMenuPageComponent;

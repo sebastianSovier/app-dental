@@ -5,8 +5,9 @@ import { catchError, map } from "rxjs/operators";
 import { AuthService } from "./auth.service";
 import { SweetAlertService } from "./sweet-alert.service";
 import { UserDataService } from "./user-data.service";
-import { PersistFormDataService } from "./persist-form-data.service";
+
 import { LoadingPageService } from "./loading-page.service";
+import { PersistFormDataService } from "./persist-form-data.service";
 
 @Injectable({
   providedIn: "root",
@@ -89,7 +90,7 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
 
   private handleDefaultError(err: HttpErrorResponse, request: HttpRequest<any>): Observable<never> {
     this.authService.logout();
-    this.formService.clearForms();
+    
     sessionStorage.clear();
     this.sweetAlertService.showSweetAlert("reintentar", "errorDefault");
     this.loadingService.setLoading(false);
@@ -99,7 +100,7 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
   private handleUnauthorizedOrForbidden(err: HttpErrorResponse, request: HttpRequest<any>): Observable<never> {
     this.authService.logoutService();
     this.UserDataService.resetData();
-    this.formService.clearForms();
+    
     sessionStorage.clear();
     this.sweetAlertService.showSweetAlert("errors.service", "timeoutsession");
     this.loadingService.setLoading(false);
@@ -108,7 +109,7 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
   private handleUnauthorize(err: HttpErrorResponse, request: HttpRequest<any>): Observable<never> {
     this.authService.logoutService();
     this.UserDataService.resetData();
-    this.formService.clearForms();
+    
     sessionStorage.clear();
     this.sweetAlertService.showSweetAlert("errors", "loginIncorrecto");
     this.loadingService.setLoading(false);

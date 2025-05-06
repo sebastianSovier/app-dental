@@ -19,6 +19,7 @@ import { CurrentPortal } from '@interfaces/currentPortal.interface';
 import { PreventService } from '@services/prevent.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { SweetAlertService } from '@services/sweet-alert.service';
 
 @Component({
   selector: 'app-login-page',
@@ -41,7 +42,7 @@ export class LoginPageComponent implements OnInit {
   type_page: string | undefined = "";
   disabled = this.loadingService.submitButtonDisabled$;
   private ps = inject(PersonalServiceService);
-
+  private sweetAlert = inject(SweetAlertService);
   isValidInput = (fieldName: string | number, form: FormGroup) => this.validationService.isValidInput(fieldName, form);
   errorMessages: Record<string, string> = this.validationService.errorMessages;
   errors = (control: AbstractControl | null) => this.validationService.errors(control);
@@ -86,7 +87,12 @@ export class LoginPageComponent implements OnInit {
       const loginRequest = { rut: loginPacientesForm.get("rut")?.value.replace(/\./g, "").replace("-", ""), password: loginPacientesForm.get("contrasena")?.value };
       this.authService.loginPacientes(loginRequest).subscribe({
             next: (response1) => {
-              this.getToken();
+              if(response1){
+                this.getToken();
+              }else{
+                this.loadingService.setLoading(false);
+                this.sweetAlert.showSweetAlert("errors.validations","userNoValidate");
+              }
             },
             error: (error: any) => {
               console.log(error);
@@ -120,13 +126,17 @@ export class LoginPageComponent implements OnInit {
     if (loginProfesionalForm.valid) {
       this.loadingService.setLoading(true);
       this.loadingService.setDisabledButton(true);
-      this.formDataService.setForm("loginProfesionalForm", loginProfesionalForm);
-
+      this.formDataService.setForm("loginProfesionalFormForm", loginProfesionalForm);
      const loginRequest = { rut: this.loginProfesionalForm.get("rut")?.value.replace(/\./g, "").replace("-", ""), password: this.loginProfesionalForm.get("contrasena")?.value };
        this.authService.loginProfesional(loginRequest).subscribe({
          next: (response1) => {
            console.log(response1);
-           this.getToken();
+           if(response1){
+            this.getToken();
+          }else{
+            this.loadingService.setLoading(false);
+            this.sweetAlert.showSweetAlert("errors.validations","userNoValidate");
+          }
          },
          error: (error: any) => {
            

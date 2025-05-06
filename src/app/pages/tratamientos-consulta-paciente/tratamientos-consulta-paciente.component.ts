@@ -67,6 +67,7 @@ export class TratamientosConsultaPacienteComponent implements OnInit {
           this.dataSource = new MatTableDataSource<obtenerTratamientoConsultaPaciente>(
             this.tratamientoConsultaPaciente
           );
+          this.insuredData.setAgendamientoInsuredUser("");
           this.loadingService.setLoading(false);
         },
         error: (err) => {

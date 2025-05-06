@@ -85,6 +85,7 @@ export class EvaluacionDoctorPageComponent implements OnInit {
             this.ps.guardarPuntuacionAtencionPaciente(crearPuntuacionRequest).subscribe({
                   next: (response1) => {
                     this.sweetAlertService.showSweetAlert("evaluacion", "exitoso");
+                    this.authSession.setAgendamientoInsuredUser("");
                     this.router.navigate(['/historial-atenciones-page']);
                   },
                   error: (error: any) => {

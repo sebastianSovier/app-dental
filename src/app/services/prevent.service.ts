@@ -7,7 +7,7 @@ import { isPlatformBrowser, LocationStrategy } from "@angular/common";
 })
 export class PreventService {
  
-  constructor(private locationStrategy: LocationStrategy,@Inject(PLATFORM_ID) private platformId: any) {
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {
   }
 
   preventBackButton() {

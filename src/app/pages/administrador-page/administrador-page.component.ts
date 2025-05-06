@@ -47,7 +47,7 @@ export class AdministradorPageComponent {
   );
 
   ngOnDestroy() {}
-  constructor(private readonly route: ActivatedRoute,private dialog: MatDialog) {
+  constructor(private dialog: MatDialog) {
   }
   ngOnInit() {
     this.prevent.preventBackButton();
@@ -60,7 +60,8 @@ export class AdministradorPageComponent {
   crearProfesional(){
     this.router.navigate(["/crear-profesional-page"]);
   }
-  modificarPerfil(element:any){
+  modificarPerfil(element:profesionalesResponse){
+    element
     const dialogRef = this.dialog.open(ModificarPerfilDialogComponent, {
       width: '600px',
       height: '400px',
@@ -69,13 +70,14 @@ export class AdministradorPageComponent {
       data: {
         id_perfil: element.id_perfil,
         rut: element.rut,
+        dv: element.dv,
         id_paciente:element.id_paciente,
         id_profesional:element.id_profesional
       }
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      if (result.perfil || result.rut) {
+      if (result && (result.perfil || result.rut)) {
         console.log('Perfil seleccionado:', result);
 
         this.loadingService.setLoading(true);

@@ -75,6 +75,11 @@ export const routes: Routes = [
         path: 'ver-tratamiento-consulta-page',
         loadComponent: () => import('./pages/tratamientos-consulta-paciente/tratamientos-consulta-paciente.component').then(m => m.default),
         canActivate: [privateGuard],
+    },
+    {
+        path: 'gestionar-agenda-profesional-page',
+        loadComponent: () => import('./pages/gestion-agenda-profesional-page/gestion-agenda-profesional-page.component').then(m => m.default),
+        canActivate: [privateGuard],
     },  
     {
         path: 'error-page', component: ErrorPageComponent,

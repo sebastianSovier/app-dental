@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ModificarPerfilDialogComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { id_perfil: string,rut:string,id_paciente:string,id_profesional:string },
+    @Inject(MAT_DIALOG_DATA) public data: { id_perfil: string,rut:string,id_paciente:string,id_profesional:string,dv:string },
     private dialogRef: MatDialogRef<ImageViewerDialogComponent>
   ) {}
   perfilesFilter : {
@@ -39,6 +39,8 @@ export class ModificarPerfilDialogComponent {
     this.dialogRef.close();
   }
   onPerfilChange() {
-    this.dialogRef.close({perfil:this.perfilSeleccionado,rut: this.data.rut});
+    if(this.perfilSeleccionado !==this.data.id_perfil){ 
+      this.dialogRef.close({perfil:this.perfilSeleccionado,rut: this.data.rut+this.data.dv});
+    }
   }
 }

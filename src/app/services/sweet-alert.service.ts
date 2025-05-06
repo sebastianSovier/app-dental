@@ -69,7 +69,23 @@ export class SweetAlertService {
 
       });
     }
-   
+    if (component === "errors.validations" && id === "userNoValidate") {
+      Swal.fire({
+        html: `<h1>Mensaje Sistema</h1>No puede continuar, Usuario no validado o no habilitado para ingresar.`,
+        icon: "error",
+        showConfirmButton: true,
+        //timer: 2000,
+        draggable:false,
+        allowOutsideClick:false,
+        showCancelButton: false,
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Entiendo",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(["/error-page"]);
+        }
+      });
+    }
     if (component === "reintentar" && id === "error") {
       Swal.fire({
         html: `
@@ -125,14 +141,35 @@ export class SweetAlertService {
         draggable:false,
         allowOutsideClick:false,
         cancelButtonColor: "#6c757d",
-        cancelButtonText: "Ir a inicio",
+        cancelButtonText:this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true ? "Ir a menu":"Ir a inicio",
       }).then((result) => {
         if (result.isConfirmed) {
           this.router.navigate(["/crear-contrasena-page"]);
         }else{
+          if(this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true){
+            this.router.navigate(["/personal-menu-page"]);
+            return;
+          }
           this.insuredData.resetData();
           this.router.navigate(["/inicio"]);
         }
+      });
+    }
+    if (component === "agendamiento" && id === "modificarDisponibilidad") {
+      Swal.fire({
+        icon: "success",
+        title: "Modificación de disponibilidad exitoso",
+        showCancelButton: false,
+       
+        showConfirmButton:true,
+        draggable:false,
+        allowOutsideClick:false,
+        cancelButtonColor: "#6c757d",
+        cancelButtonText:this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true ? "Ir a menu":"Ir a inicio",
+      }).then((result) => {
+            this.router.navigate(["/personal-menu-page"]);
+            return;
+  
       });
     }
     if (component === "errors" && id === "CrearContrasena") {

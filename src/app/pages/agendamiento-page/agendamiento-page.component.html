@@ -216,11 +216,13 @@
                    [matDatepicker]="picker"
                    formControlName="appointmentDate"
                    (click)="picker.open()"
-                   (focus)="picker.open()"
+                   
                    [matDatepickerFilter]="filterWeekends"
                    (dateChange)="onDateChange($event, doctor)">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker ></mat-datepicker>
+                   <mat-datepicker-toggle matSuffix [for]="picker">
+                  
+                  </mat-datepicker-toggle>
+            <mat-datepicker #picker (opened)="cargarAgendaDisponible(doctor)"></mat-datepicker>
             <mat-error *ngIf="isValidInput('appointmentDate', doctor.form)">
               <ng-container *ngFor="let error of errors(doctor.form.get('appointmentDate'))">
                 {{ errorMessages[error] }}<br />

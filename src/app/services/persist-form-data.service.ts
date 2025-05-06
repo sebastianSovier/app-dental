@@ -10,21 +10,13 @@ export class PersistFormDataService {
 
   constructor() {
     this.formGroups = {
-      formWelcomeData:null,
-      formNameData: null,
-      formIdentificationData: null,
+      formPersonalQuestionsData:null,
+      formPersonalData: null,
       formContactData: null,
       formBirthdayData: null,
-      formAboutMeData: null,
-      formHealthQuestionsData: null,
-      formSpecialRiskData: null,
-      formSpecialRiskTwoData: null,
-      formSwornDeclaration: null,
-      formHealthInsurancePlans: null,
-      formHealthInsurancePlanSelected: null,
-      formBeneficiaries: null,
-      formBeneficiary: null,
-      formChosenPlan: null
+      crearCuentaForm: null,
+      loginProfesionalFormForm: null,
+      loginPacientesForm: null
     };
   }
 
@@ -33,67 +25,7 @@ export class PersistFormDataService {
       this.formGroups[key] = form;
     }
   }
-  checkValidForms(){
-    let valid = true;
-    Object.keys(this.formGroups).forEach((key) => {
-      if(valid === false){
-        return;
-      }
-      if (this.formGroups[key] !== null && this.formGroups[key]?.invalid) {
-        valid = false;
-      }else if(this.formGroups[key] === null && key !== "formBeneficiary"){
-        valid = false;
-      }else{
-        return;
-      }
-    });
-    return valid;
-  }
-  checkValidFormsChosenPlan(){
-    let valid = true;
-    Object.keys(this.formGroups).forEach((key) => {
-      if(valid === false){
-        return;
-      }
-      if (this.formGroups[key] !== null && this.formGroups[key]?.invalid) {
-        valid = false;
-      }else if(this.formGroups[key] === null && key !== "formBeneficiary" && key !== "formChosenPlan"){
-        valid = false;
-      }else{
-        return;
-      }
-    });
-    return valid;
-  }
-  formsPersonalData = ["formNameData","formIdentificationData","formContactData","formBirthdayData"];
-
-  checkValidPersonalDataForms(){
-    let valid = true;
-    this.formsPersonalData.forEach(element => {
-      if(valid === false){
-        return;
-      }
-      if (this.formGroups[element] === null || this.formGroups[element]?.invalid) {
-        valid  = false;
-      }
-    });
-    return valid;
-  }
-  formsPersonalHealthData = ["formAboutMeData","formHealthQuestionsData","formSpecialRiskData","formSpecialRiskTwoData"];
-
-  checkPersonalHealthDataForms(){
-    let valid = true;
-    this.formsPersonalHealthData.forEach(element => {
-      if(valid === false){
-        return;
-      }
-      if (this.formGroups[element] === null || this.formGroups[element]?.invalid) {
-        valid  = false;
-      }
-    });
-    return valid;
-  }
-
+  
   getForm(key: string): FormGroup | null {
     return this.formGroups[key] || null;
   }

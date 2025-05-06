@@ -29,11 +29,11 @@ export class AuthService {
   public token = computed(() => this._token());
   public xsrfToken = computed(() => this._xsrfToken());
 
-  private setAuthentication(loginResponse: LoginResponse): Object | boolean {
+  private setAuthentication(loginResponse: LoginResponse): boolean {
     const { access_Token,id,login,auth,message } = loginResponse;
     if(!access_Token || !auth ) {
       this.logout();
-      return { access_Token,id,login,auth,message };
+      return false;
     }
     this._token.set(access_Token);  
     this._authStatus.set(AuthStatus.authenticated);

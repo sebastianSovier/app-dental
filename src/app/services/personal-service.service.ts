@@ -93,6 +93,17 @@ export class PersonalServiceService {
         catchError(err => throwError(() => err))
       )
   }
+  derivarAgendamientoPaciente(derivarPacienteRequest:any): Observable<LoginResponse> {
+    const apiUrl = `${environment.apiUrl}/Paciente/modificarDerivacionAgendamientoPaciente`;
+
+
+
+    return this.http.post<LoginResponse>(apiUrl, derivarPacienteRequest)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
   obtenerDatosPaciente(): Observable<PacienteRequest> {
     const apiUrl = `${environment.apiUrl}/Authentication/obtenerDatosPaciente`;
 
@@ -126,6 +137,17 @@ export class PersonalServiceService {
         catchError(err => throwError(() => err))
       )
   }
+  obtenerDiaSinDisponibilidadPorDoctor(request:any): Observable<horasAgendadasPorDoctor[]> {
+    const apiUrl = `${environment.apiUrl}/Profesional/obtenerDiaSinDisponibilidadPorDoctor`;
+
+
+
+    return this.http.post<horasAgendadasPorDoctor[]>(apiUrl, request)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
   obtenerHorasAgendadasPorDoctor(request:any): Observable<horasAgendadasPorDoctor[]> {
     const apiUrl = `${environment.apiUrl}/Profesional/obtenerHorasAgendadasPorProfesional`;
 
@@ -137,6 +159,19 @@ export class PersonalServiceService {
         catchError(err => throwError(() => err))
       )
   }
+  
+  modificarDisponibilidadDoctor(request:any): Observable<horasAgendadasPorDoctor[]> {
+    const apiUrl = `${environment.apiUrl}/Profesional/modificarDisponibilidadPorProfesional`;
+
+
+
+    return this.http.post<horasAgendadasPorDoctor[]>(apiUrl, request)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
+
   obtenerHorasAgendadasPorPaciente(): Observable<horasAgendadasPorPaciente[]> {
     const apiUrl = `${environment.apiUrl}/Paciente/obtenerHorasAgendadasPorPaciente`;
 

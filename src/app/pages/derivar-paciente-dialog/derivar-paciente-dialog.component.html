@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Derivar paciente</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Seleccionar profesional</mat-label>
+    <mat-select [(value)]="profesionalSeleccionado">
+        <mat-option [value]="profesionalSeleccionado" disabled *ngIf="profesional">
+            {{ profesional.nombres | uppercase }} 
+            {{ profesional.apellido_paterno | uppercase }} 
+            {{ profesional.apellido_materno | uppercase }}
+          </mat-option>
+      <mat-option *ngFor="let profesional of profesionales" [value]="profesional.id_profesional">
+        {{ profesional.nombres | uppercase }} {{ profesional.apellido_paterno | uppercase }} {{ profesional.apellido_materno | uppercase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="profesionalSeleccionado === this.data.id_profesional" (click)="OnProfesionalChange()">Guardar</button>
+</mat-dialog-actions>
