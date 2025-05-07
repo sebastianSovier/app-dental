@@ -52,6 +52,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login-professional-page']);
   }
   goToMenu() {
+    this.insuredData.setAgendamientoInsuredUser("");
     this.loadingService.setLoading(true);
     console.log(this.insuredData.currentPortal()?.type_page);
     this.router.navigate(['/personal-menu-page']);

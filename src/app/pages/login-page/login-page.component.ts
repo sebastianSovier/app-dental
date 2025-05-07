@@ -84,7 +84,8 @@ export class LoginPageComponent implements OnInit {
       this.loadingService.setLoading(true);
       this.loadingService.setDisabledButton(true);
       this.formDataService.setForm("loginPacientesForm", loginPacientesForm);
-      const loginRequest = { rut: loginPacientesForm.get("rut")?.value.replace(/\./g, "").replace("-", ""), password: loginPacientesForm.get("contrasena")?.value };
+      const rut = loginPacientesForm.get("rut")?.value;
+      const loginRequest = { rut: rut.replace(/\./g, "").replace("-", ""), password: loginPacientesForm.get("contrasena")?.value };
       this.authService.loginPacientes(loginRequest).subscribe({
             next: (response1) => {
               if(response1){
@@ -127,7 +128,8 @@ export class LoginPageComponent implements OnInit {
       this.loadingService.setLoading(true);
       this.loadingService.setDisabledButton(true);
       this.formDataService.setForm("loginProfesionalFormForm", loginProfesionalForm);
-     const loginRequest = { rut: this.loginProfesionalForm.get("rut")?.value.replace(/\./g, "").replace("-", ""), password: this.loginProfesionalForm.get("contrasena")?.value };
+      const rut = loginProfesionalForm.get("rut")?.value;
+     const loginRequest = { rut: rut.replace(/\./g, "").replace("-", ""), password: this.loginProfesionalForm.get("contrasena")?.value };
        this.authService.loginProfesional(loginRequest).subscribe({
          next: (response1) => {
            console.log(response1);

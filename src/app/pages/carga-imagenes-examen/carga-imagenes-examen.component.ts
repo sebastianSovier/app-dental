@@ -21,6 +21,7 @@ import { imagenExamenConsulta } from '@interfaces/personal-data-request.interfac
 import { MatDialog } from '@angular/material/dialog';
 import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-dialog.component';
 import { ImagenPreview } from '@interfaces/services.interface';
+import { SweetAlertService } from '@services/sweet-alert.service';
 
 @Component({
   selector: 'app-carga-imagenes-examen',
@@ -48,7 +49,7 @@ export class CargaImagenesExamenComponent implements OnInit {
   private ps = inject(PersonalServiceService);
   private insuredData = inject(UserDataService);
   private loadingService = inject(LoadingPageService);
-  
+  private sweetAlertService = inject(SweetAlertService);
   private router = inject(Router);
   private prevent = inject(PreventService);
   
@@ -127,7 +128,7 @@ export class CargaImagenesExamenComponent implements OnInit {
             
             this.loadingService.setLoading(false);
           }
-          this.insuredData.setAgendamientoInsuredUser("");
+          
         },
         error: (error) => {
           this.loadingService.setLoading(false);
@@ -160,7 +161,8 @@ export class CargaImagenesExamenComponent implements OnInit {
     this.ps.CargarImagenesExamenes(formData,Number(this.insuredData.currentUser()?.idAgendamiento)).subscribe({
       next: (response) => {
         this.loadingService.setLoading(false);
-       
+        this.insuredData.setAgendamientoInsuredUser("");
+        this.sweetAlertService.showSweetAlert("cargaexamenes","exitoso");
       },
       error: (error) => {
         this.loadingService.setLoading(false);

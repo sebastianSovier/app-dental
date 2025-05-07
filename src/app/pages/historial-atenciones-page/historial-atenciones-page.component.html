@@ -33,7 +33,7 @@
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let element">
               <button mat-icon-button color="primary" aria-label="cargar examenes médicos"
-                [disabled]="element.consulta_realizada === '1'" (click)="cargarExamenesMedicos(element)">
+                [disabled]="element.consulta_realizada === '0'" (click)="cargarExamenesMedicos(element)">
                 <mat-icon>upload</mat-icon>
               </button>
               <button mat-icon-button color="primary" aria-label="Ver tratamiendo"

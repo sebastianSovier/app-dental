@@ -143,7 +143,7 @@ export class HistorialAtencionesPageComponent {
   }
 
   cargarExamenesMedicos(item:horasAgendadasPorDoctor) {
-    if(item.consulta_realizada === "1"){
+    if(item.consulta_realizada === "0"){
       return;
     }
     this.loadingService.setLoading(true);

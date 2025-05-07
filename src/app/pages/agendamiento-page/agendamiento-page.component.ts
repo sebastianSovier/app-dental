@@ -18,7 +18,7 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import * as rutHelpers from "rut-helpers";
 import { OnlyNumbersDirective } from '../../directives/only-numbers.directive';
 import { crearAgendamientoPaciente, modificarAgendamientoPaciente, PacienteRequest, respuestasPreguntas } from '@interfaces/services.interface';
-import { alternativaPreguntasInicialesResponse, Doctor, horasAgendadasPorDoctor, preguntasInicialesResponse, profesionalesResponse } from '@interfaces/personal-data-request.interface';
+import { alternativaPreguntasInicialesResponse, Doctor, horasAgendadasPorDoctor, horasAgendadasPorPaciente, preguntasInicialesResponse, profesionalesResponse } from '@interfaces/personal-data-request.interface';
 import { SweetAlertService } from '@services/sweet-alert.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PreventService } from '@services/prevent.service';
@@ -74,6 +74,7 @@ export class AgendamientoPageComponent implements OnInit {
   editable: boolean = true;
   private prevent = inject(PreventService);
   disabledDates: Date[] = [];
+  horasAgendadasPorPaciente: horasAgendadasPorPaciente[] = [];
   
   constructor(private cdr: ChangeDetectorRef) {
     this.PersonalDataForm = this.fb.group(
@@ -187,6 +188,64 @@ export class AgendamientoPageComponent implements OnInit {
       },
     });
 
+  }
+  obtenerAgendamientoPaciente() {
+    this.ps.obtenerHorasAgendadasPorPaciente().subscribe({
+      next: (response1) => {
+        this.horasAgendadasPorPaciente = response1;
+        if(this.horasAgendadasPorPaciente.length === 0){
+          this.cargaDatosLogin();
+        }else{
+          this.loadingService.setLoading(false);
+          this.sweetAlertService.showSweetAlert("horaAgendada", "existente");
+
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.loadingService.setLoading(false);
+      },
+    });
+  }
+  cargaDatosLogin(){
+    this.ps.obtenerDatosPaciente().subscribe({
+      next: (response) => {
+        this.PersonalDataForm.patchValue({
+          rut: response.rut+response.dv,
+          nombres: response.nombres,
+          apellidoPaterno: response.apellido_paterno,
+          apellidoMaterno: response.apellido_materno,
+        });
+        this.ContactDataForm.patchValue({
+          correo: response.correo,
+          telefono: response.telefono,
+          direccion: response.direccion,
+        });
+        const fecha = response.fecha_nacimiento.split("/");
+        this.BirthdayDataForm.patchValue({
+          day: fecha[0],
+          month: fecha[1],
+          year: fecha[2],
+        });
+        Object.keys(this.PersonalQuestionsForm.controls).forEach(controlName => {
+          const control = this.PersonalQuestionsForm.get(controlName);
+          control?.clearValidators();
+          control?.updateValueAndValidity();
+        });
+        this.omitirPreguntas = true;
+        
+        setTimeout(() => {
+          if (this.stepper) {
+            this.stepper.selectedIndex = this.stepper._steps.length -1;
+            this.obtenerProfesionales();
+          }
+        });
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.loadingService.setLoading(false);
+      },
+    });
   }
   onSubmitDoctorAgendamientoData(doctor:Doctor,stepper:MatStepper):void{
     this.loadingService.setLoading(true);
@@ -351,44 +410,12 @@ ngOnInit(): void {
 preLoadData(){
   this.editable = false;
   this.loadingService.setLoading(true);
-  this.ps.obtenerDatosPaciente().subscribe({
-    next: (response) => {
-      this.PersonalDataForm.patchValue({
-        rut: response.rut+response.dv,
-        nombres: response.nombres,
-        apellidoPaterno: response.apellido_paterno,
-        apellidoMaterno: response.apellido_materno,
-      });
-      this.ContactDataForm.patchValue({
-        correo: response.correo,
-        telefono: response.telefono,
-        direccion: response.direccion,
-      });
-      const fecha = response.fecha_nacimiento.split("/");
-      this.BirthdayDataForm.patchValue({
-        day: fecha[0],
-        month: fecha[1],
-        year: fecha[2],
-      });
-      Object.keys(this.PersonalQuestionsForm.controls).forEach(controlName => {
-        const control = this.PersonalQuestionsForm.get(controlName);
-        control?.clearValidators();
-        control?.updateValueAndValidity();
-      });
-      this.omitirPreguntas = true;
-      
-      setTimeout(() => {
-        if (this.stepper) {
-          this.stepper.selectedIndex = this.stepper._steps.length -1;
-          this.obtenerProfesionales();
-        }
-      });
-    },
-    error: (error: any) => {
-      console.log(error);
-      this.loadingService.setLoading(false);
-    },
-  });
+  if(this.authSession.currentUser()?.idAgendamiento){
+    this.cargaDatosLogin();
+  }else{
+    this.obtenerAgendamientoPaciente();
+  }
+ 
 }
 createAgendaProfesionales(){
   this.doctors = this.profesionales.map((profesional) => ({

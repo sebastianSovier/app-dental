@@ -155,6 +155,25 @@ export class SweetAlertService {
         }
       });
     }
+    if (component === "horaAgendada" && id === "existente") {
+      Swal.fire({
+        icon: "warning",
+        title: "Ya existe una hora agendada",
+        confirmButtonText: "Entiendo",
+        showConfirmButton:true,
+        draggable:false,
+        allowOutsideClick:false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if(this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true){
+            this.router.navigate(["/personal-menu-page"]);
+            return;
+          }
+          this.insuredData.resetData();
+          this.router.navigate(["/inicio"]);
+        }
+      });
+    }
     if (component === "agendamiento" && id === "modificarDisponibilidad") {
       Swal.fire({
         icon: "success",
@@ -168,6 +187,21 @@ export class SweetAlertService {
         cancelButtonText:this.insuredData.currentPortal()?.type_page === "Paciente" && this.insuredData.currentPortal()?.login === true ? "Ir a menu":"Ir a inicio",
       }).then((result) => {
             this.router.navigate(["/personal-menu-page"]);
+            return;
+  
+      });
+    }
+    if (component === "cargaexamenes" && id === "exitoso") {
+      Swal.fire({
+        icon: "success",
+        title: "Carga de examenes realizado correctamente",
+        showCancelButton: false,
+       
+        showConfirmButton:true,
+        draggable:false,
+        allowOutsideClick:false,
+      }).then((result) => {
+            this.router.navigate(["/historial-atenciones-page"]);
             return;
   
       });
