@@ -247,7 +247,7 @@
   
         <div class="submit-container" *ngIf="doctor.form.valid">
           <button mat-flat-button color="primary" type="submit">
-            Agendar con {{ doctor.nombre_completo }}
+            Agendar con {{ doctor.nombre_completo | uppercase }}
           </button>
         </div>
       </form>

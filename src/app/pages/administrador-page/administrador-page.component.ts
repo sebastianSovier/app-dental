@@ -33,6 +33,7 @@ export class AdministradorPageComponent {
   private readonly prevent = inject(PreventService);
   disabled = this.loadingService.submitButtonDisabled$;
   displayedColumns: string[] = [
+    'rut',
     'nombre',
     'tipo_usuario',
     'tipo_perfil',

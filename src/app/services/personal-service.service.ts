@@ -159,6 +159,18 @@ export class PersonalServiceService {
         catchError(err => throwError(() => err))
       )
   }
+  obtenerHorasProximasAgendadasPorProfesional(request:any): Observable<horasAgendadasPorDoctor[]> {
+    const apiUrl = `${environment.apiUrl}/Profesional/obtenerHorasProximasAgendadasPorProfesional`;
+
+
+
+    return this.http.post<horasAgendadasPorDoctor[]>(apiUrl, request)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
+  
   
   modificarDisponibilidadDoctor(request:any): Observable<horasAgendadasPorDoctor[]> {
     const apiUrl = `${environment.apiUrl}/Profesional/modificarDisponibilidadPorProfesional`;

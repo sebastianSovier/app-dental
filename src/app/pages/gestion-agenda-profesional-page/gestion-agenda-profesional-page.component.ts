@@ -93,6 +93,7 @@ dateFilter = (date: Date | null): boolean => {
   cargarAgendaDisponible(): void {
     this.ps.obtenerDiaSinDisponibilidadPorDoctor({ id_profesional: "" }).subscribe({
       next: (response) => {
+        this.loadingService.setLoading(false);
         this.disabledDates = [];
         if (response.length > 0) {
           this.disabledDates = response.map((obj) => new Date(obj.fecha));
@@ -107,19 +108,22 @@ dateFilter = (date: Date | null): boolean => {
             const isDisabled = this.disabledDates.some(
               d => d.toISOString().split('T')[0] === formattedDate 
             );
-  
-            return !isWeekend && !isDisabled;
+            const tomorrow = new Date(this.today);
+            tomorrow.setDate(this.today.getDate());
+          
+            return !isWeekend && !isDisabled && date >= tomorrow;
           };
   
         }else{
-          
+          this.loadingService.setLoading(false);
           this.dateFilter = (date: Date | null): boolean => {
             if (!date) return false;
   
             const day = date.getDay();
             const isWeekend = (day === 0 || day === 6); 
-  
-            return !isWeekend;
+            const tomorrow = new Date(this.today);
+            tomorrow.setDate(this.today.getDate());
+            return !isWeekend && date >= tomorrow;
           };
         }
       },

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { privateGuard } from './auth/guards/private.guard';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import { roleGuard } from './auth/guards/role.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },
@@ -49,7 +50,7 @@ export const routes: Routes = [
     {
         path: 'evaluar-atencion-page',
         loadComponent: () => import('./pages/evaluacion-doctor-page/evaluacion-doctor-page.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     }, 
     {
         path: 'carga-examenes-page',

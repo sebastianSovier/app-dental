@@ -86,7 +86,7 @@ export class ProximasAtencionesPageComponent {
     this.loadingService.setLoading(true);
    
     const request = {id_profesional:"", fechaDesde:this.utilService.getActualDate(),fechaHasta:this.utilService.getFutureDate()};
-    this.ps.obtenerHorasAgendadasPorDoctor(request).subscribe({
+    this.ps.obtenerHorasProximasAgendadasPorProfesional(request).subscribe({
       next: (response1) => {
         this.loadingService.setLoading(false);
         this.horasAgendadasPorDoctor = response1;

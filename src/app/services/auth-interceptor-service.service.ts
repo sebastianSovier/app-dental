@@ -8,6 +8,7 @@ import { UserDataService } from "./user-data.service";
 
 import { LoadingPageService } from "./loading-page.service";
 import { PersistFormDataService } from "./persist-form-data.service";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -20,6 +21,7 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
   private authService = inject(AuthService);
   private UserDataService = inject(UserDataService);
   private formService = inject(PersistFormDataService);
+  private route = inject(Router);
   key: CryptoKey;
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -89,7 +91,7 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
   }
 
   private handleDefaultError(err: HttpErrorResponse, request: HttpRequest<any>): Observable<never> {
-    this.authService.logout();
+    this.authService.logoutService();
     
     sessionStorage.clear();
     this.sweetAlertService.showSweetAlert("reintentar", "errorDefault");
@@ -102,8 +104,8 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
     this.UserDataService.resetData();
     
     sessionStorage.clear();
-    this.sweetAlertService.showSweetAlert("errors.service", "timeoutsession");
-    this.loadingService.setLoading(false);
+    this.sweetAlertService.showSweetAlert("errors", "loginIncorrecto");
+        this.loadingService.setLoading(false);
     return throwError(() => new Error(err.message));
   }
   private handleUnauthorize(err: HttpErrorResponse, request: HttpRequest<any>): Observable<never> {
@@ -111,8 +113,10 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
     this.UserDataService.resetData();
     
     sessionStorage.clear();
-    this.sweetAlertService.showSweetAlert("errors", "loginIncorrecto");
+  
+    this.sweetAlertService.showSweetAlert("errors.service", "timeoutsession");
     this.loadingService.setLoading(false);
+    
     return throwError(() => new Error(err.message));
   }
   private resetReloadCountAfterDelay(): void {

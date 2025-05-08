@@ -17,10 +17,10 @@
           Portal Privado
         </button>
         
-        <button mat-flat-button color="primary" *ngIf="insuredData.currentPortal()?.type_page === 'Paciente'" [disabled]="router.url === '/personal-menu-page'"  (click)="goToMenu()">
+        <button mat-flat-button color="primary" *ngIf="(insuredData.currentPortal()?.type_page === 'Paciente' || insuredData.currentPortal()?.type_page === 'Profesional') && insuredData.currentPortal()?.login" [disabled]="router.url === '/personal-menu-page'"  (click)="goToMenu()">
           Menú
         </button>
-        <button mat-flat-button color="warn" *ngIf="insuredData.currentUser()?.token" (click)="goToLogout()">
+        <button mat-flat-button color="warn" *ngIf="insuredData.currentUser()?.token && insuredData.currentPortal()?.login" (click)="goToLogout()">
           Cerrar Sesión
         </button>
       </div>

@@ -81,9 +81,6 @@ export class SweetAlertService {
         confirmButtonColor: "#d33",
         confirmButtonText: "Entiendo",
       }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigate(["/error-page"]);
-        }
       });
     }
     if (component === "reintentar" && id === "error") {

@@ -89,7 +89,7 @@ export interface horasAgendadasPorPaciente {
   estado:string;
   id_perfil:string;
   dv:string;
-  
+  rut:string;
 
 }
 export interface profesionalesPuntuacion {

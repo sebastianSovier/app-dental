@@ -11,6 +11,8 @@ import { profesionalesResponse } from '@interfaces/personal-data-request.interfa
 import { UserDataService } from '@services/user-data.service';
 import { PreventService } from '@services/prevent.service';
 import { Router } from '@angular/router';
+import { FormGroup, AbstractControl } from '@angular/forms';
+import { ValidationsService } from '@services/validations-forms.service';
 
 @Component({
   selector: 'app-derivar-paciente-dialog',
@@ -20,8 +22,13 @@ import { Router } from '@angular/router';
 })
 export class DerivarPacienteDialogComponent {
   private ps = inject(PersonalServiceService);
+  private validationService = inject(ValidationsService);
+
   private loadingService = inject(LoadingPageService);
   profesionales: profesionalesResponse[] = [];
+  isValidInput = (fieldName: string | number, form: FormGroup) => this.validationService.isValidInput(fieldName, form);
+  errorMessages: Record<string, string> = this.validationService.errorMessages;
+  errors = (control: AbstractControl | null) => this.validationService.errors(control);
    private readonly authSession = inject(UserDataService);
     private readonly insuredData = inject(UserDataService);
     private readonly router = inject(Router);
