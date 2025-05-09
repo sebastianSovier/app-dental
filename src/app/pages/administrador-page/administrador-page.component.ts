@@ -123,10 +123,6 @@ export class AdministradorPageComponent {
       },
     });
   }
-  volverMenu(){
-    this.authService.logout();
-    this.router.navigate(["/inicio"]);
-  }
-  
+
 }
 export default AdministradorPageComponent;

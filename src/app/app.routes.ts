@@ -16,7 +16,7 @@ export const routes: Routes = [
     {
         path: 'agendamiento-usuario-page',
         loadComponent: () => import('./pages/agendamiento-page/agendamiento-page.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     },
     {
         path: 'login-page',
@@ -25,7 +25,7 @@ export const routes: Routes = [
     {
         path: 'crear-contrasena-page',
         loadComponent: () => import('./pages/crear-cuenta/crear-cuenta.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     },
     {
         path: 'personal-menu-page',
@@ -45,7 +45,7 @@ export const routes: Routes = [
     {
         path: 'consulta-medica-page',
         loadComponent: () => import('./pages/consulta-medica-page/consulta-medica-page.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     }, 
     {
         path: 'evaluar-atencion-page',
@@ -55,12 +55,12 @@ export const routes: Routes = [
     {
         path: 'carga-examenes-page',
         loadComponent: () => import('./pages/carga-imagenes-examen/carga-imagenes-examen.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     },
     {
         path: 'visualizar-examenes-page',
         loadComponent: () => import('./pages/visualizar-examenes-paciente/visualizar-examenes-paciente.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     },
     {
         path: 'administrador-page',
@@ -75,12 +75,12 @@ export const routes: Routes = [
     {
         path: 'ver-tratamiento-consulta-page',
         loadComponent: () => import('./pages/tratamientos-consulta-paciente/tratamientos-consulta-paciente.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     },
     {
         path: 'gestionar-agenda-profesional-page',
         loadComponent: () => import('./pages/gestion-agenda-profesional-page/gestion-agenda-profesional-page.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     },  
     {
         path: 'error-page', component: ErrorPageComponent,
