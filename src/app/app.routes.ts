@@ -65,12 +65,12 @@ export const routes: Routes = [
     {
         path: 'administrador-page',
         loadComponent: () => import('./pages/administrador-page/administrador-page.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     },
     {
         path: 'crear-profesional-page',
         loadComponent: () => import('./pages/create-profesional/create-profesional.component').then(m => m.default),
-        canActivate: [privateGuard],
+        canActivate: [privateGuard,roleGuard],
     },  
     {
         path: 'ver-tratamiento-consulta-page',

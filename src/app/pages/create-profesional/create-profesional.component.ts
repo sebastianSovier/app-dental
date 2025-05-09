@@ -23,10 +23,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { OnlyNumbersDirective } from '../../directives/only-numbers.directive';
 import * as rutHelpers from "rut-helpers";
 import { OnlyLettersNumbersDirective } from '../../directives/only-letters-numbers.directive';
+import { OnlyLettersDirective } from '../../directives/only-letters.directive';
 
 @Component({
   selector: 'app-create-profesional',
-  imports: [MatIconModule, MatTooltipModule, OnlyNumbersDirective,OnlyLettersNumbersDirective,OnlyNumbersDirective, MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule ],
+  imports: [MatIconModule, MatTooltipModule, OnlyLettersDirective,OnlyLettersNumbersDirective,OnlyNumbersDirective, MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule ],
   providers: [rutValidator],
 
   templateUrl: './create-profesional.component.html',
@@ -60,14 +61,14 @@ export class CreateProfesionalComponent implements OnInit {
     this.ProfesionalDataForm = this.fb.group(
       {
         rut:  [null, [Validators.required, Validators.maxLength(12), Validators.minLength(7), this.rutValidate]],
-        nombres: [null, [Validators.required,Validators.pattern(/^[a-zA-Z]+$/),Validators.maxLength(80),Validators.minLength(1)]],
-        apellidoPaterno: [null, [Validators.required,Validators.pattern(/^[a-zA-Z]+$/),Validators.maxLength(80),Validators.minLength(1)]],
-        apellidoMaterno: [null, [Validators.required,Validators.pattern(/^[a-zA-Z]+$/),Validators.maxLength(80),Validators.minLength(1)]],
+        nombres: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
+        apellidoPaterno: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
+        apellidoMaterno: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
     
  
         correo: [null, [Validators.email, Validators.required, Validators.pattern('^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$'), Validators.minLength(1),Validators.maxLength(60)]],
         telefono: [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/), Validators.maxLength(8), Validators.minLength(8)]],
-        direccion: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9 ]+$/), Validators.minLength(1),Validators.maxLength(40)]],
+        direccion: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9ÁÉÍÓÚáéíóúÑñ ]+$/), Validators.minLength(1),Validators.maxLength(40)]],
      
         day: [null, [Validators.required, Validators.pattern(/^(0[1-9]|[12][0-9]|3[01])$/), Validators.max(31),Validators.minLength(2), Validators.maxLength(2)]],
         month: [null, [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])$/), Validators.max(12),Validators.minLength(2), Validators.maxLength(2)]],

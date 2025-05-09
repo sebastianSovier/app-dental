@@ -1,13 +1,14 @@
 # Etapa 1: Build Angular
-FROM node:20-alpine as builder
+FROM node:slim AS builder
 
 WORKDIR /app
 
-RUN npm install -g @angular/cli --force
+RUN npm install -g @angular/cli
 
 COPY package*.json ./
-RUN npm install --force
+RUN npm install
 
+RUN npm audit fix || true
 COPY . .
 RUN ng build --configuration production
 

@@ -171,7 +171,7 @@ export class CargaImagenesExamenComponent implements OnInit {
     });
   }
   volverMenu() {
-    this.router.navigate(['/proximas-atenciones-page']);
+    this.router.navigate(['/historial-atenciones-page']);
   }
   ngOnInit(): void {
     this.prevent.preventBackButton();
