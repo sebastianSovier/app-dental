@@ -49,10 +49,14 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
   const isImageUpload = req.url.includes('/cargarImagenExamen'); 
 
   const headers: { [name: string]: string } = {
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${this.authService.token()}`,
-    'X-Q': xsrfToken || ''
-  };
+  'Accept': 'application/json',
+  'X-Q': xsrfToken || ''
+};
+
+const token = this.authService.token();
+if (token) {
+  headers['Authorization'] = `Bearer ${token}`;
+}
 
   if (!isImageUpload) {
     headers['Content-Type'] = 'application/json';
