@@ -15,7 +15,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const loadingService = inject(LoadingPageService);
   if (currentUser.currentUser()?.token !== null && currentUser.currentUser()?.token.length! > 0 && authService.authStatus() === AuthStatus.authenticated && authService.token !== null && authService.token?.toString().length > 0 &&authService.xsrfToken !== null  &&authService.xsrfToken?.toString().length > 0 && currentUser.currentPortal()?.type_page !== null && currentUser.currentPortal()?.type_page.length! > 0) {
     const destinationUrl = state.url;
-    if((destinationUrl.includes("evaluar-atencion-page") || destinationUrl.includes("crear-contrasena-page") || destinationUrl.includes("ver-tratamiento-consulta-page") || destinationUrl.includes("visualizar-examenes-page")
+    if((destinationUrl.includes("evaluar-atencion-page") || destinationUrl.includes("crear-contrasena-page") || destinationUrl.includes("visualizar-examenes-page")
       ||destinationUrl.includes("agendamiento-usuario-page")) && currentUser.currentPortal()?.type_page !== "Paciente"){
       logout();
       return false;
@@ -26,6 +26,11 @@ export const roleGuard: CanActivateFn = (route, state) => {
       return false;
     }
     if(((destinationUrl.includes("gestionar-agenda-profesional-page") || destinationUrl.includes("carga-examenes-page") || destinationUrl.includes("consulta-medica-page"))  && currentUser.currentPortal()?.type_page !== "Profesional")){
+      logout();
+      return false;
+    }
+    
+    if(destinationUrl.includes("ver-tratamiento-consulta-page") && (currentUser.currentPortal()?.type_page !== "Profesional" && currentUser.currentPortal()?.type_page !== "Paciente")){
       logout();
       return false;
     }
