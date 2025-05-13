@@ -62,6 +62,7 @@ export class AdministradorPageComponent {
     this.router.navigate(["/crear-profesional-page"]);
   }
   modificarPerfil(element:profesionalesResponse){
+    if(element.id_perfil !== "3"){
     element
     const dialogRef = this.dialog.open(ModificarPerfilDialogComponent, {
       width: '600px',
@@ -95,7 +96,9 @@ export class AdministradorPageComponent {
       }
     });
   }
+  }
   eliminarUsuario(element:profesionalesResponse){
+    if(element.id_perfil !== "3"){
     this.loadingService.setLoading(true);
     this.ps.eliminarUsuario(element.rut+element.dv).subscribe({
       next: (response1) => {
@@ -107,6 +110,7 @@ export class AdministradorPageComponent {
         this.loadingService.setLoading(false);
       },
     });
+  }
   }
   obtenerUsuarios() {
     this.loadingService.setLoading(true);

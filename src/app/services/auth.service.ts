@@ -8,6 +8,7 @@ import { emptyResponse } from "@interfaces/personal-data-request.interface";
 import { HttpClient } from "@angular/common/http";
 import { InsuredUser, PacienteRequest } from "@interfaces/services.interface";
 import { CurrentPortal } from "@interfaces/currentPortal.interface";
+import { SweetAlertService } from "./sweet-alert.service";
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class AuthService {
 
 
   private readonly insuredData = inject(UserDataService);
-
+  private readonly sweetAlert = inject(SweetAlertService);
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
   private _token = signal<string | null>(null);
   private _xsrfToken = signal<string | null>(null);
@@ -29,12 +30,26 @@ export class AuthService {
   public token = computed(() => this._token());
   public xsrfToken = computed(() => this._xsrfToken());
 
-  private setAuthentication(loginResponse: LoginResponse): boolean {
+  private setAuthentication(loginResponse: LoginResponse): any {
     const { access_Token,id,login,auth,message } = loginResponse;
     if(!access_Token || !auth ) {
-      this.logout();
+
+      this._authStatus.set(AuthStatus.notAuthenticated);
+      this._token.set(null);
+       if (message && message.length > 0 && message ==="Agende hora a traves de su portal privado."){
+        this.sweetAlert.showSweetAlert("errors", "passwordExiste");
+        return false;
+      }
+      this.logoutService().subscribe({
+        next: () => {
+      this.sweetAlert.showSweetAlert("errors.validations", "userNoValidate")
+    return false},
+        error: () => {this.sweetAlert.showSweetAlert("errors.validations", "userNoValidate")
+    return false}
+      });
       return false;
     }
+   
     this._token.set(access_Token);  
     this._authStatus.set(AuthStatus.authenticated);
     sessionStorage.setItem("accessToken", access_Token);
@@ -56,13 +71,17 @@ export class AuthService {
       idAgendamiento: "",
     }
     this.insuredData.setInsuredUser(user);
+       if(message && message.length > 0 && message === "Cree contraseña para continuar.") {
+        this.sweetAlert.showSweetAlert("errors", "creeContrasena");
+        return {message:message,auth:false};
+      }
     return true;
   }
   public setXsrfToken(token: string): boolean {
     this._xsrfToken.set(token);
     return true;
   }
-  loginPacientes(loginRequest:any): Observable<Object | boolean> {
+  loginPacientes(loginRequest:any): Observable<any> {
     const url = `${environment.apiUrl}/Authentication/loginPaciente`;
 
 
@@ -76,7 +95,7 @@ export class AuthService {
       )
     );
   }
-  withoutLoginPacientes(loginRequest:any): Observable<Object | boolean> {
+  withoutLoginPacientes(loginRequest:any): Observable<any> {
     const url = `${environment.apiUrl}/Authentication/withoutLoginPaciente`;
 
 
@@ -90,7 +109,7 @@ export class AuthService {
       )
     );
   }
-  loginProfesional(loginRequest:any): Observable<Object | boolean> {
+  loginProfesional(loginRequest:any): Observable<boolean> {
     const url = `${environment.apiUrl}/Authentication/loginProfesional`;
 
 

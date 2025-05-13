@@ -32,6 +32,32 @@ export class SweetAlertService {
         this.router.navigate(["error-page"]);
       });
     }
+    if (component === "errors" && id === "creeContrasena") {
+      Swal.fire({
+        html: `<h1>Mensaje Sistema</h1>Cree contraseña para continuar.`,
+        icon: "warning",
+         showConfirmButton: true,
+        draggable:false,
+        allowOutsideClick:false,
+        customClass: { confirmButton: "btn btn-warning" },
+        buttonsStyling: true,
+      }).then(() => {
+        this.router.navigate(["crear-contrasena-page"]);
+      });
+    }
+    if (component === "errors" && id === "poseecuenta") {
+      Swal.fire({
+        html: `<h1>Mensaje Sistema</h1>Cree contraseña para continuar.`,
+        icon: "warning",
+         showConfirmButton: true,
+        draggable:false,
+        allowOutsideClick:false,
+        customClass: { confirmButton: "btn btn-warning" },
+        buttonsStyling: true,
+      }).then(() => {
+        this.router.navigate(["crear-contrasena-page"]);
+      });
+    }
     if (component === "crearCuenta" && id === "exitoso") {
       Swal.fire({
         html: `<h1>Mensaje Sistema</h1>Su cuenta ha sido creada con éxito, será redirigido a la página de inicio sesión.`,

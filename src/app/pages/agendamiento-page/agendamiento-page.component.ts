@@ -333,10 +333,20 @@ export class AgendamientoPageComponent implements OnInit {
       const loginRequest = {rut:rutWithoutDot};
       this.authService.withoutLoginPacientes(loginRequest).subscribe({
         next: (response1) => {
-          if (typeof response1 === 'object' && response1 !== null) {
+          if (!response1 || response1.auth === false) {
             this.loadingService.setLoading(false);
-            const response = response1 as { message: string };
-            response && response.message === "Agende hora a traves de su portal privado." ? this.sweetAlertService.showSweetAlert("errors", "passwordExiste") : this.sweetAlertService.showSweetAlert("errors", "CrearContrasena");
+            if(response1.message === "Cree contraseña para continuar."){
+            this.ps.fetchXsrfToken().subscribe({
+            next: (response) => {
+              this.authService.setXsrfToken(response.token);
+              this.loadingService.setLoading(false);
+            },
+            error: (error: any) => {
+              console.log(error);
+              this.loadingService.setLoading(false);
+            },
+          });
+            }
           }else{
           this.ps.fetchXsrfToken().subscribe({
             next: (response1) => {
