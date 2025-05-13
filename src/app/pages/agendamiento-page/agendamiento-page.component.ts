@@ -80,7 +80,7 @@ export class AgendamientoPageComponent implements OnInit {
     this.PersonalDataForm = this.fb.group(
       {
         rut:  [null, [Validators.required, Validators.maxLength(12), Validators.minLength(7), this.rutValidate]],
-        nombres: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
+        nombres: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
         apellidoPaterno: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
         apellidoMaterno: [null, [Validators.required,Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/),Validators.maxLength(80),Validators.minLength(1)]],
       },

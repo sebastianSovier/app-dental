@@ -145,6 +145,7 @@ isHoraCercana(hora:string): boolean {
       if (result.isConfirmed) {
         this.loadingService.setLoading(true);
         const eliminarCita :eliminarCitaPaciente = {id_agendamiento: element.id_agendamiento.toString()};
+        if(this.insuredData.currentPortal()?.type_page === "Paciente"){
         this.ps.eliminarAgendamientoPaciente(eliminarCita).subscribe({
           next: (response1) => {
             this.obtenerAgendamientoPaciente();
@@ -155,7 +156,19 @@ isHoraCercana(hora:string): boolean {
             this.loadingService.setLoading(false);
           },
         });
+      }else{
+         this.ps.eliminarAgendamientoPacienteByProfesional(eliminarCita).subscribe({
+          next: (response1) => {
+            this.obtenerAgendamientoDoctor();
+            console.log(response1);
+          },
+          error: (error: any) => {
+            console.log(error);
+            this.loadingService.setLoading(false);
+          },
+        });
       }
+    }
     });
       
    

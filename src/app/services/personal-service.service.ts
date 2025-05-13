@@ -261,6 +261,17 @@ export class PersonalServiceService {
         catchError(err => throwError(() => err))
       )
   }
+   eliminarAgendamientoPacienteByProfesional(request:eliminarCitaPaciente): Observable<LoginResponse> {
+    const apiUrl = `${environment.apiUrl}/Profesional/eliminarAgendamientoPaciente`;
+
+
+
+    return this.http.post<LoginResponse>(apiUrl, request)
+      .pipe(
+        map((data) => data),
+        catchError(err => throwError(() => err))
+      )
+  }
   confirmarAgendamientoPaciente(request:eliminarCitaPaciente): Observable<LoginResponse> {
     const apiUrl = `${environment.apiUrl}/Paciente/ConfirmarAgendamientoPaciente`;
 
