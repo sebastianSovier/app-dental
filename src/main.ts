@@ -8,6 +8,9 @@ import { enableProdMode } from '@angular/core';
 
 if (environment.production) {
   enableProdMode();
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('ngsw-worker.js');
+  }
 
   if (window) {
     window.console.log = () => {};

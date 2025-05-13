@@ -16,7 +16,6 @@ import { UserDataService } from '@services/user-data.service';
 import { ValidationsService } from '@services/validations-forms.service';
 import { MatDatepickerModule  } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { T } from '@angular/cdk/portal-directives.d-efec58af';
 @Component({
   selector: 'app-gestion-agenda-profesional-page',
   imports: [ReactiveFormsModule,CommonModule,MatFormFieldModule, MatCardModule,MatInputModule,MatSliderModule,MatButtonModule,

@@ -1,7 +1,7 @@
 import {
   ApplicationConfig,
   LOCALE_ID,
-  provideZoneChangeDetection,
+  provideZoneChangeDetection, isDevMode,
 } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -22,6 +22,7 @@ import localeEsCL from '@angular/common/locales/es-CL'; // Importa el locale par
 
 import { AuthInterceptorServiceService } from './services/auth-interceptor-service.service';
 import { registerLocaleData } from '@angular/common';
+import { provideServiceWorker } from '@angular/service-worker';
 registerLocaleData(localeEsCL, 'es-CL');
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -46,6 +47,9 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorServiceService,
       multi: true,
-    },
+    }, provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 };
