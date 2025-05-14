@@ -13,10 +13,11 @@ import { UtilsService } from '@services/utils.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { SweetAlertService } from '@services/sweet-alert.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-proximas-atenciones-page',
-  imports: [MatTableModule, MatButtonModule, MatIconModule, MatCardModule,CommonModule],
+  imports: [MatTooltipModule,MatTableModule, MatButtonModule, MatIconModule, MatCardModule,CommonModule],
   templateUrl: './proximas-atenciones-page.component.html',
   styleUrl: './proximas-atenciones-page.component.scss',
 })

@@ -32,11 +32,11 @@
           <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="primary" aria-label="cargar examenes médicos"
+              <button mat-icon-button color="primary" matTooltip="Cargar exámenes medicos" aria-label="cargar examenes médicos"
                 [disabled]="element.consulta_realizada === '0'" (click)="cargarExamenesMedicos(element)">
                 <mat-icon>upload</mat-icon>
               </button>
-              <button mat-icon-button color="primary" aria-label="Ver tratamiendo"
+              <button mat-icon-button color="primary" matTooltip="Ver tratamientos" aria-label="Ver tratamiendo"
               [disabled]="element.consulta_realizada === '0'" (click)="verTratamientoConsulta(element)">
               <mat-icon>history</mat-icon> 
             </button>
@@ -94,15 +94,15 @@
           <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="primary" aria-label="descarga examenes"
+              <button mat-icon-button color="primary" matTooltip="Descargar exámenes médicos" aria-label="descarga examenes"
                 [disabled]="element.consulta_realizada === '0'" (click)="descargarExamenesMedicos(element)">
                 <mat-icon>file_download</mat-icon>
               </button>
-              <button mat-icon-button color="accent" aria-label="evaluar"
+              <button mat-icon-button color="accent" matTooltip="Evaluar atención" aria-label="evaluar"
                 [disabled]="element.consulta_realizada === '0' || element.puntuacion_realizada" (click)="evaluarAtencion(element)">
                 <mat-icon>star_rate</mat-icon>
               </button>
-              <button mat-icon-button color="primary" aria-label="Ver tratamiendo"
+              <button mat-icon-button color="primary" matTooltip="Ver tratamientos" aria-label="Ver tratamiendo"
               [disabled]="element.consulta_realizada === '0'" (click)="verTratamientoConsulta(element)">
               <mat-icon>history</mat-icon> 
             </button>

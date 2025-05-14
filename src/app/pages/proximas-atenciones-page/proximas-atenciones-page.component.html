@@ -33,11 +33,11 @@
             [disabled]="element.consulta_realizada === '0'" (click)="cargarExamenesMedicos(element)">
             <mat-icon>upload</mat-icon>
           </button>--> 
-            <button mat-icon-button color="primary" aria-label="consulta médica"
+            <button mat-icon-button color="primary" matTooltip="Ingresar a consulta médica" aria-label="Consulta médica"
             [disabled]="element.consulta_realizada === '1' || !isHoraCercana(element.hora)" (click)="ingresarConsulta(element)">
             <mat-icon>medical_services</mat-icon>
             </button>
-            <button mat-icon-button color="warn" aria-label="eliminar"
+            <button mat-icon-button color="warn" matTooltip="Eliminar cita" aria-label="Eliminar"
               [disabled]="element.consulta_realizada === '1'" (click)="eliminarCita(element)">
               <mat-icon>delete</mat-icon>
             </button>
@@ -87,15 +87,15 @@
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" aria-label="modificar"
+            <button mat-icon-button color="primary" matTooltip="Modificar cita" aria-label="modificar"
               [disabled]="element.consulta_realizada === '1' || element.estado === 'CONFIRMADO'"  (click)="modificarCita(element)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="accent" aria-label="confirmar"
+            <button mat-icon-button color="accent" matTooltip="Confirmar cita" aria-label="confirmar"
               [disabled]="element.consulta_realizada === '1' || element.estado === 'CONFIRMADO'" (click)="confirmarCita(element)">
               <mat-icon>check_circle</mat-icon>
             </button>
-            <button mat-icon-button color="warn" aria-label="eliminar"
+            <button mat-icon-button color="warn" matTooltip="Eliminar cita" aria-label="eliminar"
               [disabled]="element.consulta_realizada === '1' || element.estado === 'CONFIRMADO'"  (click)="eliminarCita(element)">
               <mat-icon>delete</mat-icon>
             </button>

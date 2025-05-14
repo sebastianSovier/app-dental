@@ -13,10 +13,11 @@ import { PreventService } from '@services/prevent.service';
 import { UserDataService } from '@services/user-data.service';
 import { UtilsService } from '@services/utils.service';
 import { DerivarPacienteDialogComponent } from '../derivar-paciente-dialog/derivar-paciente-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-historial-atenciones-page',
-  imports: [MatTableModule, MatButtonModule, MatIconModule, MatCardModule,CommonModule],
+  imports: [MatTooltipModule,MatTableModule, MatButtonModule, MatIconModule, MatCardModule,CommonModule],
   templateUrl: './historial-atenciones-page.component.html',
   styleUrl: './historial-atenciones-page.component.scss'
 })
