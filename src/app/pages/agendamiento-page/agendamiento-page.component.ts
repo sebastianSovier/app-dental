@@ -25,6 +25,7 @@ import { PreventService } from '@services/prevent.service';
 import { MatIconModule } from '@angular/material/icon';
 import { OnlyLettersDirective } from '../../directives/only-letters.directive';
 import { OnlyLettersNumbersDirective } from '../../directives/only-letters-numbers.directive';
+import { UtilsService } from '@services/utils.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class AgendamientoPageComponent implements OnInit {
   private loadingService = inject(LoadingPageService);
   private readonly authSession = inject(UserDataService);
   private readonly authService = inject(AuthService);
+  private readonly utilService = inject(UtilsService);
   private readonly router = inject(Router);
   type_page: string | undefined = "";
   disabled = this.loadingService.submitButtonDisabled$;
@@ -140,9 +142,16 @@ export class AgendamientoPageComponent implements OnInit {
     }
     return match;
   });
+  const fechaHastaStr = this.utilService.getFutureDate(); // ej: '15/06/2025'
+  const [dayF, monthF, yearF] = fechaHastaStr.split('/');
+  const fechaHasta = new Date(+yearF, +monthF - 1, +dayF); // Mes 0-indexed
 
-  return !isWeekend && !isDisabled;
-}
+  const isAfterLimit = date > fechaHasta;
+  if (isAfterLimit) {
+    console.log('Fecha fuera del rango permitido:', formattedDate);
+  }
+  return !isWeekend && !isDisabled && !isAfterLimit;
+};
 
   onEmailnInput(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -167,7 +176,15 @@ export class AgendamientoPageComponent implements OnInit {
               d => d.toISOString().split('T')[0] === formattedDate 
             );
   
-            return !isWeekend && !isDisabled;
+              const fechaHastaStr = this.utilService.getFutureDate(); // ej: '15/06/2025'
+          const [dayF, monthF, yearF] = fechaHastaStr.split('/');
+          const fechaHasta = new Date(+yearF, +monthF - 1, +dayF); // Mes 0-indexed
+
+        const isAfterLimit = date > fechaHasta;
+          if (isAfterLimit) {
+         console.log('Fecha fuera del rango permitido:', formattedDate);
+          }
+          return !isWeekend && !isDisabled && !isAfterLimit;
           };
   
         }else{
@@ -178,7 +195,14 @@ export class AgendamientoPageComponent implements OnInit {
             const day = date.getDay();
             const isWeekend = (day === 0 || day === 6); 
   
-            return !isWeekend;
+              const fechaHastaStr = this.utilService.getFutureDate(); // ej: '15/06/2025'
+          const [dayF, monthF, yearF] = fechaHastaStr.split('/');
+          const fechaHasta = new Date(+yearF, +monthF - 1, +dayF); // Mes 0-indexed
+
+        const isAfterLimit = date > fechaHasta;
+          if (isAfterLimit) {
+          }
+          return !isWeekend  && !isAfterLimit;
           };
         }
       },

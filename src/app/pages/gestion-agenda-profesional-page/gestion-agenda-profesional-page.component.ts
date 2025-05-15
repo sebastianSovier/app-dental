@@ -16,6 +16,7 @@ import { UserDataService } from '@services/user-data.service';
 import { ValidationsService } from '@services/validations-forms.service';
 import { MatDatepickerModule  } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { UtilsService } from '@services/utils.service';
 @Component({
   selector: 'app-gestion-agenda-profesional-page',
   imports: [ReactiveFormsModule,CommonModule,MatFormFieldModule, MatCardModule,MatInputModule,MatSliderModule,MatButtonModule,
@@ -38,6 +39,7 @@ export class GestionAgendaProfesionalPageComponent implements OnInit {
   private loadingService = inject(LoadingPageService);
   private readonly authSession = inject(UserDataService);
   private readonly router = inject(Router);
+  private readonly utilService = inject(UtilsService);
   private readonly sweetAlertService = inject(SweetAlertService);
   disabled = this.loadingService.submitButtonDisabled$;
   private ps = inject(PersonalServiceService);
@@ -85,8 +87,13 @@ dateFilter = (date: Date | null): boolean => {
   const day = date.getDay();
   const tomorrow = new Date(this.today);
   tomorrow.setDate(this.today.getDate());
+    const fechaHastaStr = this.utilService.getFutureDate();
+          const [dayF, monthF, yearF] = fechaHastaStr.split('/');
+          const fechaHasta = new Date(+yearF, +monthF - 1, +dayF);
 
-  return day !== 0 && day !== 6 && date >= tomorrow;
+        const isAfterLimit = date > fechaHasta;
+
+  return day !== 0 && day !== 6 && date >= tomorrow && !isAfterLimit;
 };
 
   cargarAgendaDisponible(): void {
@@ -109,8 +116,12 @@ dateFilter = (date: Date | null): boolean => {
             );
             const tomorrow = new Date(this.today);
             tomorrow.setDate(this.today.getDate());
-          
-            return !isWeekend && !isDisabled && date >= tomorrow;
+          const fechaHastaStr = this.utilService.getFutureDate();
+          const [dayF, monthF, yearF] = fechaHastaStr.split('/');
+          const fechaHasta = new Date(+yearF, +monthF - 1, +dayF);
+
+        const isAfterLimit = date > fechaHasta;
+            return !isWeekend && !isDisabled && date >= tomorrow && !isAfterLimit;
           };
   
         }else{
@@ -122,7 +133,12 @@ dateFilter = (date: Date | null): boolean => {
             const isWeekend = (day === 0 || day === 6); 
             const tomorrow = new Date(this.today);
             tomorrow.setDate(this.today.getDate());
-            return !isWeekend && date >= tomorrow;
+             const fechaHastaStr = this.utilService.getFutureDate();
+          const [dayF, monthF, yearF] = fechaHastaStr.split('/');
+          const fechaHasta = new Date(+yearF, +monthF - 1, +dayF);
+
+        const isAfterLimit = date > fechaHasta;
+            return !isWeekend && date >= tomorrow && !isAfterLimit;
           };
         }
       },
