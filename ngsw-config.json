@@ -8,7 +8,6 @@
       "resources": {
         "files": [
           "/favicon.ico",
-          "/index.csr.html",
           "/index.html",
           "/manifest.webmanifest",
           "/*.css",
@@ -26,11 +25,12 @@
         ]
       }
     }
-  ], "dataGroups": [
+  ],
+  "dataGroups": [
     {
       "name": "api-data",
       "urls": [
-        "https://api.sistema-de-autoatencion-odontologico-iplacex.click:443/api"
+        "https://api.sistema-de-autoatencion-odontologico-iplacex.click:443/api/**"
       ],
       "cacheConfig": {
         "maxSize": 100,
