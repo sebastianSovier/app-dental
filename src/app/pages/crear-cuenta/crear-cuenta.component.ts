@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-crear-cuenta',
-  imports: [MatButtonModule, MatCardModule,MatIconModule, MatFormFieldModule,MatInputModule,ReactiveFormsModule, FormsModule, CommonModule,],
+  imports: [MatButtonModule, MatCardModule, MatIconModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, FormsModule],
 
   templateUrl: './crear-cuenta.component.html',
   styleUrl: './crear-cuenta.component.scss'

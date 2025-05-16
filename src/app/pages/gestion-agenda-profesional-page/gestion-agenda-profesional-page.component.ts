@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, AbstractControl, FormControl, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,16 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { UtilsService } from '@services/utils.service';
 @Component({
   selector: 'app-gestion-agenda-profesional-page',
-  imports: [ReactiveFormsModule,CommonModule,MatFormFieldModule, MatCardModule,MatInputModule,MatSliderModule,MatButtonModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-  ],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatCardModule, MatInputModule, MatSliderModule, MatButtonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './gestion-agenda-profesional-page.component.html',
   styleUrl: './gestion-agenda-profesional-page.component.scss'
 })

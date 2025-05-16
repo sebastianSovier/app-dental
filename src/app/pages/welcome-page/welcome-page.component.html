@@ -20,29 +20,34 @@
   </div>
 
   <div class="doctor-cards-grid">
-    <mat-card *ngFor="let profesional of profesionalesPuntaje" class="doctor-card mat-elevation-z3">
-      <mat-card-header>
-        <mat-card-title>{{ profesional.nombres | uppercase }} {{ profesional.apellido_paterno | uppercase }} {{ profesional.apellido_materno | uppercase}}</mat-card-title>
-        <mat-card-subtitle>{{ profesional.especialidad | uppercase}}</mat-card-subtitle>
-      </mat-card-header>
-
-      <mat-card-content *ngIf="profesional.puntaje_general && profesional.empatia && profesional.claridad && profesional.cordialidad && profesional.nivel_satisfaccion && profesional.recomendacion && profesional.puntualidad">
-        <div class="ratings-grid">
-          <div class="rating" *ngFor="let item of [
-            { label: 'Empatía', value: profesional.empatia },
-            { label: 'Claridad', value: profesional.claridad },
-            { label: 'Cordialidad', value: profesional.cordialidad },
-            { label: 'Satisfacción', value: profesional.nivel_satisfaccion },
-            { label: 'Recomendación', value: profesional.recomendacion },
-            { label: 'Puntualidad', value: profesional.puntualidad }
-          ]">
-            <span class="label" [title]="item.label">⭐ {{ item.label }}</span>
-            <mat-progress-bar mode="determinate" [value]="getNumber(item.value)"></mat-progress-bar>
-            <span class="value">{{ item.value }}</span>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    @for (profesional of profesionalesPuntaje; track profesional) {
+      <mat-card class="doctor-card mat-elevation-z3">
+        <mat-card-header>
+          <mat-card-title>{{ profesional.nombres | uppercase }} {{ profesional.apellido_paterno | uppercase }} {{ profesional.apellido_materno | uppercase}}</mat-card-title>
+          <mat-card-subtitle>{{ profesional.especialidad | uppercase}}</mat-card-subtitle>
+        </mat-card-header>
+        @if (profesional.puntaje_general && profesional.empatia && profesional.claridad && profesional.cordialidad && profesional.nivel_satisfaccion && profesional.recomendacion && profesional.puntualidad) {
+          <mat-card-content>
+            <div class="ratings-grid">
+              @for (item of [
+                { label: 'Empatía', value: profesional.empatia },
+                { label: 'Claridad', value: profesional.claridad },
+                { label: 'Cordialidad', value: profesional.cordialidad },
+                { label: 'Satisfacción', value: profesional.nivel_satisfaccion },
+                { label: 'Recomendación', value: profesional.recomendacion },
+                { label: 'Puntualidad', value: profesional.puntualidad }
+                ]; track item) {
+                <div class="rating">
+                  <span class="label" [title]="item.label">⭐ {{ item.label }}</span>
+                  <mat-progress-bar mode="determinate" [value]="getNumber(item.value)"></mat-progress-bar>
+                  <span class="value">{{ item.value }}</span>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        }
+      </mat-card>
+    }
   </div>
 </section>
 

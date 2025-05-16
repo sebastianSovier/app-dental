@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { MatMenuModule } from '@angular/material/menu';
 import {
   Component,
@@ -27,13 +27,11 @@ import { LoadingPageService } from '@services/loading-page.service';
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    CommonModule,
     MatMenuModule,
     MatButtonModule,
     MatButtonModule,
-    
     MatIconModule
-  ],
+],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })

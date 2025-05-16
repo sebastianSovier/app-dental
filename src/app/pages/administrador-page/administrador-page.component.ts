@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +17,7 @@ import { ModificarPerfilDialogComponent } from '../modificar-perfil-dialog/modif
 
 @Component({
   selector: 'app-administrador-page',
-  imports: [MatTableModule, MatButtonModule, MatIconModule, MatCardModule,CommonModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule, MatCardModule],
   templateUrl: './administrador-page.component.html',
   styleUrl: './administrador-page.component.scss'
 })

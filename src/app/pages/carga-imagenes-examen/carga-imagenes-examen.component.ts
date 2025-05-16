@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,12 +34,11 @@ import { SweetAlertService } from '@services/sweet-alert.service';
     MatOptionModule,
     ReactiveFormsModule,
     FormsModule,
-    CommonModule,
     MatStepperModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule
-  ],
+],
   templateUrl: './carga-imagenes-examen.component.html',
   styleUrl: './carga-imagenes-examen.component.scss',
 })

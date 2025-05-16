@@ -9,9 +9,11 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Contraseña</mat-label>
           <input matInput formControlName="contrasena" type="password" minlength="8" maxlength="20" required />
-          <mat-error *ngIf="crearCuentaForm.get('contrasena')?.invalid">
-            La contraseña debe tener mas de 8 caracteres.
-          </mat-error>
+          @if (crearCuentaForm.get('contrasena')?.invalid) {
+            <mat-error>
+              La contraseña debe tener mas de 8 caracteres.
+            </mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -20,14 +22,18 @@
           <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" aria-label="Toggle password visibility">
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
-          <mat-error *ngIf="crearCuentaForm.get('repetirContrasena')?.invalid">
-            Debes repetir correctamente la contraseña.
-          </mat-error>
+          @if (crearCuentaForm.get('repetirContrasena')?.invalid) {
+            <mat-error>
+              Debes repetir correctamente la contraseña.
+            </mat-error>
+          }
         </mat-form-field>
 
-        <div *ngIf="crearCuentaForm.errors?.['passwordMismatch']" class="mat-error-p">
-          Las contraseñas no coinciden.
-        </div>
+        @if (crearCuentaForm.errors?.['passwordMismatch']) {
+          <div class="mat-error-p">
+            Las contraseñas no coinciden.
+          </div>
+        }
       </div>
 
       <div class="form-buttons">

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,7 +23,7 @@ import { SweetAlertService } from '@services/sweet-alert.service';
 
 @Component({
   selector: 'app-login-page',
-  imports: [MatButtonModule, MatTabsModule,MatFormFieldModule,MatInputModule,ReactiveFormsModule, FormsModule, CommonModule,MatIconModule],
+  imports: [MatButtonModule, MatTabsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, FormsModule, MatIconModule],
   templateUrl: './login-page.component.html',
   providers: [rutValidator],
   styleUrl: './login-page.component.scss'

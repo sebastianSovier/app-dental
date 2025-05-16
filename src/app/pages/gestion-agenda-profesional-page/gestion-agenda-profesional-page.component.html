@@ -1,32 +1,36 @@
 <mat-card class="form-card">
-    <h2>Seleccionar los días de cierre de agenda</h2>
-  
-    <form [formGroup]="formModificarDisponibilidad" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Rango de fechas</mat-label>
-            
-            <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeGroup" [dateFilter]="dateFilter">
-              <input matStartDate formControlName="start" placeholder="Desde" (click)="picker.open()" (focus)="picker.open()" readonly>
-              <input matEndDate formControlName="end" placeholder="Hasta" (click)="picker.open()" (focus)="picker.open()" readonly>
-            </mat-date-range-input>
-          
-            <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
-            
-            <mat-date-range-picker #picker></mat-date-range-picker>
-            <mat-error *ngIf="isValidInput('start', dateRangeGroup) ">
-              <ng-container *ngFor="let error of errors(dateRangeGroup.get('start'))">
-                {{ errorMessages[error] }}<br />
-              </ng-container>
-            </mat-error>
-            <mat-error *ngIf="isValidInput('end', dateRangeGroup)">
-              <ng-container *ngFor="let error of errors(dateRangeGroup.get('end'))">
-                {{ errorMessages[error] }}<br />
-              </ng-container>
-            </mat-error>
-          </mat-form-field>
-  
-      <button mat-raised-button color="primary" type="submit" [disabled]="!formModificarDisponibilidad.valid">Guardar</button>
-      <button mat-button type="button" (click)="volverMenu()" >Volver</button>
+  <h2>Seleccionar los días de cierre de agenda</h2>
 
-    </form>
-  </mat-card>
+  <form [formGroup]="formModificarDisponibilidad" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Rango de fechas</mat-label>
+
+      <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeGroup" [dateFilter]="dateFilter">
+        <input matStartDate formControlName="start" placeholder="Desde" (click)="picker.open()" (focus)="picker.open()" readonly>
+        <input matEndDate formControlName="end" placeholder="Hasta" (click)="picker.open()" (focus)="picker.open()" readonly>
+      </mat-date-range-input>
+
+      <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+
+      <mat-date-range-picker #picker></mat-date-range-picker>
+      @if (isValidInput('start', dateRangeGroup) ) {
+        <mat-error>
+          @for (error of errors(dateRangeGroup.get('start')); track error) {
+            {{ errorMessages[error] }}<br />
+          }
+        </mat-error>
+      }
+      @if (isValidInput('end', dateRangeGroup)) {
+        <mat-error>
+          @for (error of errors(dateRangeGroup.get('end')); track error) {
+            {{ errorMessages[error] }}<br />
+          }
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!formModificarDisponibilidad.valid">Guardar</button>
+    <button mat-button type="button" (click)="volverMenu()" >Volver</button>
+
+  </form>
+</mat-card>

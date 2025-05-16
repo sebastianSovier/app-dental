@@ -4,16 +4,20 @@
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Seleccionar profesional</mat-label>
     <mat-select [(value)]="profesionalSeleccionado">
-        <mat-option [value]="profesionalSeleccionado" disabled *ngIf="profesional">
-            {{ profesional.nombres | uppercase }} 
-            {{ profesional.apellido_paterno | uppercase }} 
-            {{ profesional.apellido_materno | uppercase }}
-          </mat-option>
-      <mat-option *ngFor="let profesional of profesionales" [value]="profesional.id_profesional">
-        {{ profesional.nombres | uppercase }} {{ profesional.apellido_paterno | uppercase }} {{ profesional.apellido_materno | uppercase }}
-      </mat-option>
+      @if (profesional) {
+        <mat-option [value]="profesionalSeleccionado" disabled>
+          {{ profesional.nombres | uppercase }}
+          {{ profesional.apellido_paterno | uppercase }}
+          {{ profesional.apellido_materno | uppercase }}
+        </mat-option>
+      }
+      @for (profesional of profesionales; track profesional) {
+        <mat-option [value]="profesional.id_profesional">
+          {{ profesional.nombres | uppercase }} {{ profesional.apellido_paterno | uppercase }} {{ profesional.apellido_materno | uppercase }}
+        </mat-option>
+      }
     </mat-select>
-   
+
   </mat-form-field>
 </mat-dialog-content>
 

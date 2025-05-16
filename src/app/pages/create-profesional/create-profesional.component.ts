@@ -12,7 +12,7 @@ import { UserDataService } from '@services/user-data.service';
 import { ValidationsService } from '@services/validations-forms.service';
 import { rutValidator } from '../../directives/rut-validator';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -27,7 +27,7 @@ import { OnlyLettersDirective } from '../../directives/only-letters.directive';
 
 @Component({
   selector: 'app-create-profesional',
-  imports: [MatIconModule, MatTooltipModule, OnlyLettersDirective,OnlyLettersNumbersDirective,OnlyNumbersDirective, MatInputModule,MatButtonModule,MatSelectModule,MatOptionModule, ReactiveFormsModule, FormsModule, CommonModule,MatStepperModule,MatDatepickerModule,MatNativeDateModule ],
+  imports: [MatIconModule, MatTooltipModule, OnlyLettersDirective, OnlyLettersNumbersDirective, OnlyNumbersDirective, MatInputModule, MatButtonModule, MatSelectModule, MatOptionModule, ReactiveFormsModule, FormsModule, MatStepperModule, MatDatepickerModule, MatNativeDateModule],
   providers: [rutValidator],
 
   templateUrl: './create-profesional.component.html',

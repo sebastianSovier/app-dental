@@ -4,11 +4,13 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>RUT</mat-label>
         <input matInput formControlName="rut" (input)="setFormatRut($event)" minlength="7" maxlength="12" required />
-        <mat-error *ngIf="isValidInput('rut', loginPacientesForm)">
-          <ng-container *ngFor="let error of errors(loginPacientesForm.get('rut'))">
-            {{ errorMessages[error] }}<br />
-          </ng-container>
-        </mat-error>
+        @if (isValidInput('rut', loginPacientesForm)) {
+          <mat-error>
+            @for (error of errors(loginPacientesForm.get('rut')); track error) {
+              {{ errorMessages[error] }}<br />
+            }
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
@@ -17,11 +19,13 @@
         <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" aria-label="Toggle password visibility">
           <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
-        <mat-error *ngIf="isValidInput('contrasena', loginPacientesForm)">
-          <ng-container *ngFor="let error of errors(loginPacientesForm.get('contrasena'))">
-            {{ errorMessages[error] }}<br />
-          </ng-container>
-        </mat-error>
+        @if (isValidInput('contrasena', loginPacientesForm)) {
+          <mat-error>
+            @for (error of errors(loginPacientesForm.get('contrasena')); track error) {
+              {{ errorMessages[error] }}<br />
+            }
+          </mat-error>
+        }
       </mat-form-field>
 
       <div class="button-group">
@@ -36,11 +40,13 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>RUT</mat-label>
         <input matInput formControlName="rut" (input)="setFormatRutProfesional($event)" minlength="7" maxlength="12" required />
-        <mat-error *ngIf="isValidInput('rut', loginProfesionalForm)">
-          <ng-container *ngFor="let error of errors(loginProfesionalForm.get('rut'))">
-            {{ errorMessages[error] }}<br />
-          </ng-container>
-        </mat-error>
+        @if (isValidInput('rut', loginProfesionalForm)) {
+          <mat-error>
+            @for (error of errors(loginProfesionalForm.get('rut')); track error) {
+              {{ errorMessages[error] }}<br />
+            }
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
@@ -49,11 +55,13 @@
         <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" aria-label="Toggle password visibility">
           <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
-        <mat-error *ngIf="isValidInput('contrasena', loginProfesionalForm)">
-          <ng-container *ngFor="let error of errors(loginProfesionalForm.get('contrasena'))">
-            {{ errorMessages[error] }}<br />
-          </ng-container>
-        </mat-error>
+        @if (isValidInput('contrasena', loginProfesionalForm)) {
+          <mat-error>
+            @for (error of errors(loginProfesionalForm.get('contrasena')); track error) {
+              {{ errorMessages[error] }}<br />
+            }
+          </mat-error>
+        }
       </mat-form-field>
 
       <div class="button-group">

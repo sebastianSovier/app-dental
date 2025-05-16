@@ -6,21 +6,25 @@
         <mat-form-field appearance="fill">
           <mat-label>Motivo Consulta</mat-label>
           <input matInput formControlName="motivo_consulta" type="text" minlength="10" maxlength="100" required />
-          <mat-error *ngIf="isValidInput('motivo_consulta', consultaMedicaForm)">
-            <ng-container *ngFor="let error of errors(consultaMedicaForm.get('motivo_consulta'))">
-              {{ errorMessages[error] }}<br />
-            </ng-container>
-          </mat-error>
+          @if (isValidInput('motivo_consulta', consultaMedicaForm)) {
+            <mat-error>
+              @for (error of errors(consultaMedicaForm.get('motivo_consulta')); track error) {
+                {{ errorMessages[error] }}<br />
+              }
+            </mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Observación</mat-label>
           <input matInput formControlName="observaciones" type="text" minlength="8" maxlength="100" required />
-          <mat-error *ngIf="isValidInput('observaciones', consultaMedicaForm)">
-            <ng-container *ngFor="let error of errors(consultaMedicaForm.get('observaciones'))">
-              {{ errorMessages[error] }}<br />
-            </ng-container>
-          </mat-error>
+          @if (isValidInput('observaciones', consultaMedicaForm)) {
+            <mat-error>
+              @for (error of errors(consultaMedicaForm.get('observaciones')); track error) {
+                {{ errorMessages[error] }}<br />
+              }
+            </mat-error>
+          }
         </mat-form-field>
       </div>
     </mat-card-content>
@@ -33,31 +37,37 @@
         <mat-form-field appearance="fill">
           <mat-label>Nombre Tratamiento</mat-label>
           <input matInput formControlName="nombre_tratamiento" type="text" minlength="8" maxlength="100" required />
-          <mat-error *ngIf="isValidInput('nombre_tratamiento', tratamientoForm)">
-            <ng-container *ngFor="let error of errors(tratamientoForm.get('nombre_tratamiento'))">
-              {{ errorMessages[error] }}<br />
-            </ng-container>
-          </mat-error>
+          @if (isValidInput('nombre_tratamiento', tratamientoForm)) {
+            <mat-error>
+              @for (error of errors(tratamientoForm.get('nombre_tratamiento')); track error) {
+                {{ errorMessages[error] }}<br />
+              }
+            </mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Descripción</mat-label>
           <input matInput formControlName="descripcion" type="text" minlength="8" maxlength="100" required />
-          <mat-error *ngIf="isValidInput('descripcion', tratamientoForm)">
-            <ng-container *ngFor="let error of errors(tratamientoForm.get('descripcion'))">
-              {{ errorMessages[error] }}<br />
-            </ng-container>
-          </mat-error>
+          @if (isValidInput('descripcion', tratamientoForm)) {
+            <mat-error>
+              @for (error of errors(tratamientoForm.get('descripcion')); track error) {
+                {{ errorMessages[error] }}<br />
+              }
+            </mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Valor</mat-label>
           <input matInput formControlName="valor"  [dirOnlyNumbers]="10" type="text" minlength="1" maxlength="10" required />
-          <mat-error *ngIf="isValidInput('valor', tratamientoForm)">
-            <ng-container *ngFor="let error of errors(tratamientoForm.get('valor'))">
-              {{ errorMessages[error] }}<br />
-            </ng-container>
-          </mat-error>
+          @if (isValidInput('valor', tratamientoForm)) {
+            <mat-error>
+              @for (error of errors(tratamientoForm.get('valor')); track error) {
+                {{ errorMessages[error] }}<br />
+              }
+            </mat-error>
+          }
         </mat-form-field>
 
         <div fxLayout="row" fxLayoutAlign="end">
@@ -69,45 +79,42 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="tratamientos.length > 0" class="mb-4">
-    <mat-card-title>Listado de Tratamientos</mat-card-title>
-    <mat-card-content>
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full">
-
-        <ng-container matColumnDef="nombre_tratamiento">
-          <th mat-header-cell *matHeaderCellDef>Tratamiento</th>
-          <td mat-cell *matCellDef="let element">{{ element.nombre_tratamiento }}</td>
-          <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-
-        <ng-container matColumnDef="descripcion">
-          <th mat-header-cell *matHeaderCellDef>Descripción</th>
-          <td mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
-          <td mat-footer-cell *matFooterCellDef>Total</td>
-        </ng-container>
-
-        <ng-container matColumnDef="valor">
-          <th mat-header-cell *matHeaderCellDef>Valor</th>
-          <td mat-cell *matCellDef="let element">{{ element.valor | currency:'CLP' }}</td>
-          <td mat-footer-cell *matFooterCellDef>{{ getSumaTotal() | currency:'CLP' }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef>Acciones</th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="warn" (click)="eliminarTratamiento(element)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-          <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumnsPaciente"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumnsPaciente;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumnsPaciente"></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
+  @if (tratamientos.length > 0) {
+    <mat-card class="mb-4">
+      <mat-card-title>Listado de Tratamientos</mat-card-title>
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 w-full">
+          <ng-container matColumnDef="nombre_tratamiento">
+            <th mat-header-cell *matHeaderCellDef>Tratamiento</th>
+            <td mat-cell *matCellDef="let element">{{ element.nombre_tratamiento }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef>Descripción</th>
+            <td mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
+            <td mat-footer-cell *matFooterCellDef>Total</td>
+          </ng-container>
+          <ng-container matColumnDef="valor">
+            <th mat-header-cell *matHeaderCellDef>Valor</th>
+            <td mat-cell *matCellDef="let element">{{ element.valor | currency:'CLP' }}</td>
+            <td mat-footer-cell *matFooterCellDef>{{ getSumaTotal() | currency:'CLP' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="warn" (click)="eliminarTratamiento(element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsPaciente"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsPaciente;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumnsPaciente"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  }
 
   <div fxLayout="row" fxLayoutAlign="end">
     <button mat-flat-button color="primary" (click)="onSubmitConsultaMedica()"

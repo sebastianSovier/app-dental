@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule, MatNativeDateModule } from '@angular/material/core';
@@ -29,13 +29,12 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatSelectModule,
     MatOptionModule,
-    CommonModule,
     MatStepperModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
-    MatCardModule,
-  ],
+    MatCardModule
+],
   templateUrl: './visualizar-examenes-paciente.component.html',
   styleUrl: './visualizar-examenes-paciente.component.scss'
 })

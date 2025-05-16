@@ -4,9 +4,11 @@
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Seleccionar perfil</mat-label>
     <mat-select [(value)]="perfilSeleccionado">
-      <mat-option *ngFor="let perfil of perfilesFilter" [value]="perfil.label">
-        {{ perfil.label }}
-      </mat-option>
+      @for (perfil of perfilesFilter; track perfil) {
+        <mat-option [value]="perfil.label">
+          {{ perfil.label }}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
 </mat-dialog-content>
