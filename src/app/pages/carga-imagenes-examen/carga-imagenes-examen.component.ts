@@ -155,7 +155,9 @@ export class CargaImagenesExamenComponent implements OnInit {
     const formData = new FormData();
 
     this.dataSource.data.forEach((img: any) => {
+      if(img.archivo !== null){
       formData.append('imagenes', img.archivo, img.nombre); 
+    }
     });
     this.ps.CargarImagenesExamenes(formData,Number(this.insuredData.currentUser()?.idAgendamiento)).subscribe({
       next: (response) => {

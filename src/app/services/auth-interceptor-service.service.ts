@@ -26,9 +26,14 @@ export class AuthInterceptorServiceService implements HttpInterceptor {
   private route = inject(Router);
 
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!environment.useEncrypt || !req.body) {
-      return next.handle(req);                               
-    }
+    const isFormData = req.body instanceof FormData;
+
+  if (!environment.useEncrypt || !req.body || isFormData) {
+    const authReq = this.addAuthHeader(req);
+    return next.handle(authReq).pipe(
+      catchError((err: HttpErrorResponse) => this.handleError(err))
+    );
+  }
 
     return from(this.importKey()).pipe(
       switchMap(key =>
