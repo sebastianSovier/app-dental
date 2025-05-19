@@ -53,7 +53,7 @@
   </div>
 
   <div class="actions-bottom">
-    <button mat-flat-button color="primary" [disabled]="dataSource.data.length === 0" (click)="cargarImagenes()">
+    <button mat-flat-button color="primary" [disabled]="dataSource.data.length === 0 || dataSource.data.length <= imagenes.length" (click)="cargarImagenes()">
       <mat-icon>cloud_upload</mat-icon>
       Enviar exámenes
     </button>

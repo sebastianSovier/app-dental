@@ -53,6 +53,7 @@ export class CargaImagenesExamenComponent implements OnInit {
   private prevent = inject(PreventService);
   
   disabled = this.loadingService.submitButtonDisabled$;
+  imagenes: ImagenPreview[] = [];
 
   constructor(private dialog: MatDialog){
 
@@ -117,13 +118,13 @@ export class CargaImagenesExamenComponent implements OnInit {
         next: (response) => {
           this.loadingService.setLoading(false);
           if (response.length > 0) {
-            const imagenes: ImagenPreview[] = response.map((img: imagenExamenConsulta) => ({
+            this.imagenes = response.map((img: imagenExamenConsulta) => ({
               url: img.imagen_examen,
               nombre: img.nombre_examen,
               tamanoKB:  Math.round(Number(img.tamano)),
               archivo: null
             }));
-            this.dataSource.data = imagenes;
+            this.dataSource.data = this.imagenes;
             
             this.loadingService.setLoading(false);
           }
@@ -151,6 +152,9 @@ export class CargaImagenesExamenComponent implements OnInit {
     }
   }
   cargarImagenes(){
+    if(this.dataSource.data.length <= this.imagenes.length){
+      return;
+    }
     this.loadingService.setLoading(true);
     const formData = new FormData();
 
